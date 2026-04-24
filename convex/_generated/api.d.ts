@@ -9,6 +9,7 @@
  */
 
 import type * as corrections from "../corrections.js";
+import type * as http from "../http.js";
 import type * as institutions from "../institutions.js";
 import type * as programmes from "../programmes.js";
 import type * as searchEvents from "../searchEvents.js";
@@ -21,6 +22,7 @@ import type {
 
 declare const fullApi: ApiFromModules<{
   corrections: typeof corrections;
+  http: typeof http;
   institutions: typeof institutions;
   programmes: typeof programmes;
   searchEvents: typeof searchEvents;

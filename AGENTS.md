@@ -78,6 +78,7 @@ MVP search should use full-text search, structured filters, synonym/intent mappi
 docs/search-queries.md
 docs/search-architecture.md
 docs/data-integration.md
+docs/admin-api.md
 data/README.md
 ```
 

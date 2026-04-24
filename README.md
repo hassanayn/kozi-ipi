@@ -64,6 +64,12 @@ Processed import files are generated in:
 data/processed
 ```
 
+Admin moderation is protected with a private Convex `ADMIN_API_KEY`. See:
+
+```text
+docs/admin-api.md
+```
+
 ## Search Principle
 
 ```text

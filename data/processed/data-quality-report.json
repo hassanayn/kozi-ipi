@@ -1,0 +1,19 @@
+{
+  "generatedAt": "2026-04-24T20:19:55.816Z",
+  "baseDataset": "tanzania-post-form-four-dataset",
+  "enrichmentDataset": "tanzania-education-dataset",
+  "institutions": {
+    "rawBaseCount": 631,
+    "enrichmentCount": 503,
+    "processedCount": 631,
+    "enrichedCount": 378,
+    "needsReviewCount": 263
+  },
+  "programmes": {
+    "rawBaseCount": 2743,
+    "enrichmentCount": 1771,
+    "processedCount": 2743,
+    "enrichedCount": 935,
+    "needsReviewCount": 729
+  }
+}

@@ -1,21 +1,54 @@
-# Next.js template
+# Kozi Ipi
 
-This is a Next.js template with shadcn/ui.
+Kozi Ipi is a Tanzania post-Form Four education discovery platform. It helps students, parents, and guardians search institutions and programmes using course names, careers, locations, subjects, and eligibility constraints.
 
-## Adding components
+## Stack
 
-To add components to your app, run the following command:
+- Next.js
+- shadcn UI preset
+- Bun
 
-```bash
-npx shadcn@latest add button
+## Local Setup
+
+Install dependencies:
+
+```sh
+bun install
 ```
 
-This will place the ui components in the `components` directory.
+Build the processed dataset:
 
-## Using components
+```sh
+bun run data:build
+```
 
-To use the components in your app, import them as follows:
+Start Next.js:
 
-```tsx
-import { Button } from "@/components/ui/button";
+```sh
+bun run dev
+```
+
+## Data Flow
+
+Raw datasets live in:
+
+```text
+data/raw/tanzania-post-form-four-dataset
+data/raw/tanzania-education-dataset
+```
+
+The broader post-Form Four dataset is the canonical base. The NACTVET-focused dataset enriches matching institutions and programmes.
+
+Processed import files are generated in:
+
+```text
+data/processed
+```
+
+## Search Principle
+
+```text
+Lexical search finds.
+Rules decide eligibility.
+Semantic search suggests.
 ```

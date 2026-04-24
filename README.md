@@ -6,6 +6,7 @@ Kozi Ipi is a Tanzania post-Form Four education discovery platform. It helps stu
 
 - Next.js
 - shadcn UI preset
+- Convex
 - Bun
 
 ## Local Setup
@@ -20,6 +21,24 @@ Build the processed dataset:
 
 ```sh
 bun run data:build
+```
+
+Start Convex:
+
+```sh
+bun run convex:dev
+```
+
+Import processed data into Convex:
+
+```sh
+bun run data:import
+```
+
+Import processed data into production Convex:
+
+```sh
+bun run data:import:prod
 ```
 
 Start Next.js:

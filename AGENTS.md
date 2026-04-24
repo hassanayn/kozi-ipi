@@ -8,6 +8,7 @@ Kozi Ipi is a Tanzania post-Form Four education discovery platform. It helps stu
 
 - Next.js app router
 - shadcn UI preset
+- Convex backend/database
 - Bun package manager
 - TypeScript
 
@@ -49,6 +50,18 @@ data/processed/institutions.jsonl
 data/processed/programmes.jsonl
 ```
 
+Import processed data into Convex with:
+
+```sh
+bun run data:import
+```
+
+Import processed data into production Convex with:
+
+```sh
+bun run data:import:prod
+```
+
 ## Search Principle
 
 ```text
@@ -74,8 +87,12 @@ data/README.md
 bun run typecheck
 bun run lint
 bun run build
+bun run convex:dev
+bun run convex:deploy
 bun run dev
 ```
+
+Run `bun run convex:dev` in one terminal and `bun run dev` in another when developing locally.
 
 <!-- convex-ai-start -->
 This project uses [Convex](https://convex.dev) as its backend.

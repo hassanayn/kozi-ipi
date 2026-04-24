@@ -8,13 +8,23 @@
  * @module
  */
 
+import type * as corrections from "../corrections.js";
+import type * as institutions from "../institutions.js";
+import type * as programmes from "../programmes.js";
+import type * as searchEvents from "../searchEvents.js";
+
 import type {
   ApiFromModules,
   FilterApi,
   FunctionReference,
 } from "convex/server";
 
-declare const fullApi: ApiFromModules<{}>;
+declare const fullApi: ApiFromModules<{
+  corrections: typeof corrections;
+  institutions: typeof institutions;
+  programmes: typeof programmes;
+  searchEvents: typeof searchEvents;
+}>;
 
 /**
  * A utility for referencing Convex functions in your app's public API.

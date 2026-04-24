@@ -1,0 +1,138 @@
+import { defineSchema, defineTable } from "convex/server"
+import { v } from "convex/values"
+
+const confidenceLevel = v.union(v.literal("high"), v.literal("medium"), v.literal("low"))
+const suitability = v.union(v.literal("yes"), v.literal("no"), v.literal("unknown"))
+
+export default defineSchema({
+  institutions: defineTable({
+    institutionName: v.string(),
+    normalizedInstitutionName: v.string(),
+    registrationNumber: v.optional(v.string()),
+    registrationNumberAsShown: v.optional(v.string()),
+    regulator: v.string(),
+    accreditationStatus: v.optional(v.string()),
+    ownershipType: v.string(),
+    institutionType: v.string(),
+    institutionCategory: v.optional(v.string()),
+    region: v.optional(v.string()),
+    districtOrCouncil: v.optional(v.string()),
+    physicalLocation: v.optional(v.string()),
+    mainlandOrZanzibar: v.optional(v.string()),
+    website: v.optional(v.string()),
+    phoneNumbers: v.optional(v.string()),
+    email: v.optional(v.string()),
+    applicationMethod: v.optional(v.string()),
+    hasFormFourDirectProgramme: suitability,
+    officialSourceUrl: v.string(),
+    sourceType: v.string(),
+    sourceDatasets: v.array(v.string()),
+    confidenceLevel,
+    lastVerifiedDate: v.string(),
+    notes: v.optional(v.string()),
+    needsReview: v.boolean(),
+    reviewReasons: v.array(v.string()),
+    searchText: v.string(),
+  })
+    .index("by_normalizedInstitutionName", ["normalizedInstitutionName"])
+    .index("by_registrationNumber", ["registrationNumber"])
+    .index("by_region", ["region"])
+    .index("by_regulator", ["regulator"])
+    .searchIndex("search_searchText", {
+      searchField: "searchText",
+      filterFields: [
+        "region",
+        "regulator",
+        "ownershipType",
+        "institutionType",
+        "mainlandOrZanzibar",
+        "confidenceLevel",
+      ],
+    }),
+
+  programmes: defineTable({
+    programmeName: v.string(),
+    normalizedProgrammeName: v.string(),
+    awardLevel: v.string(),
+    fieldCategory: v.string(),
+    courseFamily: v.optional(v.string()),
+    institutionName: v.string(),
+    normalizedInstitutionName: v.string(),
+    institutionRegistrationNumber: v.optional(v.string()),
+    regulator: v.string(),
+    institutionType: v.optional(v.string()),
+    ownershipType: v.optional(v.string()),
+    region: v.optional(v.string()),
+    districtOrCouncil: v.optional(v.string()),
+    minimumEntryRequirements: v.optional(v.string()),
+    requiredSubjects: v.optional(v.string()),
+    suitableForFormFourLeaver: suitability,
+    duration: v.optional(v.string()),
+    feesIfAvailable: v.optional(v.string()),
+    feeBand: v.optional(v.string()),
+    studyMode: v.optional(v.string()),
+    campusLocation: v.optional(v.string()),
+    admissionCapacity: v.optional(v.string()),
+    entryRouteTypes: v.optional(v.string()),
+    acceptsFormFourDirect: suitability,
+    accreditationStatusIfAvailable: v.optional(v.string()),
+    applicationLink: v.optional(v.string()),
+    officialSourceUrl: v.string(),
+    sourceType: v.string(),
+    sourceDatasets: v.array(v.string()),
+    confidenceLevel,
+    lastVerifiedDate: v.string(),
+    notes: v.optional(v.string()),
+    needsReview: v.boolean(),
+    reviewReasons: v.array(v.string()),
+    careerKeywords: v.array(v.string()),
+    swahiliKeywords: v.array(v.string()),
+    searchText: v.string(),
+  })
+    .index("by_normalizedInstitutionName", ["normalizedInstitutionName"])
+    .index("by_region", ["region"])
+    .index("by_fieldCategory", ["fieldCategory"])
+    .index("by_suitableForFormFourLeaver", ["suitableForFormFourLeaver"])
+    .searchIndex("search_searchText", {
+      searchField: "searchText",
+      filterFields: [
+        "region",
+        "awardLevel",
+        "fieldCategory",
+        "courseFamily",
+        "regulator",
+        "institutionType",
+        "ownershipType",
+        "suitableForFormFourLeaver",
+        "confidenceLevel",
+      ],
+    }),
+
+  correctionSubmissions: defineTable({
+    targetType: v.union(v.literal("institution"), v.literal("programme"), v.literal("general")),
+    targetId: v.optional(v.string()),
+    targetName: v.optional(v.string()),
+    correctionType: v.string(),
+    message: v.string(),
+    sourceUrl: v.optional(v.string()),
+    submitterName: v.optional(v.string()),
+    submitterContact: v.optional(v.string()),
+    status: v.union(
+      v.literal("pending"),
+      v.literal("approved"),
+      v.literal("rejected"),
+      v.literal("needs_more_info"),
+    ),
+  }).index("by_status", ["status"]),
+
+  searchEvents: defineTable({
+    query: v.string(),
+    normalizedQuery: v.string(),
+    detectedIntent: v.optional(v.string()),
+    filtersJson: v.optional(v.string()),
+    resultCount: v.number(),
+    clickedResultId: v.optional(v.string()),
+    languageMode: v.optional(v.string()),
+  }).index("by_normalizedQuery", ["normalizedQuery"]),
+})
+

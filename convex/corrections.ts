@@ -1,6 +1,6 @@
 import { v } from "convex/values"
 
-import { mutation, query } from "./_generated/server"
+import { internalQuery, mutation } from "./_generated/server"
 
 export const submit = mutation({
   args: {
@@ -14,14 +14,23 @@ export const submit = mutation({
     submitterContact: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
+    const message = args.message.trim()
+    if (message.length < 5) {
+      throw new Error("Correction message is too short.")
+    }
+    if (message.length > 4000) {
+      throw new Error("Correction message is too long.")
+    }
+
     return await ctx.db.insert("correctionSubmissions", {
       ...args,
+      message,
       status: "pending",
     })
   },
 })
 
-export const pending = query({
+export const pending = internalQuery({
   args: {
     limit: v.optional(v.number()),
   },
@@ -32,4 +41,3 @@ export const pending = query({
       .take(args.limit ?? 50)
   },
 })
-

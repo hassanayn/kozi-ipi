@@ -1,6 +1,13 @@
 import "./globals.css"
+import { Inter } from "next/font/google"
 import { ConvexClientProvider } from "@/components/convex-client-provider"
 import { ThemeProvider } from "@/components/theme-provider"
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+})
 
 export default function RootLayout({
   children,
@@ -11,7 +18,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className="font-sans antialiased"
+      className={`${inter.variable} font-sans antialiased`}
     >
       <body>
         <ConvexClientProvider>

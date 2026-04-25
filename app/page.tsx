@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import { ProgrammeSearch } from "@/components/programme-search"
 import report from "@/data/processed/data-quality-report.json"
 
 export default function Page() {
@@ -34,33 +35,7 @@ export default function Page() {
         </header>
 
         <section className="grid gap-4 lg:grid-cols-[1.5fr_1fr]">
-          <div className="flex flex-col gap-4">
-            <label className="text-sm font-medium" htmlFor="search">
-              Search courses, colleges, careers, or requirements
-            </label>
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <input
-                id="search"
-                className="min-h-12 flex-1 rounded-md border bg-background px-4 text-base outline-none transition focus:border-foreground"
-                placeholder='Try "nataka kuwa nurse" or "computer courses after Form Four"'
-              />
-              <Button className="min-h-12">Search</Button>
-            </div>
-            <div className="flex flex-wrap gap-2 text-sm">
-              {["Health", "ICT", "Business", "VETA", "Dar es Salaam", "Form Four"].map(
-                (item) => (
-                  <button
-                    className="rounded-md border px-3 py-1.5 text-muted-foreground transition hover:text-foreground"
-                    key={item}
-                    type="button"
-                  >
-                    {item}
-                  </button>
-                ),
-              )}
-            </div>
-          </div>
-
+          <ProgrammeSearch />
           <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
             {stats.map((item) => (
               <div className="rounded-md border p-4" key={item.label}>

@@ -20,6 +20,74 @@ const filtersValidator = v.optional(
   }),
 )
 
+type ProgrammeFilters = {
+  region?: string
+  awardLevel?: string
+  fieldCategory?: string
+  courseFamily?: string
+  regulator?: string
+  institutionType?: string
+  ownershipType?: string
+  suitableForFormFourLeaver?: "yes" | "no" | "unknown"
+  confidenceLevel?: "high" | "medium" | "low"
+}
+
+const courseFamilyIntents = [
+  {
+    courseFamily: "engineering",
+    terms: ["engineering", "engineer", "civil", "mechanical", "electrical"],
+  },
+  {
+    courseFamily: "health",
+    terms: ["health", "afya", "nurse", "nursing", "hospital", "medical", "clinical"],
+  },
+  {
+    courseFamily: "ICT",
+    terms: ["ict", "computer", "kompyuta", "software", "network", "technology"],
+  },
+  {
+    courseFamily: "business",
+    terms: ["business", "biashara", "accounting", "procurement", "office", "ofisini"],
+  },
+  {
+    courseFamily: "education",
+    terms: ["education", "teacher", "teaching", "ualimu", "mwalimu"],
+  },
+  {
+    courseFamily: "tourism_hospitality",
+    terms: ["hotel", "hospitality", "tourism", "utalii"],
+  },
+  {
+    courseFamily: "agriculture",
+    terms: ["agriculture", "kilimo"],
+  },
+]
+
+function interpretProgrammeQuery(query: string, filters?: ProgrammeFilters, formFourOnly?: boolean) {
+  const normalizedQuery = query.trim().toLowerCase()
+  const inferredCourseFamily = courseFamilyIntents.find((intent) =>
+    intent.terms.some((term) => normalizedQuery.includes(term)),
+  )?.courseFamily
+
+  const appliedFilters: ProgrammeFilters = {
+    ...filters,
+    courseFamily: filters?.courseFamily ?? inferredCourseFamily,
+    suitableForFormFourLeaver: formFourOnly
+      ? "yes"
+      : filters?.suitableForFormFourLeaver,
+  }
+
+  const rewrittenQuery = appliedFilters.courseFamily && inferredCourseFamily
+    ? inferredCourseFamily
+    : query.trim()
+
+  return {
+    query: rewrittenQuery,
+    appliedFilters,
+    inferredCourseFamily,
+  }
+}
+
 export const search = query({
   args: {
     query: v.string(),
@@ -71,6 +139,69 @@ export const search = query({
         return search
       })
       .take(args.limit ?? 25)
+  },
+})
+
+export const smartSearch = query({
+  args: {
+    query: v.string(),
+    filters: filtersValidator,
+    formFourOnly: v.optional(v.boolean()),
+    limit: v.optional(v.number()),
+  },
+  handler: async (ctx, args) => {
+    const interpreted = interpretProgrammeQuery(args.query, args.filters, args.formFourOnly)
+    if (!interpreted.query) {
+      return {
+        interpreted,
+        results: [],
+      }
+    }
+
+    const results = await ctx.db
+      .query("programmes")
+      .withSearchIndex("search_searchText", (q) => {
+        let search = q.search("searchText", interpreted.query)
+
+        if (interpreted.appliedFilters.region) {
+          search = search.eq("region", interpreted.appliedFilters.region)
+        }
+        if (interpreted.appliedFilters.awardLevel) {
+          search = search.eq("awardLevel", interpreted.appliedFilters.awardLevel)
+        }
+        if (interpreted.appliedFilters.fieldCategory) {
+          search = search.eq("fieldCategory", interpreted.appliedFilters.fieldCategory)
+        }
+        if (interpreted.appliedFilters.courseFamily) {
+          search = search.eq("courseFamily", interpreted.appliedFilters.courseFamily)
+        }
+        if (interpreted.appliedFilters.regulator) {
+          search = search.eq("regulator", interpreted.appliedFilters.regulator)
+        }
+        if (interpreted.appliedFilters.institutionType) {
+          search = search.eq("institutionType", interpreted.appliedFilters.institutionType)
+        }
+        if (interpreted.appliedFilters.ownershipType) {
+          search = search.eq("ownershipType", interpreted.appliedFilters.ownershipType)
+        }
+        if (interpreted.appliedFilters.suitableForFormFourLeaver) {
+          search = search.eq(
+            "suitableForFormFourLeaver",
+            interpreted.appliedFilters.suitableForFormFourLeaver,
+          )
+        }
+        if (interpreted.appliedFilters.confidenceLevel) {
+          search = search.eq("confidenceLevel", interpreted.appliedFilters.confidenceLevel)
+        }
+
+        return search
+      })
+      .take(args.limit ?? 25)
+
+    return {
+      interpreted,
+      results,
+    }
   },
 })
 
@@ -128,6 +259,68 @@ export const searchCount = query({
       .take(maxCount)
 
     return { count: results.length, capped: results.length === maxCount }
+  },
+})
+
+export const smartSearchCount = query({
+  args: {
+    query: v.string(),
+    filters: filtersValidator,
+    formFourOnly: v.optional(v.boolean()),
+    maxCount: v.optional(v.number()),
+  },
+  handler: async (ctx, args) => {
+    const interpreted = interpretProgrammeQuery(args.query, args.filters, args.formFourOnly)
+    if (!interpreted.query) {
+      return { interpreted, count: 0, capped: false }
+    }
+
+    const maxCount = args.maxCount ?? 1000
+    const results = await ctx.db
+      .query("programmes")
+      .withSearchIndex("search_searchText", (q) => {
+        let search = q.search("searchText", interpreted.query)
+
+        if (interpreted.appliedFilters.region) {
+          search = search.eq("region", interpreted.appliedFilters.region)
+        }
+        if (interpreted.appliedFilters.awardLevel) {
+          search = search.eq("awardLevel", interpreted.appliedFilters.awardLevel)
+        }
+        if (interpreted.appliedFilters.fieldCategory) {
+          search = search.eq("fieldCategory", interpreted.appliedFilters.fieldCategory)
+        }
+        if (interpreted.appliedFilters.courseFamily) {
+          search = search.eq("courseFamily", interpreted.appliedFilters.courseFamily)
+        }
+        if (interpreted.appliedFilters.regulator) {
+          search = search.eq("regulator", interpreted.appliedFilters.regulator)
+        }
+        if (interpreted.appliedFilters.institutionType) {
+          search = search.eq("institutionType", interpreted.appliedFilters.institutionType)
+        }
+        if (interpreted.appliedFilters.ownershipType) {
+          search = search.eq("ownershipType", interpreted.appliedFilters.ownershipType)
+        }
+        if (interpreted.appliedFilters.suitableForFormFourLeaver) {
+          search = search.eq(
+            "suitableForFormFourLeaver",
+            interpreted.appliedFilters.suitableForFormFourLeaver,
+          )
+        }
+        if (interpreted.appliedFilters.confidenceLevel) {
+          search = search.eq("confidenceLevel", interpreted.appliedFilters.confidenceLevel)
+        }
+
+        return search
+      })
+      .take(maxCount)
+
+    return {
+      interpreted,
+      count: results.length,
+      capped: results.length === maxCount,
+    }
   },
 })
 

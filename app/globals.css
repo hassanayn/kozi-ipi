@@ -5,8 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-    --font-heading: var(--font-display), var(--font-sans);
-    --font-display: var(--font-display);
+    --font-heading: var(--font-body), var(--font-sans);
     --font-body: var(--font-body);
     --font-sans: var(--font-body), var(--font-sans);
     --color-brand-cream: var(--brand-cream);

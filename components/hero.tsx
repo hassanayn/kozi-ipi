@@ -10,7 +10,6 @@ const NAV = [
   { label: "Career Paths", href: "#" },
   { label: "Compare", href: "#" },
   { label: "Quiz", href: "#" },
-  { label: "Rasilimali", href: "#" },
 ]
 
 const TRENDING = [
@@ -27,13 +26,15 @@ export function Hero() {
       className="relative min-h-svh w-full bg-brand-cream font-body text-brand-ink"
       style={{ fontFamily: "var(--font-body)" }}
     >
-      <div className="mx-auto flex w-full max-w-[1320px] flex-col px-6 sm:px-10 lg:px-14">
+      <div className="mx-auto flex w-full max-w-[1320px] flex-col gap-14 pb-20 lg:gap-20 lg:pb-24 px-6 sm:px-10 lg:px-14">
         <SiteHeader />
 
-        <div className="mt-10 grid grid-cols-1 items-center gap-12 pb-20 lg:mt-6 lg:grid-cols-[1fr_1.25fr] lg:gap-12 lg:pb-24">
+        <div className="mt-4 grid grid-cols-1 items-center gap-12 lg:mt-2 lg:grid-cols-[1fr_1.25fr] lg:gap-12">
           <HeroCopy />
           <HeroArtwork />
         </div>
+
+        <CategoryStrip />
       </div>
     </section>
   )
@@ -44,26 +45,15 @@ export function Hero() {
 function SiteHeader() {
   return (
     <header className="flex h-20 items-center justify-between gap-6 lg:h-24">
-      <a href="/" className="flex items-center gap-2.5" aria-label="Kozi Ipi home">
+      <a href="/" aria-label="Kozi Ipi home" className="inline-flex">
         <Image
           src="/kozi-ipi-logo.png"
-          alt=""
+          alt="Kozi Ipi"
           width={56}
           height={56}
           priority
           className="size-12 lg:size-14"
         />
-        <span className="hidden flex-col leading-none sm:flex">
-          <span
-            className="text-[22px] font-extrabold tracking-[-0.02em] text-brand-blue"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Kozi Ipi
-          </span>
-          <span className="mt-1 text-[10px] font-semibold tracking-[0.18em] text-brand-ink/60">
-            KOZI YAKO, MAISHA YAKO.
-          </span>
-        </span>
       </a>
 
       <nav className="hidden items-center gap-8 lg:flex">
@@ -160,24 +150,13 @@ function SearchBar({ className = "" }: { className?: string }) {
         />
       </label>
 
-      <div className="flex items-center gap-1 sm:gap-2">
-        <div className="hidden h-7 w-px bg-brand-ink/10 sm:block" />
-        <button
-          type="button"
-          className="flex h-12 items-center gap-2 rounded-full px-4 text-[14px] font-medium text-brand-ink/80 transition-colors hover:bg-brand-ink/5"
-        >
-          <PinIcon className="size-[15px]" />
-          Tanzania
-          <ChevronIcon className="size-[14px] text-brand-ink/55" />
-        </button>
-        <Button
-          type="submit"
-          size="lg"
-          className="h-12 rounded-full bg-brand-blue px-7 text-[14px] font-semibold text-white hover:bg-brand-blue-deep"
-        >
-          Tafuta
-        </Button>
-      </div>
+      <Button
+        type="submit"
+        size="lg"
+        className="h-12 shrink-0 rounded-full bg-brand-blue px-7 text-[14px] font-semibold text-white hover:bg-brand-blue-deep"
+      >
+        Tafuta
+      </Button>
     </form>
   )
 }
@@ -198,6 +177,74 @@ function HeroArtwork() {
         />
       </div>
     </div>
+  )
+}
+
+/* ─────────────────────────── Category strip ─────────────────────────── */
+
+const CATEGORIES: Array<{
+  label: string
+  hint: string
+  tone: "blue" | "yellow" | "ink"
+  Icon: (props: { className?: string }) => React.JSX.Element
+}> = [
+  { label: "Engineering", hint: "Uhandisi", tone: "blue", Icon: GearIcon },
+  { label: "Biashara", hint: "Business", tone: "yellow", Icon: BriefcaseIcon },
+  { label: "Afya", hint: "Health", tone: "ink", Icon: PulseIcon },
+  { label: "Utalii", hint: "Tourism", tone: "blue", Icon: PalmIcon },
+  { label: "Tech", hint: "Teknolojia", tone: "yellow", Icon: CodeIcon },
+]
+
+const TONE_BADGE: Record<"blue" | "yellow" | "ink", string> = {
+  blue: "bg-brand-blue/10 text-brand-blue",
+  yellow: "bg-brand-yellow/20 text-brand-ink",
+  ink: "bg-brand-ink text-white",
+}
+
+function CategoryStrip() {
+  return (
+    <section aria-labelledby="categories-heading">
+      <div className="mb-5 flex items-end justify-between gap-4">
+        <h2
+          id="categories-heading"
+          className="text-[18px] font-semibold tracking-tight text-brand-ink lg:text-[20px]"
+        >
+          Anza na kategoria
+        </h2>
+        <a
+          href="#"
+          className="hidden items-center gap-1 text-[13px] font-medium text-brand-blue hover:underline sm:inline-flex"
+        >
+          Tazama zote
+          <ArrowRightIcon className="size-3.5" />
+        </a>
+      </div>
+
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
+        {CATEGORIES.map(({ label, hint, tone, Icon }) => (
+          <a
+            key={label}
+            href="#"
+            className="group relative flex flex-col gap-4 rounded-2xl border border-brand-ink/10 bg-white p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-blue/40 hover:shadow-[0_22px_42px_-26px_rgba(29,78,216,0.45)]"
+          >
+            <div
+              className={`grid size-11 place-items-center rounded-xl ${TONE_BADGE[tone]}`}
+            >
+              <Icon className="size-5" />
+            </div>
+            <div className="flex items-end justify-between gap-2">
+              <div>
+                <div className="text-[15px] font-semibold tracking-tight text-brand-ink">
+                  {label}
+                </div>
+                <div className="text-[12px] text-brand-ink/55">{hint}</div>
+              </div>
+              <ArrowRightIcon className="size-4 shrink-0 text-brand-ink/35 transition-all group-hover:translate-x-0.5 group-hover:text-brand-blue" />
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
   )
 }
 
@@ -239,25 +286,7 @@ function UserIcon({ className = "" }: { className?: string }) {
   )
 }
 
-function PinIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className={className}
-      aria-hidden
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M12 22s7-7.5 7-13a7 7 0 1 0-14 0c0 5.5 7 13 7 13Z" />
-      <circle cx={12} cy={9} r={2.5} />
-    </svg>
-  )
-}
-
-function ChevronIcon({ className = "" }: { className?: string }) {
+function ArrowRightIcon({ className = "" }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -269,7 +298,100 @@ function ChevronIcon({ className = "" }: { className?: string }) {
       strokeLinecap="round"
       strokeLinejoin="round"
     >
-      <path d="m6 9 6 6 6-6" />
+      <path d="M5 12h14" />
+      <path d="m13 6 6 6-6 6" />
+    </svg>
+  )
+}
+
+function GearIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx={12} cy={12} r={3} />
+      <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z" />
+    </svg>
+  )
+}
+
+function BriefcaseIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect width={18} height={13} x={3} y={7} rx={2} />
+      <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+      <path d="M3 13h18" />
+    </svg>
+  )
+}
+
+function PulseIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M3 12h4l2-7 4 14 2-7h6" />
+    </svg>
+  )
+}
+
+function PalmIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M12 22V10" />
+      <path d="M12 10c-1.5-3-5-4-8-3 1.5 1 2 3 2 5" />
+      <path d="M12 10c1.5-3 5-4 8-3-1.5 1-2 3-2 5" />
+      <path d="M12 10c-2-2.5-2-6 0-9 2 3 2 6.5 0 9Z" />
+    </svg>
+  )
+}
+
+function CodeIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="m8 18-6-6 6-6" />
+      <path d="m16 6 6 6-6 6" />
     </svg>
   )
 }

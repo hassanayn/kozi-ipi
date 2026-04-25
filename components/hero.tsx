@@ -30,7 +30,7 @@ export function Hero() {
       <div className="mx-auto flex w-full max-w-[1320px] flex-col px-6 sm:px-10 lg:px-14">
         <SiteHeader />
 
-        <div className="mt-10 grid grid-cols-1 items-center gap-12 pb-20 lg:mt-6 lg:grid-cols-[1.1fr_1fr] lg:gap-10 lg:pb-24">
+        <div className="mt-10 grid grid-cols-1 items-center gap-12 pb-20 lg:mt-6 lg:grid-cols-[1fr_1.25fr] lg:gap-12 lg:pb-24">
           <HeroCopy />
           <HeroArtwork />
         </div>
@@ -102,7 +102,7 @@ function SiteHeader() {
 
 function HeroCopy() {
   return (
-    <div className="relative">
+    <div className="relative order-2 lg:order-1">
       <h1 className="relative">
         <span className="sr-only">Oyaaa, kozi ipi unachukua?</span>
         <Image
@@ -186,14 +186,14 @@ function SearchBar({ className = "" }: { className?: string }) {
 
 function HeroArtwork() {
   return (
-    <div className="relative mx-auto w-full max-w-[640px]">
+    <div className="relative order-1 mx-auto w-full max-w-[640px] lg:order-2 lg:mx-0 lg:ml-auto lg:max-w-[780px] lg:-mr-4 xl:-mr-10">
       <div className="relative aspect-[4/3] w-full">
         <Image
           src="/hero-students.png"
           alt="Three Tanzanian students looking ahead"
           fill
           priority
-          sizes="(min-width: 1024px) 640px, 90vw"
+          sizes="(min-width: 1024px) 780px, 90vw"
           className="object-contain"
         />
       </div>

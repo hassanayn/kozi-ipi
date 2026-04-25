@@ -153,7 +153,8 @@ export function SearchResultsClient() {
 
   const search = useQuery(api.programmes.smartSearch, searchArgs)
   const count = useQuery(api.programmes.smartSearchCount, countArgs)
-  const isLoading = activeQuery && (search === undefined || count === undefined)
+  const isResultsLoading = activeQuery && search === undefined
+  const isCountLoading = activeQuery && count === undefined
 
   const inferredFamily = search?.interpreted.inferredCourseFamily
   const activeFilters = [
@@ -431,7 +432,9 @@ export function SearchResultsClient() {
           <div className="flex flex-wrap items-end justify-between gap-4 border-b border-brand-ink/8 pb-4">
             <div>
               <p className="text-[12.5px] font-medium uppercase tracking-[0.16em] text-brand-blue">
-                {isLoading ? "Searching" : `${count?.count ?? 0}${count?.capped ? "+" : ""} matches`}
+                {isCountLoading
+                  ? "Searching"
+                  : `${count?.count ?? search?.results.length ?? 0}${count?.capped ? "+" : ""} matches`}
               </p>
               <h2 className="mt-1 text-[22px] font-bold tracking-tight">
                 {activeQuery ? `Results for "${activeQuery}"` : "All programmes"}
@@ -463,7 +466,7 @@ export function SearchResultsClient() {
           <div className="mt-5 grid gap-4">
             {!activeQuery ? (
               <EmptyState />
-            ) : isLoading ? (
+            ) : isResultsLoading ? (
               <LoadingState />
             ) : search?.results.length ? (
               search.results.map((programme) => (

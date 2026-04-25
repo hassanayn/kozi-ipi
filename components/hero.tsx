@@ -141,11 +141,13 @@ function SearchBar({ className = "" }: { className?: string }) {
       className={`flex w-full max-w-[40rem] flex-col gap-2 rounded-3xl border border-brand-ink/10 bg-white p-2 shadow-[0_18px_38px_-22px_rgba(15,15,18,0.25)] sm:flex-row sm:items-center sm:gap-0 sm:rounded-full ${className}`}
     >
       <label className="flex flex-1 items-center gap-3 px-4">
+        <span className="sr-only">Tafuta kozi, chuo, au career path</span>
         <SearchIcon className="size-[18px] shrink-0 text-brand-ink/55" />
         <Input
           variant="ghost"
           size="xl"
           placeholder="Tafuta kozi, chuo, career path..."
+          aria-label="Tafuta kozi, chuo, au career path"
           className="h-12 border-0 bg-transparent px-0 text-[15px] shadow-none placeholder:text-brand-ink/40 focus-visible:ring-0"
         />
       </label>

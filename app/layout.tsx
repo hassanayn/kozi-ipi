@@ -1,4 +1,5 @@
 import "./globals.css"
+import { ConvexClientProvider } from "@/components/convex-client-provider"
 import { ThemeProvider } from "@/components/theme-provider"
 
 export default function RootLayout({
@@ -13,7 +14,9 @@ export default function RootLayout({
       className="font-sans antialiased"
     >
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ConvexClientProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </ConvexClientProvider>
       </body>
     </html>
   )

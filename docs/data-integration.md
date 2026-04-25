@@ -48,6 +48,18 @@ data/processed/data-quality-report.json
 
 Use the JSONL files for backend imports once the backend is installed.
 
+For Convex dev imports:
+
+```sh
+bun run data:import
+```
+
+For Convex production imports:
+
+```sh
+bun run data:import:prod
+```
+
 ## Review Flags
 
 Rows are flagged with:

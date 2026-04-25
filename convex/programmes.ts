@@ -74,6 +74,63 @@ export const search = query({
   },
 })
 
+export const searchCount = query({
+  args: {
+    query: v.string(),
+    filters: filtersValidator,
+    maxCount: v.optional(v.number()),
+  },
+  handler: async (ctx, args) => {
+    const text = args.query.trim()
+    if (!text) {
+      return { count: 0, capped: false }
+    }
+
+    const maxCount = args.maxCount ?? 1000
+    const results = await ctx.db
+      .query("programmes")
+      .withSearchIndex("search_searchText", (q) => {
+        let search = q.search("searchText", text)
+
+        if (args.filters?.region) {
+          search = search.eq("region", args.filters.region)
+        }
+        if (args.filters?.awardLevel) {
+          search = search.eq("awardLevel", args.filters.awardLevel)
+        }
+        if (args.filters?.fieldCategory) {
+          search = search.eq("fieldCategory", args.filters.fieldCategory)
+        }
+        if (args.filters?.courseFamily) {
+          search = search.eq("courseFamily", args.filters.courseFamily)
+        }
+        if (args.filters?.regulator) {
+          search = search.eq("regulator", args.filters.regulator)
+        }
+        if (args.filters?.institutionType) {
+          search = search.eq("institutionType", args.filters.institutionType)
+        }
+        if (args.filters?.ownershipType) {
+          search = search.eq("ownershipType", args.filters.ownershipType)
+        }
+        if (args.filters?.suitableForFormFourLeaver) {
+          search = search.eq(
+            "suitableForFormFourLeaver",
+            args.filters.suitableForFormFourLeaver,
+          )
+        }
+        if (args.filters?.confidenceLevel) {
+          search = search.eq("confidenceLevel", args.filters.confidenceLevel)
+        }
+
+        return search
+      })
+      .take(maxCount)
+
+    return { count: results.length, capped: results.length === maxCount }
+  },
+})
+
 export const byInstitution = query({
   args: {
     normalizedInstitutionName: v.string(),
@@ -97,4 +154,3 @@ export const byId = query({
     return await ctx.db.get(args.id)
   },
 })
-

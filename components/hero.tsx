@@ -26,15 +26,15 @@ export function Hero() {
       className="relative min-h-svh w-full bg-brand-cream font-body text-brand-ink"
       style={{ fontFamily: "var(--font-body)" }}
     >
-      <div className="mx-auto flex w-full max-w-[1320px] flex-col gap-14 pb-20 lg:gap-20 lg:pb-24 px-6 sm:px-10 lg:px-14">
+      <div className="mx-auto flex w-full max-w-[1320px] flex-col gap-10 pb-20 lg:gap-14 lg:pb-24 px-6 sm:px-10 lg:px-14">
         <SiteHeader />
 
-        <div className="mt-4 grid grid-cols-1 items-center gap-12 lg:mt-2 lg:grid-cols-[1fr_1.25fr] lg:gap-12">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1fr_1.45fr] lg:gap-12">
           <HeroCopy />
           <HeroArtwork />
         </div>
 
-        <CategoryStrip />
+        <CategoryStrip className="lg:mt-6" />
       </div>
     </section>
   )
@@ -165,7 +165,7 @@ function SearchBar({ className = "" }: { className?: string }) {
 
 function HeroArtwork() {
   return (
-    <div className="relative order-1 mx-auto w-full max-w-[640px] lg:order-2 lg:mx-0 lg:ml-auto lg:max-w-[780px] lg:-mr-4 xl:-mr-10">
+    <div className="relative order-1 mx-auto w-full max-w-[640px] lg:order-2 lg:mx-0 lg:ml-auto lg:max-w-[860px] lg:-mr-4 xl:-mr-10">
       <div className="relative aspect-[4/3] w-full">
         <Image
           src="/hero-students.png"
@@ -201,15 +201,15 @@ const TONE_BADGE: Record<"blue" | "yellow" | "ink", string> = {
   ink: "bg-brand-ink text-white",
 }
 
-function CategoryStrip() {
+function CategoryStrip({ className = "" }: { className?: string }) {
   return (
-    <section aria-labelledby="categories-heading">
+    <section aria-labelledby="categories-heading" className={className}>
       <div className="mb-5 flex items-end justify-between gap-4">
         <h2
           id="categories-heading"
           className="text-[18px] font-semibold tracking-tight text-brand-ink lg:text-[20px]"
         >
-          Anza na kategoria
+          Category
         </h2>
         <a
           href="#"

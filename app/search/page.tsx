@@ -1,5 +1,8 @@
 import Link from "next/link"
 import Image from "next/image"
+import { Suspense } from "react"
+
+import { SearchResultsClient } from "@/components/search/search-results-client"
 
 export default function SearchPage() {
   return (
@@ -33,9 +36,19 @@ export default function SearchPage() {
             Find programmes that match what you typed.
           </h1>
           <p className="mt-3 max-w-2xl text-base leading-7 text-brand-ink/65">
-            This page will show real programme matches, filters, and concise entry requirements.
+            Start with discovery. Eligibility labels will come later after the student adds grades.
           </p>
         </section>
+
+        <Suspense
+          fallback={
+            <div className="rounded-[1.5rem] border border-brand-ink/10 bg-white p-8 text-brand-ink/60">
+              Loading search...
+            </div>
+          }
+        >
+          <SearchResultsClient />
+        </Suspense>
       </div>
     </main>
   )

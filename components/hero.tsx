@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
@@ -45,7 +46,7 @@ export function Hero() {
 function SiteHeader() {
   return (
     <header className="flex h-20 items-center justify-between gap-6 lg:h-24">
-      <a href="/" aria-label="Kozi Ipi home" className="inline-flex">
+      <Link href="/" aria-label="Kozi Ipi home" className="inline-flex">
         <Image
           src="/kozi-ipi-logo.png"
           alt="Kozi Ipi"
@@ -54,7 +55,7 @@ function SiteHeader() {
           priority
           className="size-12 lg:size-14"
         />
-      </a>
+      </Link>
 
       <nav className="hidden items-center gap-8 lg:flex">
         {NAV.map((item) => (
@@ -397,4 +398,3 @@ function CodeIcon({ className = "" }: { className?: string }) {
     </svg>
   )
 }
-

@@ -63,11 +63,18 @@ const courseFamilyIntents = [
   },
 ]
 
+const vagueIntentPattern = /\b(i want|want to|study|become|nataka|kuwa|kazi ya|courses? za)\b/i
+
 function interpretProgrammeQuery(query: string, filters?: ProgrammeFilters, formFourOnly?: boolean) {
-  const normalizedQuery = query.trim().toLowerCase()
-  const inferredCourseFamily = courseFamilyIntents.find((intent) =>
-    intent.terms.some((term) => normalizedQuery.includes(term)),
-  )?.courseFamily
+  const trimmedQuery = query.trim()
+  const normalizedQuery = trimmedQuery.toLowerCase()
+  const matchedIntent = courseFamilyIntents
+    .map((intent) => ({
+      courseFamily: intent.courseFamily,
+      term: intent.terms.find((term) => normalizedQuery.includes(term)),
+    }))
+    .find((intent) => intent.term)
+  const inferredCourseFamily = matchedIntent?.courseFamily
 
   const appliedFilters: ProgrammeFilters = {
     ...filters,
@@ -77,9 +84,10 @@ function interpretProgrammeQuery(query: string, filters?: ProgrammeFilters, form
       : filters?.suitableForFormFourLeaver,
   }
 
-  const rewrittenQuery = appliedFilters.courseFamily && inferredCourseFamily
-    ? inferredCourseFamily
-    : query.trim()
+  const shouldSimplifyQuery =
+    matchedIntent?.term &&
+    (normalizedQuery === matchedIntent.term || vagueIntentPattern.test(trimmedQuery))
+  const rewrittenQuery = shouldSimplifyQuery ? (matchedIntent.term ?? trimmedQuery) : trimmedQuery
 
   return {
     query: rewrittenQuery,

@@ -15,7 +15,3 @@ Contributions that improve accuracy, add official source links, correct outdated
 - Keep uncertain values marked as `unknown` or `needsReview`.
 - Include a source URL for every correction when possible.
 - Do not add private student data or scraped exam-result data.
-
-## Brand Assets
-
-Kozi Ipi brand assets, campaign images, logos, and visual identity files are not licensed for reuse without permission, even when stored in this repository.

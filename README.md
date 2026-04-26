@@ -80,7 +80,7 @@ Semantic search suggests.
 
 ## License
 
-Code is licensed under the MIT License. Data is provided with source notes and should be verified against official sources before use. Kozi Ipi brand assets are not licensed for reuse without permission.
+Code is licensed under the MIT License. Data is provided with source notes and should be verified against official sources before use.
 
 See:
 

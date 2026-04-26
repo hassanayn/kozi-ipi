@@ -7,12 +7,56 @@ import { type FormEvent, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
-const NAV = [
+const NAV: Array<{ label: string; href?: string }> = [
   { label: "Kozi", href: "/search" },
   { label: "Vyuo", href: "/vyuo" },
-  { label: "Career Paths", href: "/search" },
-  { label: "Compare", href: "/search" },
-  { label: "Quiz", href: "/search" },
+  { label: "Career Paths" },
+  { label: "Compare" },
+  { label: "Quiz" },
+]
+
+const FEATURED_INSTITUTIONS: Array<{
+  name: string
+  short: string
+  region: string
+  image: string
+  query: string
+}> = [
+  {
+    name: "University of Dar es Salaam",
+    short: "UDSM",
+    region: "Dar es Salaam",
+    image: "/institution-campus/udsm.jpg",
+    query: "University of Dar es Salaam",
+  },
+  {
+    name: "University of Dodoma",
+    short: "UDOM",
+    region: "Dodoma",
+    image: "/institution-campus/udom.jpg",
+    query: "University of Dodoma",
+  },
+  {
+    name: "Ardhi University",
+    short: "ARU",
+    region: "Dar es Salaam",
+    image: "/institution-campus/ardhi.jpg",
+    query: "Ardhi University",
+  },
+  {
+    name: "Mbeya University of Science and Technology",
+    short: "MUST",
+    region: "Mbeya",
+    image: "/institution-campus/must.jpg",
+    query: "Mbeya University of Science and Technology",
+  },
+  {
+    name: "St Joseph University in Tanzania",
+    short: "SJUIT",
+    region: "Dar es Salaam",
+    image: "/institution-campus/st-joseph.jpg",
+    query: "St Joseph University",
+  },
 ]
 
 const TRENDING = [
@@ -38,6 +82,8 @@ export function Hero() {
         </div>
 
         <CategoryStrip className="lg:mt-6" />
+
+        <FeaturedInstitutions />
       </div>
     </section>
   )
@@ -60,16 +106,28 @@ function SiteHeader() {
       </Link>
 
       <nav className="hidden items-center gap-8 lg:flex">
-        {NAV.map((item) => (
-          <Link
-            key={item.label}
-            href={item.href}
-            className="group relative text-[14px] font-medium text-brand-ink/85 transition-colors hover:text-brand-blue"
-          >
-            {item.label}
-            <span className="absolute -bottom-1.5 left-0 h-[2px] w-0 bg-brand-blue transition-[width] duration-300 group-hover:w-full" />
-          </Link>
-        ))}
+        {NAV.map((item) =>
+          item.href ? (
+            <Link
+              key={item.label}
+              href={item.href}
+              className="group relative text-[14px] font-medium text-brand-ink/85 transition-colors hover:text-brand-blue"
+            >
+              {item.label}
+              <span className="absolute -bottom-1.5 left-0 h-[2px] w-0 bg-brand-blue transition-[width] duration-300 group-hover:w-full" />
+            </Link>
+          ) : (
+            <span
+              key={item.label}
+              className="inline-flex items-center gap-2 text-[14px] font-medium text-brand-ink/45"
+            >
+              {item.label}
+              <span className="rounded-full bg-brand-ink/[0.06] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-brand-ink/55">
+                Inakuja
+              </span>
+            </span>
+          ),
+        )}
       </nav>
 
       <div className="flex items-center gap-2">
@@ -323,7 +381,112 @@ function CategoryStrip({ className = "" }: { className?: string }) {
   )
 }
 
+/* ───────────────────────── Featured institutions ───────────────────────── */
+
+function FeaturedInstitutions() {
+  return (
+    <section aria-labelledby="featured-institutions-heading">
+      <div className="mb-5 flex items-end justify-between gap-4">
+        <h2
+          id="featured-institutions-heading"
+          className="text-[18px] font-semibold tracking-tight text-brand-ink lg:text-[20px]"
+        >
+          Baadhi ya vyuo
+        </h2>
+        <Link
+          href="/vyuo"
+          className="hidden items-center gap-1 text-[13px] font-medium text-brand-blue hover:underline sm:inline-flex"
+        >
+          Tazama vyote
+          <ArrowRightIcon className="size-3.5" />
+        </Link>
+      </div>
+
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
+        {FEATURED_INSTITUTIONS.map((institution) => (
+          <Link
+            key={institution.short}
+            href={`/search?q=${encodeURIComponent(institution.query)}`}
+            className="group flex flex-col overflow-hidden rounded-2xl border border-brand-ink/10 bg-white transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-blue/40 hover:shadow-[0_22px_42px_-26px_rgba(29,78,216,0.45)]"
+          >
+            <CampusImage
+              src={institution.image}
+              alt={`${institution.name} campus`}
+              short={institution.short}
+            />
+            <div className="flex flex-1 flex-col gap-1 p-4">
+              <div className="text-[11px] font-semibold uppercase tracking-wide text-brand-blue">
+                {institution.short}
+              </div>
+              <h3 className="line-clamp-2 text-[13.5px] font-semibold leading-snug text-brand-ink">
+                {institution.name}
+              </h3>
+              <p className="mt-auto inline-flex items-center gap-1 pt-2 text-[12px] text-brand-ink/55">
+                <PinIcon className="size-3" />
+                {institution.region}
+              </p>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function CampusImage({
+  src,
+  alt,
+  short,
+}: {
+  src: string
+  alt: string
+  short: string
+}) {
+  const [failed, setFailed] = useState(false)
+
+  if (failed) {
+    return (
+      <div className="grid aspect-[16/10] w-full place-items-center bg-gradient-to-br from-brand-blue/10 to-brand-yellow/20">
+        <span className="text-[18px] font-bold tracking-tight text-brand-ink/40">
+          {short}
+        </span>
+      </div>
+    )
+  }
+
+  return (
+    <div className="relative aspect-[16/10] w-full overflow-hidden bg-brand-ink/[0.04]">
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes="(min-width: 1024px) 18vw, (min-width: 640px) 30vw, 45vw"
+        className="object-cover transition-transform duration-500 group-hover:scale-105"
+        onError={() => setFailed(true)}
+      />
+    </div>
+  )
+}
+
 /* ─────────────────────────────── Icons ─────────────────────────────── */
+
+function PinIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0Z" />
+      <circle cx={12} cy={10} r={3} />
+    </svg>
+  )
+}
 
 function SearchIcon({ className = "" }: { className?: string }) {
   return (

@@ -14,19 +14,14 @@ Kozi Ipi is a Tanzania post-Form Four education discovery platform. It helps stu
 
 ## Root
 
-The project root is this directory:
-
-```text
-/Users/elishabulalu/Documents/kozi-ipi
-```
-
-Do not create another nested `kozi-ipi` app folder.
+Work from the repository root. Do not create another nested `kozi-ipi` app folder.
 
 ## Data
 
 Raw datasets:
 
 ```text
+data/raw/tanzania-education-pathways-dataset
 data/raw/tanzania-post-form-four-dataset
 data/raw/tanzania-education-dataset
 ```
@@ -34,10 +29,10 @@ data/raw/tanzania-education-dataset
 Canonical source:
 
 ```text
-data/raw/tanzania-post-form-four-dataset
+data/raw/tanzania-education-pathways-dataset
 ```
 
-The NACTVET-focused dataset is only an enrichment source. Do not manually edit raw CSV files. Build processed data with:
+The post-Form Four dataset is a fallback source for preserving current-only records. The NACTVET-focused dataset is only an enrichment source. Do not manually edit raw CSV files. Build processed data with:
 
 ```sh
 bun run data:build
@@ -48,6 +43,7 @@ Processed import files:
 ```text
 data/processed/institutions.jsonl
 data/processed/programmes.jsonl
+data/processed/entry-requirements.jsonl
 ```
 
 Import processed data into Convex with:

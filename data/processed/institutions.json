@@ -4535,6 +4535,11 @@
     "districtOrCouncil": "Chato District Council",
     "physicalLocation": "Chato District Council - Geita",
     "mainlandOrZanzibar": "Mainland",
+    "website": "https://www.ifm.ac.tz/",
+    "logoUrl": "https://ifm.ac.tz/storage/logo.png",
+    "logoSourceUrl": "https://www.ifm.ac.tz/",
+    "logoStatus": "verified",
+    "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "CAS ; TCU",
     "hasFormFourDirectProgramme": "unknown",
     "officialSourceUrl": "https://www.nactvet.go.tz/storage/public/files/GUIDEBOOK_FOR_ALL_NTA_2025_2026.pdf ; https://www.tcu.go.tz/sites/default/files/admission_guidebooks/Bachelors_Degree_Admission_Guidebook_for_the_2025_2026_Academic_Year_For_Holders_of_Secondary_School_Qualifications.pdf",
@@ -4547,7 +4552,7 @@
     "notes": "Listed in NACTVET technical institutions guidebook 2025/2026. ; Listed by TCU as non-university approved to admit students in 2025/2026. || Alternate official spellings/names seen: Institute of Finance Management (IFM) || Ownership labels differed across sources.",
     "needsReview": false,
     "reviewReasons": [],
-    "searchText": "INSTITUTE OF FINANCE MANAGEMENT institute of finance management IFM NACTVET ; TCU business college unknown Dar es Salaam Chato District Council Mainland"
+    "searchText": "INSTITUTE OF FINANCE MANAGEMENT institute of finance management IFM NACTVET ; TCU business college unknown Dar es Salaam Chato District Council Mainland IFM"
   },
   {
     "institutionName": "INSTITUTE OF FINANCE MANAGEMENT - DAR ES SALAAM",
@@ -4562,6 +4567,11 @@
     "districtOrCouncil": "Ilala Municipal Council",
     "physicalLocation": "Ilala Municipal Council - Dar es Salaam",
     "mainlandOrZanzibar": "Mainland",
+    "website": "https://www.ifm.ac.tz/",
+    "logoUrl": "https://ifm.ac.tz/storage/logo.png",
+    "logoSourceUrl": "https://www.ifm.ac.tz/",
+    "logoStatus": "verified",
+    "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "CAS",
     "hasFormFourDirectProgramme": "yes",
     "officialSourceUrl": "https://www.nactvet.go.tz/storage/public/files/GUIDEBOOK_FOR_ALL_NTA_2025_2026.pdf",
@@ -4575,7 +4585,7 @@
     "notes": "Listed in NACTVET technical institutions guidebook 2025/2026.",
     "needsReview": false,
     "reviewReasons": [],
-    "searchText": "INSTITUTE OF FINANCE MANAGEMENT - DAR ES SALAAM institute of finance management dar es salaam REG/BMG/001 NACTVET business college public Dar es Salaam Ilala Municipal Council Mainland"
+    "searchText": "INSTITUTE OF FINANCE MANAGEMENT - DAR ES SALAAM institute of finance management dar es salaam REG/BMG/001 NACTVET business college public Dar es Salaam Ilala Municipal Council Mainland IFM"
   },
   {
     "institutionName": "INSTITUTE OF HEAVY EQUIPMENT AND TECHNOLOGY",
@@ -6822,6 +6832,11 @@
     "districtOrCouncil": "Dodoma Municipal Council",
     "physicalLocation": "Dodoma Municipal Council - Dodoma",
     "mainlandOrZanzibar": "Mainland",
+    "website": "https://www.ifm.ac.tz/",
+    "logoUrl": "https://ifm.ac.tz/storage/logo.png",
+    "logoSourceUrl": "https://www.ifm.ac.tz/",
+    "logoStatus": "verified",
+    "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "CAS",
     "hasFormFourDirectProgramme": "yes",
     "officialSourceUrl": "https://www.nactvet.go.tz/storage/public/files/GUIDEBOOK_FOR_ALL_NTA_2025_2026.pdf",
@@ -6835,7 +6850,7 @@
     "notes": "Listed in NACTVET technical institutions guidebook 2025/2026.",
     "needsReview": false,
     "reviewReasons": [],
-    "searchText": "INSTITUTE OF FINANCE MANAGEMENT - DODOMA CAMPUS institute of finance management dodoma campus REG/BTP/118 NACTVET business college public Dodoma Dodoma Municipal Council Mainland"
+    "searchText": "INSTITUTE OF FINANCE MANAGEMENT - DODOMA CAMPUS institute of finance management dodoma campus REG/BTP/118 NACTVET business college public Dodoma Dodoma Municipal Council Mainland IFM"
   },
   {
     "institutionName": "INSTITUTE OF RURAL DEVELOPMENT PLANNING - DODOMA",
@@ -6874,6 +6889,11 @@
     "region": "Dodoma",
     "physicalLocation": "Dodoma",
     "mainlandOrZanzibar": "Mainland",
+    "website": "https://www.ifm.ac.tz/",
+    "logoUrl": "https://ifm.ac.tz/storage/logo.png",
+    "logoSourceUrl": "https://www.ifm.ac.tz/",
+    "logoStatus": "verified",
+    "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
     "hasFormFourDirectProgramme": "unknown",
     "officialSourceUrl": "https://www.tcu.go.tz/sites/default/files/admission_guidebooks/Bachelors_Degree_Admission_Guidebook_for_the_2025_2026_Academic_Year_For_Holders_of_Secondary_School_Qualifications.pdf",
@@ -6888,7 +6908,7 @@
     "reviewReasons": [
       "missing_registration_number"
     ],
-    "searchText": "Institute of Finance Management (IFM)- Dodoma institute of finance management dodoma TCU business college public Dodoma Mainland"
+    "searchText": "Institute of Finance Management (IFM)- Dodoma institute of finance management dodoma TCU business college public Dodoma Mainland IFM"
   },
   {
     "institutionName": "Institute of Rural Development Planning (IRDP)",
@@ -12625,6 +12645,11 @@
     "districtOrCouncil": "Ilemela Municipal Council",
     "physicalLocation": "Ilemela Municipal Council - Mwanza",
     "mainlandOrZanzibar": "Mainland",
+    "website": "https://www.ifm.ac.tz/",
+    "logoUrl": "https://ifm.ac.tz/storage/logo.png",
+    "logoSourceUrl": "https://www.ifm.ac.tz/",
+    "logoStatus": "verified",
+    "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "CAS",
     "hasFormFourDirectProgramme": "yes",
     "officialSourceUrl": "https://www.nactvet.go.tz/storage/public/files/GUIDEBOOK_FOR_ALL_NTA_2025_2026.pdf",
@@ -12638,7 +12663,7 @@
     "notes": "Listed in NACTVET technical institutions guidebook 2025/2026.",
     "needsReview": false,
     "reviewReasons": [],
-    "searchText": "INSTITUTE OF FINANCE MANAGEMENT - MWANZA CAMPUS institute of finance management mwanza campus REG/BTP/041 NACTVET business college public Mwanza Ilemela Municipal Council Mainland"
+    "searchText": "INSTITUTE OF FINANCE MANAGEMENT - MWANZA CAMPUS institute of finance management mwanza campus REG/BTP/041 NACTVET business college public Mwanza Ilemela Municipal Council Mainland IFM"
   },
   {
     "institutionName": "INSTITUTE OF RURAL DEVELOPMENT PLANNING - MWANZA",
@@ -12677,6 +12702,11 @@
     "region": "Mwanza",
     "physicalLocation": "Mwanza",
     "mainlandOrZanzibar": "Mainland",
+    "website": "https://www.ifm.ac.tz/",
+    "logoUrl": "https://ifm.ac.tz/storage/logo.png",
+    "logoSourceUrl": "https://www.ifm.ac.tz/",
+    "logoStatus": "verified",
+    "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
     "hasFormFourDirectProgramme": "unknown",
     "officialSourceUrl": "https://www.tcu.go.tz/sites/default/files/admission_guidebooks/Bachelors_Degree_Admission_Guidebook_for_the_2025_2026_Academic_Year_For_Holders_of_Secondary_School_Qualifications.pdf",
@@ -12691,7 +12721,7 @@
     "reviewReasons": [
       "missing_registration_number"
     ],
-    "searchText": "Institute of Finance Management (IFM)- Mwanza institute of finance management mwanza TCU business college public Mwanza Mainland"
+    "searchText": "Institute of Finance Management (IFM)- Mwanza institute of finance management mwanza TCU business college public Mwanza Mainland IFM"
   },
   {
     "institutionName": "JEMA INSTITUTE OF TECHNOLOGY",
@@ -14734,6 +14764,11 @@
     "districtOrCouncil": "Bariadi District Council",
     "physicalLocation": "Bariadi District Council - Simiyu",
     "mainlandOrZanzibar": "Mainland",
+    "website": "https://www.ifm.ac.tz/",
+    "logoUrl": "https://ifm.ac.tz/storage/logo.png",
+    "logoSourceUrl": "https://www.ifm.ac.tz/",
+    "logoStatus": "verified",
+    "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "CAS",
     "hasFormFourDirectProgramme": "yes",
     "officialSourceUrl": "https://www.nactvet.go.tz/storage/public/files/GUIDEBOOK_FOR_ALL_NTA_2025_2026.pdf",
@@ -14747,7 +14782,7 @@
     "notes": "Listed in NACTVET technical institutions guidebook 2025/2026.",
     "needsReview": false,
     "reviewReasons": [],
-    "searchText": "INSTITUTE OF FINANCE MANAGEMENT - SIMIYU CAMPUS institute of finance management simiyu campus REG/BTP/119 NACTVET business college public Simiyu Bariadi District Council Mainland"
+    "searchText": "INSTITUTE OF FINANCE MANAGEMENT - SIMIYU CAMPUS institute of finance management simiyu campus REG/BTP/119 NACTVET business college public Simiyu Bariadi District Council Mainland IFM"
   },
   {
     "institutionName": "Institute of Finance Management (IFM)-Simiyu",
@@ -14758,6 +14793,11 @@
     "region": "Simiyu",
     "physicalLocation": "Simiyu",
     "mainlandOrZanzibar": "Mainland",
+    "website": "https://www.ifm.ac.tz/",
+    "logoUrl": "https://ifm.ac.tz/storage/logo.png",
+    "logoSourceUrl": "https://www.ifm.ac.tz/",
+    "logoStatus": "verified",
+    "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
     "hasFormFourDirectProgramme": "unknown",
     "officialSourceUrl": "https://www.tcu.go.tz/sites/default/files/admission_guidebooks/Bachelors_Degree_Admission_Guidebook_for_the_2025_2026_Academic_Year_For_Holders_of_Secondary_School_Qualifications.pdf",
@@ -14772,7 +14812,7 @@
     "reviewReasons": [
       "missing_registration_number"
     ],
-    "searchText": "Institute of Finance Management (IFM)-Simiyu institute of finance management simiyu TCU business college public Simiyu Mainland"
+    "searchText": "Institute of Finance Management (IFM)-Simiyu institute of finance management simiyu TCU business college public Simiyu Mainland IFM"
   },
   {
     "institutionName": "Kanadi VTC",
@@ -16784,6 +16824,11 @@
     "districtOrCouncil": "Magharibi District",
     "physicalLocation": "Magharibi District - Zanzibar Urban/West",
     "mainlandOrZanzibar": "Zanzibar",
+    "website": "https://www.ifm.ac.tz/",
+    "logoUrl": "https://ifm.ac.tz/storage/logo.png",
+    "logoSourceUrl": "https://www.ifm.ac.tz/",
+    "logoStatus": "verified",
+    "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "CAS",
     "hasFormFourDirectProgramme": "yes",
     "officialSourceUrl": "https://www.nactvet.go.tz/storage/public/files/GUIDEBOOK_FOR_ALL_NTA_2025_2026.pdf",
@@ -16797,7 +16842,7 @@
     "notes": "Listed in NACTVET technical institutions guidebook 2025/2026.",
     "needsReview": false,
     "reviewReasons": [],
-    "searchText": "INSTITUTE OF FINANCE MANAGEMENT - ZANZIBAR institute of finance management zanzibar REG/BTP/173 NACTVET business college public Zanzibar Zanzibar"
+    "searchText": "INSTITUTE OF FINANCE MANAGEMENT - ZANZIBAR institute of finance management zanzibar REG/BTP/173 NACTVET business college public Zanzibar Zanzibar IFM"
   },
   {
     "institutionName": "Institute of Public Administration (IPA)",

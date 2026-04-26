@@ -42,6 +42,17 @@ function institutionNameCandidates(value: string | undefined) {
   ].filter(Boolean)
 }
 
+function institutionAliases(institutionName: string | undefined, registrationNumber: string | undefined) {
+  const aliases = new Set<string>()
+  const combined = `${institutionName ?? ""} ${registrationNumber ?? ""}`.toUpperCase()
+
+  if (combined.includes("INSTITUTE OF FINANCE MANAGEMENT") || combined.includes("IFM")) {
+    aliases.add("IFM")
+  }
+
+  return [...aliases]
+}
+
 function programmeFingerprint(value: string | undefined) {
   return normalizeName(value)
     .replace(
@@ -212,6 +223,7 @@ const processedInstitutions = institutionsBase.map((row) => {
   const region = firstValue(row.region, enrichment?.region)
   const institutionType = firstValue(row.institution_type, enrichment?.institution_category) ?? "unknown"
   const ownershipType = firstValue(row.ownership_type, enrichment?.ownership_type) ?? "unknown"
+  const aliases = institutionAliases(institutionName, row.registration_number)
 
   return {
     institutionName,
@@ -254,6 +266,7 @@ const processedInstitutions = institutionsBase.map((row) => {
       region,
       row.district_or_council,
       row.mainland_or_zanzibar,
+      ...aliases,
     ]
       .filter(Boolean)
       .join(" "),
@@ -292,6 +305,10 @@ const processedProgrammes = programmesBase.map((row) => {
   const fieldCategory = row.field_category.trim() || "other"
   const awardLevel = row.award_level.trim() || "unknown"
   const suitableForFormFourLeaver = normalizeSuitability(row.suitable_for_form_four_leaver)
+  const institutionSearchAliases = institutionAliases(
+    row.institution_name,
+    row.institution_registration_number,
+  )
 
   return {
     programmeName,
@@ -352,6 +369,7 @@ const processedProgrammes = programmesBase.map((row) => {
       row.required_subjects,
       ...keywordData.careerKeywords,
       ...keywordData.swahiliKeywords,
+      ...institutionSearchAliases,
     ]
       .filter(Boolean)
       .join(" "),

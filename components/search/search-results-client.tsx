@@ -32,8 +32,7 @@ export function SearchResultsClient() {
   const family = searchParams.get("family") ?? undefined
   const awardLevel = searchParams.get("level") ?? "all"
   const region = searchParams.get("region") ?? ""
-  const formFourOnly = searchParams.get("formFour") === "yes"
-  const resultSetKey = `${queryFromUrl}|${family ?? ""}|${awardLevel}|${region}|${formFourOnly}`
+  const resultSetKey = `${queryFromUrl}|${family ?? ""}|${awardLevel}|${region}`
   const [resultLimitState, setResultLimitState] = useState({
     key: resultSetKey,
     limit: INITIAL_RESULT_LIMIT,
@@ -50,13 +49,12 @@ export function SearchResultsClient() {
   }, [awardLevel, family, region])
 
   const activeQuery = queryFromUrl
-  const hasFilters = Boolean(family) || awardLevel !== "all" || Boolean(region) || formFourOnly
+  const hasFilters = Boolean(family) || awardLevel !== "all" || Boolean(region)
 
   const searchArgs = activeQuery
     ? {
         query: activeQuery,
         filters: hasFilters ? filters : undefined,
-        formFourOnly,
         limit: resultLimit,
       }
     : "skip"
@@ -65,7 +63,6 @@ export function SearchResultsClient() {
     ? {
         query: activeQuery,
         filters: hasFilters ? filters : undefined,
-        formFourOnly,
         maxCount: 1000,
       }
     : "skip"
@@ -100,11 +97,6 @@ export function SearchResultsClient() {
       label: region,
       clear: () => setFilter("region", null),
     },
-    formFourOnly && {
-      key: "formFour",
-      label: "Form Four direct",
-      clear: () => setFilter("formFour", "false"),
-    },
   ].filter(isActiveFilter)
 
   function routeWith(nextParams: URLSearchParams) {
@@ -120,7 +112,6 @@ export function SearchResultsClient() {
     routeWith(
       updateParams(searchParams, {
         family: null,
-        formFour: null,
         level: null,
         region: null,
       }),
@@ -162,7 +153,6 @@ export function SearchResultsClient() {
           activeFilters={activeFilters}
           awardLevel={awardLevel}
           family={family}
-          formFourOnly={formFourOnly}
           region={region}
           clearAllFilters={clearAllFilters}
           setFilter={setFilter}

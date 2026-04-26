@@ -35,7 +35,7 @@ export const trendingQueries = [
   "Hotel management",
 ] as const
 
-export type SearchFilterKey = "family" | "formFour" | "level" | "region"
+export type SearchFilterKey = "family" | "level" | "region"
 
 export type ActiveFilter = {
   key: string
@@ -84,18 +84,6 @@ export function familyMeta(key?: string) {
     swahili: "",
     mark: "•",
   }
-}
-
-export function formFourLabel(value?: string) {
-  if (value === "yes") {
-    return "Form Four direct"
-  }
-
-  if (value === "no") {
-    return "A-level required"
-  }
-
-  return "Verify entry route"
 }
 
 export function isActiveFilter(

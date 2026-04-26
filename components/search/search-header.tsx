@@ -56,12 +56,13 @@ export function SearchHeader({
             </Link>
           </nav>
 
-          <Button
-            className="h-10 rounded-full bg-brand-ink px-5 text-[13px] font-semibold text-white hover:bg-brand-ink/90"
-            type="button"
+          <Link
+            href="/search"
+            aria-label="Search programmes"
+            className="grid size-10 place-items-center rounded-full text-brand-ink transition-colors hover:bg-brand-ink/5 md:hidden"
           >
-            Ingia / Jiunge
-          </Button>
+            <SearchIcon className="size-[18px]" />
+          </Link>
         </div>
       </header>
 

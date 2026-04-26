@@ -5,11 +5,10 @@ import type { ReactNode } from "react"
 import { useState } from "react"
 import type { useQuery } from "convex/react"
 
-import { familyMeta, formFourLabel } from "@/components/search/search-config"
+import { familyMeta } from "@/components/search/search-config"
 import {
   ArrowRightIcon,
   BookmarkIcon,
-  CheckIcon,
   ClockIcon,
   PinIcon,
 } from "@/components/search/search-icons"
@@ -74,12 +73,6 @@ export function ProgrammeCard({ programme }: { programme: ProgrammeSearchResult 
           </Tag>
         ) : null}
         {programme.feesIfAvailable ? <Tag>{programme.feesIfAvailable}</Tag> : null}
-        <Tag tone={programme.suitableForFormFourLeaver === "yes" ? "green" : "ink"}>
-          {programme.suitableForFormFourLeaver === "yes" ? (
-            <CheckIcon className="size-3.5" />
-          ) : null}
-          {formFourLabel(programme.suitableForFormFourLeaver)}
-        </Tag>
       </div>
 
       {programme.minimumEntryRequirements ? (

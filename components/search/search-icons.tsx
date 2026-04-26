@@ -59,14 +59,6 @@ export function ClockIcon({ className = "" }: { className?: string }) {
   )
 }
 
-export function CheckIcon({ className = "" }: { className?: string }) {
-  return (
-    <Icon className={className}>
-      <path d="M5 12l5 5L20 7" />
-    </Icon>
-  )
-}
-
 export function BookmarkIcon({ className = "" }: { className?: string }) {
   return (
     <Icon className={className}>

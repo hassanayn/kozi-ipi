@@ -1,0 +1,127 @@
+"use client"
+
+import Image from "next/image"
+import Link from "next/link"
+import type { Dispatch, FormEvent, SetStateAction } from "react"
+
+import { trendingQueries } from "@/components/search/search-config"
+import { SearchIcon, XIcon } from "@/components/search/search-icons"
+
+type SearchHeaderProps = {
+  query: string
+  setQuery: Dispatch<SetStateAction<string>>
+  onSubmit: (event: FormEvent<HTMLFormElement>) => void
+  onTrending: (query: string) => void
+}
+
+export function SearchHeader({
+  query,
+  setQuery,
+  onSubmit,
+  onTrending,
+}: SearchHeaderProps) {
+  return (
+    <>
+      <header className="border-b border-brand-ink/8">
+        <div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between gap-6 px-6 sm:px-8">
+          <Link href="/" className="inline-flex items-center gap-3" aria-label="Kozi Ipi home">
+            <Image
+              src="/kozi-ipi-logo.png"
+              alt="Kozi Ipi"
+              width={36}
+              height={36}
+              priority
+              className="size-9"
+            />
+            <span className="text-[15px] font-semibold tracking-tight">Kozi Ipi</span>
+          </Link>
+
+          <nav className="hidden items-center gap-7 text-[13.5px] font-medium text-brand-ink/70 md:flex">
+            <Link href="/search" className="text-brand-ink">
+              Kozi
+            </Link>
+            <Link href="/search" className="transition hover:text-brand-blue">
+              Vyuo
+            </Link>
+            <Link href="/search" className="transition hover:text-brand-blue">
+              Career Paths
+            </Link>
+            <Link href="/search" className="transition hover:text-brand-blue">
+              Compare
+            </Link>
+            <Link href="/search" className="transition hover:text-brand-blue">
+              Quiz
+            </Link>
+          </nav>
+
+          <button className="h-10 rounded-full bg-brand-ink px-5 text-[13px] font-semibold text-white">
+            Ingia / Jiunge
+          </button>
+        </div>
+      </header>
+
+      <section className="border-b border-brand-ink/8 bg-[#fbfbfb]">
+        <div className="mx-auto max-w-[1280px] px-6 py-7 sm:px-8">
+          <div className="flex items-center gap-3 text-[12px] uppercase tracking-[0.18em] text-brand-blue">
+            <span className="font-semibold">Search</span>
+            <span className="h-px flex-1 bg-brand-blue/20" />
+          </div>
+
+          <h1 className="mt-3 max-w-3xl text-[34px] font-bold leading-[1.1] tracking-tight">
+            Tafuta kozi na njia inayokufaa.
+          </h1>
+          <p className="mt-2 max-w-2xl text-[15px] leading-7 text-brand-ink/65">
+            fahamu kozi, vyuo, na njia za kujiunga kulingana na elimu uliyonayo.
+          </p>
+
+          <form
+            className="mt-6 flex w-full max-w-3xl flex-col gap-2 rounded-3xl border border-brand-ink/10 bg-white p-2 shadow-[0_18px_38px_-22px_rgba(15,15,18,0.25)] sm:flex-row sm:items-center sm:rounded-full"
+            onSubmit={onSubmit}
+          >
+            <label className="flex flex-1 items-center gap-3 px-4">
+              <span className="sr-only">Tafuta kozi, chuo, career path</span>
+              <SearchIcon className="size-[18px] shrink-0 text-brand-ink/55" />
+              <input
+                aria-label="Tafuta kozi, chuo, career path"
+                className="h-12 min-w-0 flex-1 bg-transparent text-[15px] outline-none placeholder:text-brand-ink/40"
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Tafuta kozi, chuo, career path..."
+                value={query}
+              />
+              {query ? (
+                <button
+                  className="grid size-7 place-items-center rounded-full text-brand-ink/40 transition hover:bg-brand-ink/5 hover:text-brand-ink"
+                  onClick={() => setQuery("")}
+                  type="button"
+                  aria-label="Clear search"
+                >
+                  <XIcon className="size-4" />
+                </button>
+              ) : null}
+            </label>
+            <button
+              className="h-12 shrink-0 rounded-full bg-brand-blue px-7 text-[14px] font-semibold text-white transition hover:bg-brand-blue-deep"
+              type="submit"
+            >
+              Tafuta
+            </button>
+          </form>
+
+          <div className="mt-4 flex flex-wrap items-center gap-2 text-[12.5px]">
+            <span className="font-semibold text-brand-ink/60">Trending:</span>
+            {trendingQueries.map((trending) => (
+              <button
+                className="rounded-full border border-brand-ink/15 bg-white px-3 py-1.5 text-brand-ink/70 transition hover:border-brand-blue hover:bg-brand-blue hover:text-white"
+                key={trending}
+                onClick={() => onTrending(trending)}
+                type="button"
+              >
+                {trending}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  )
+}

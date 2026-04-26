@@ -2,6 +2,8 @@
 
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { type FormEvent, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
@@ -120,13 +122,13 @@ function HeroCopy() {
       <div className="mt-7 flex flex-wrap items-center gap-2.5 text-[13px]">
         <span className="font-semibold text-brand-ink">Trending:</span>
         {TRENDING.map((t) => (
-          <a
+          <Link
             key={t}
-            href="#"
+            href={`/search?q=${encodeURIComponent(t)}`}
             className="rounded-full border border-brand-ink/15 bg-white/70 px-3.5 py-1.5 text-brand-ink/75 transition-colors hover:border-brand-blue hover:bg-brand-blue hover:text-white"
           >
             {t}
-          </a>
+          </Link>
         ))}
       </div>
     </div>
@@ -136,9 +138,23 @@ function HeroCopy() {
 /* ───────────────────────────── Search bar ──────────────────────────── */
 
 function SearchBar({ className = "" }: { className?: string }) {
+  const router = useRouter()
+  const [query, setQuery] = useState("")
+
+  function submitSearch(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    const nextQuery = query.trim()
+    if (!nextQuery) {
+      return
+    }
+
+    router.push(`/search?q=${encodeURIComponent(nextQuery)}`)
+  }
+
   return (
     <form
-      onSubmit={(e) => e.preventDefault()}
+      onSubmit={submitSearch}
       className={`flex w-full max-w-[40rem] flex-col gap-2 rounded-3xl border border-brand-ink/10 bg-white p-2 shadow-[0_18px_38px_-22px_rgba(15,15,18,0.25)] sm:flex-row sm:items-center sm:gap-0 sm:rounded-full ${className}`}
     >
       <label className="flex flex-1 items-center gap-3 px-4">
@@ -147,9 +163,11 @@ function SearchBar({ className = "" }: { className?: string }) {
         <Input
           variant="ghost"
           size="xl"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
           placeholder="Tafuta kozi, chuo, career path..."
           aria-label="Tafuta kozi, chuo, au career path"
-          className="h-12 border-0 bg-transparent px-0 text-[15px] shadow-none placeholder:text-brand-ink/40 focus-visible:ring-0"
+          className="h-12 border-0 bg-transparent px-0 text-[15px] text-brand-ink caret-brand-blue shadow-none placeholder:text-brand-ink/40 focus-visible:ring-0"
         />
       </label>
 
@@ -189,13 +207,50 @@ const CATEGORIES: Array<{
   label: string
   hint: string
   tone: "blue" | "yellow" | "ink"
+  family: string
+  query: string
   Icon: (props: { className?: string }) => React.JSX.Element
 }> = [
-  { label: "Engineering", hint: "Uhandisi", tone: "blue", Icon: GearIcon },
-  { label: "Biashara", hint: "Business", tone: "yellow", Icon: BriefcaseIcon },
-  { label: "Afya", hint: "Health", tone: "ink", Icon: PulseIcon },
-  { label: "Utalii", hint: "Tourism", tone: "blue", Icon: PalmIcon },
-  { label: "Tech", hint: "Teknolojia", tone: "yellow", Icon: CodeIcon },
+  {
+    label: "Engineering",
+    hint: "Uhandisi",
+    tone: "blue",
+    family: "engineering",
+    query: "Engineering",
+    Icon: GearIcon,
+  },
+  {
+    label: "Biashara",
+    hint: "Business",
+    tone: "yellow",
+    family: "business",
+    query: "Business",
+    Icon: BriefcaseIcon,
+  },
+  {
+    label: "Afya",
+    hint: "Health",
+    tone: "ink",
+    family: "health",
+    query: "Health",
+    Icon: PulseIcon,
+  },
+  {
+    label: "Utalii",
+    hint: "Tourism",
+    tone: "blue",
+    family: "tourism_hospitality",
+    query: "Tourism",
+    Icon: PalmIcon,
+  },
+  {
+    label: "Tech",
+    hint: "Teknolojia",
+    tone: "yellow",
+    family: "ICT",
+    query: "ICT",
+    Icon: CodeIcon,
+  },
 ]
 
 const TONE_BADGE: Record<"blue" | "yellow" | "ink", string> = {
@@ -224,10 +279,10 @@ function CategoryStrip({ className = "" }: { className?: string }) {
       </div>
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
-        {CATEGORIES.map(({ label, hint, tone, Icon }) => (
-          <a
+        {CATEGORIES.map(({ label, hint, tone, family, query, Icon }) => (
+          <Link
             key={label}
-            href="#"
+            href={`/search?q=${encodeURIComponent(query)}&family=${encodeURIComponent(family)}`}
             className="group relative flex flex-col gap-4 rounded-2xl border border-brand-ink/10 bg-white p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-blue/40 hover:shadow-[0_22px_42px_-26px_rgba(29,78,216,0.45)]"
           >
             <div
@@ -244,7 +299,7 @@ function CategoryStrip({ className = "" }: { className?: string }) {
               </div>
               <ArrowRightIcon className="size-4 shrink-0 text-brand-ink/35 transition-all group-hover:translate-x-0.5 group-hover:text-brand-blue" />
             </div>
-          </a>
+          </Link>
         ))}
       </div>
     </section>

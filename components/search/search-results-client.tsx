@@ -1,0 +1,252 @@
+"use client"
+
+import { type FormEvent, useMemo, useState } from "react"
+import { useQuery } from "convex/react"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
+
+import { ProgrammeCard } from "@/components/search/programme-card"
+import {
+  awardLevels,
+  familyMeta,
+  getInitialQuery,
+  isActiveFilter,
+  type SearchFilterKey,
+  updateParams,
+} from "@/components/search/search-config"
+import { SearchFilters } from "@/components/search/search-filters"
+import { SearchHeader } from "@/components/search/search-header"
+import { XIcon } from "@/components/search/search-icons"
+import { api } from "@/convex/_generated/api"
+
+export function SearchResultsClient() {
+  const router = useRouter()
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const queryFromUrl = getInitialQuery(searchParams)
+  const [query, setQuery] = useState(queryFromUrl)
+
+  const family = searchParams.get("family") ?? undefined
+  const awardLevel = searchParams.get("level") ?? "all"
+  const region = searchParams.get("region") ?? ""
+  const formFourOnly = searchParams.get("formFour") === "yes"
+
+  const filters = useMemo(() => {
+    return {
+      ...(family ? { courseFamily: family } : {}),
+      ...(awardLevel !== "all" ? { awardLevel } : {}),
+      ...(region ? { region } : {}),
+    }
+  }, [awardLevel, family, region])
+
+  const activeQuery = queryFromUrl
+  const hasFilters = Boolean(family) || awardLevel !== "all" || Boolean(region) || formFourOnly
+
+  const searchArgs = activeQuery
+    ? {
+        query: activeQuery,
+        filters: hasFilters ? filters : undefined,
+        formFourOnly,
+        limit: 20,
+      }
+    : "skip"
+
+  const countArgs = activeQuery
+    ? {
+        query: activeQuery,
+        filters: hasFilters ? filters : undefined,
+        formFourOnly,
+        maxCount: 1000,
+      }
+    : "skip"
+
+  const search = useQuery(api.programmes.smartSearch, searchArgs)
+  const count = useQuery(api.programmes.smartSearchCount, countArgs)
+  const isResultsLoading = activeQuery && search === undefined
+  const isCountLoading = activeQuery && count === undefined
+
+  const inferredFamily = search?.interpreted.inferredCourseFamily
+  const activeFilters = [
+    family && {
+      key: "family",
+      label: familyMeta(family).label,
+      clear: () => setFilter("family", null),
+    },
+    awardLevel !== "all" && {
+      key: "level",
+      label: awardLevels.find((level) => level.value === awardLevel)?.label ?? awardLevel,
+      clear: () => setFilter("level", "all"),
+    },
+    region && {
+      key: "region",
+      label: region,
+      clear: () => setFilter("region", null),
+    },
+    formFourOnly && {
+      key: "formFour",
+      label: "Form Four direct",
+      clear: () => setFilter("formFour", "false"),
+    },
+  ].filter(isActiveFilter)
+
+  function routeWith(nextParams: URLSearchParams) {
+    const queryString = nextParams.toString()
+    router.push(queryString ? `${pathname}?${queryString}` : pathname)
+  }
+
+  function setFilter(key: SearchFilterKey, value: string | null) {
+    routeWith(updateParams(searchParams, { [key]: value }))
+  }
+
+  function clearAllFilters() {
+    routeWith(
+      updateParams(searchParams, {
+        family: null,
+        formFour: null,
+        level: null,
+        region: null,
+      }),
+    )
+  }
+
+  function submitSearch(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    const nextQuery = query.trim()
+    if (!nextQuery) {
+      return
+    }
+
+    routeWith(updateParams(searchParams, { q: nextQuery, family: null }))
+  }
+
+  function runTrending(nextQuery: string) {
+    setQuery(nextQuery)
+    routeWith(updateParams(searchParams, { q: nextQuery, family: null }))
+  }
+
+  return (
+    <main className="min-h-screen bg-white text-brand-ink">
+      <SearchHeader
+        query={query}
+        setQuery={setQuery}
+        onSubmit={submitSearch}
+        onTrending={runTrending}
+      />
+
+      <div className="mx-auto grid max-w-[1280px] gap-8 px-6 py-8 sm:px-8 lg:grid-cols-[19rem_1fr]">
+        <SearchFilters
+          activeFilters={activeFilters}
+          awardLevel={awardLevel}
+          family={family}
+          formFourOnly={formFourOnly}
+          region={region}
+          clearAllFilters={clearAllFilters}
+          setFilter={setFilter}
+        />
+
+        <section className="min-w-0">
+          <SearchResultsHeader
+            activeQuery={activeQuery}
+            count={count}
+            inferredFamily={inferredFamily}
+            isCountLoading={isCountLoading}
+            resultCount={search?.results.length}
+          />
+
+          {activeFilters.length > 0 ? (
+            <div className="mt-4 flex flex-wrap items-center gap-2">
+              {activeFilters.map((filter) => (
+                <button
+                  className="inline-flex items-center gap-1.5 rounded-full bg-brand-blue/10 px-3 py-1.5 text-[12px] font-medium text-brand-blue hover:bg-brand-blue/15"
+                  key={filter.key}
+                  onClick={filter.clear}
+                  type="button"
+                >
+                  {filter.label}
+                  <XIcon className="size-3" />
+                </button>
+              ))}
+            </div>
+          ) : null}
+
+          <div className="mt-5 grid gap-4">
+            {!activeQuery ? (
+              <EmptyState />
+            ) : isResultsLoading ? (
+              <LoadingState />
+            ) : search?.results.length ? (
+              search.results.map((programme) => (
+                <ProgrammeCard key={programme._id} programme={programme} />
+              ))
+            ) : (
+              <EmptyState message="No matching programmes. Try a broader search or remove a filter." />
+            )}
+          </div>
+        </section>
+      </div>
+    </main>
+  )
+}
+
+function SearchResultsHeader({
+  activeQuery,
+  count,
+  inferredFamily,
+  isCountLoading,
+  resultCount,
+}: {
+  activeQuery: string
+  count:
+    | {
+        count: number
+        capped: boolean
+      }
+    | undefined
+  inferredFamily?: string
+  isCountLoading: boolean | ""
+  resultCount?: number
+}) {
+  return (
+    <div className="flex flex-wrap items-end justify-between gap-4 border-b border-brand-ink/8 pb-4">
+      <div>
+        <p className="text-[12.5px] font-medium uppercase tracking-[0.16em] text-brand-blue">
+          {isCountLoading
+            ? "Searching"
+            : `${count?.count ?? resultCount ?? 0}${count?.capped ? "+" : ""} matches`}
+        </p>
+        <h2 className="mt-1 text-[22px] font-bold tracking-tight">
+          {activeQuery ? `Results for "${activeQuery}"` : "All programmes"}
+        </h2>
+      </div>
+      {inferredFamily ? (
+        <span className="rounded-full bg-brand-blue/10 px-3 py-1.5 text-[12px] font-medium text-brand-blue">
+          {familyMeta(inferredFamily).label}
+        </span>
+      ) : null}
+    </div>
+  )
+}
+
+function EmptyState({ message = "Search a course, college, or career path to see results." }) {
+  return (
+    <div className="rounded-2xl border border-dashed border-brand-ink/15 bg-white p-10 text-center">
+      <p className="text-[15px] font-semibold">{message}</p>
+      <p className="mt-1 text-[13px] text-brand-ink/55">
+        Try “clinical medicine”, “civil engineering”, or “computer courses after Form Four”.
+      </p>
+    </div>
+  )
+}
+
+function LoadingState() {
+  return (
+    <div className="grid gap-4">
+      {[0, 1, 2].map((item) => (
+        <div
+          className="h-52 animate-pulse rounded-2xl border border-brand-ink/10 bg-brand-ink/[0.03]"
+          key={item}
+        />
+      ))}
+    </div>
+  )
+}

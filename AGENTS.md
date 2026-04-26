@@ -14,13 +14,7 @@ Kozi Ipi is a Tanzania post-Form Four education discovery platform. It helps stu
 
 ## Root
 
-The project root is this directory:
-
-```text
-/Users/elishabulalu/Documents/kozi-ipi
-```
-
-Do not create another nested `kozi-ipi` app folder.
+Work from the repository root. Do not create another nested `kozi-ipi` app folder.
 
 ## Data
 

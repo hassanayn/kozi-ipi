@@ -42,7 +42,7 @@ export function SearchHeader({
             <Link href="/search" className="text-brand-ink">
               Kozi
             </Link>
-            <Link href="/search" className="transition hover:text-brand-blue">
+            <Link href="/vyuo" className="transition hover:text-brand-blue">
               Vyuo
             </Link>
             <Link href="/search" className="transition hover:text-brand-blue">

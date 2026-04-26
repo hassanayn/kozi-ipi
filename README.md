@@ -68,11 +68,7 @@ Processed import files are generated in:
 data/processed
 ```
 
-Admin moderation is protected with a private Convex `ADMIN_API_KEY`. See:
-
-```text
-docs/admin-api.md
-```
+Admin moderation is protected with a private Convex `ADMIN_API_KEY`. Keep real admin keys and private admin notes in local ignored files only.
 
 ## Search Principle
 

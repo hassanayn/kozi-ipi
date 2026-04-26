@@ -32,6 +32,8 @@ export default defineSchema({
     phoneNumbers: v.optional(v.string()),
     email: v.optional(v.string()),
     applicationMethod: v.optional(v.string()),
+    admissionsUrl: v.optional(v.string()),
+    applicationUrl: v.optional(v.string()),
     hasFormFourDirectProgramme: suitability,
     programmeCount: v.optional(v.number()),
     awardLevels: v.optional(v.array(v.string())),
@@ -68,7 +70,10 @@ export default defineSchema({
   programmes: defineTable({
     programmeName: v.string(),
     normalizedProgrammeName: v.string(),
+    programmeCode: v.optional(v.string()),
     awardLevel: v.string(),
+    qualificationLevel: v.optional(v.string()),
+    pathwayType: v.optional(v.string()),
     fieldCategory: v.string(),
     courseFamily: v.optional(v.string()),
     institutionName: v.string(),
@@ -82,6 +87,10 @@ export default defineSchema({
     minimumEntryRequirements: v.optional(v.string()),
     requiredSubjects: v.optional(v.string()),
     suitableForFormFourLeaver: suitability,
+    acceptsFormSix: v.optional(suitability),
+    acceptsCertificate: v.optional(suitability),
+    acceptsDiploma: v.optional(suitability),
+    acceptsEquivalent: v.optional(suitability),
     duration: v.optional(v.string()),
     feesIfAvailable: v.optional(v.string()),
     feeBand: v.optional(v.string()),
@@ -108,6 +117,9 @@ export default defineSchema({
     .index("by_region", ["region"])
     .index("by_fieldCategory", ["fieldCategory"])
     .index("by_suitableForFormFourLeaver", ["suitableForFormFourLeaver"])
+    .index("by_acceptsFormSix", ["acceptsFormSix"])
+    .index("by_acceptsCertificate", ["acceptsCertificate"])
+    .index("by_acceptsDiploma", ["acceptsDiploma"])
     .searchIndex("search_searchText", {
       searchField: "searchText",
       filterFields: [
@@ -120,6 +132,51 @@ export default defineSchema({
         "ownershipType",
         "suitableForFormFourLeaver",
         "confidenceLevel",
+      ],
+    }),
+
+  entryRequirements: defineTable({
+    programmeName: v.string(),
+    normalizedProgrammeName: v.string(),
+    institutionName: v.string(),
+    normalizedInstitutionName: v.string(),
+    rawRequirementText: v.string(),
+    acceptsFormFourDirect: suitability,
+    acceptsFormSix: suitability,
+    acceptsCertificate: suitability,
+    acceptsDiploma: suitability,
+    acceptsEquivalent: suitability,
+    minimumCseeDivisionIfAvailable: v.optional(v.string()),
+    minimumAcseePrincipalPassesIfAvailable: v.optional(v.string()),
+    minimumPointsIfAvailable: v.optional(v.string()),
+    requiredSubjects: v.optional(v.string()),
+    requiredSubjectGradesIfAvailable: v.optional(v.string()),
+    requiredPriorFieldIfAvailable: v.optional(v.string()),
+    bridgeOrFoundationRequired: suitability,
+    eligibilityConfidence: confidenceLevel,
+    officialSourceUrl: v.string(),
+    notes: v.optional(v.string()),
+    searchText: v.string(),
+  })
+    .index("by_normalizedInstitutionName", ["normalizedInstitutionName"])
+    .index("by_normalizedProgrammeName_and_normalizedInstitutionName", [
+      "normalizedProgrammeName",
+      "normalizedInstitutionName",
+    ])
+    .index("by_acceptsFormFourDirect", ["acceptsFormFourDirect"])
+    .index("by_acceptsFormSix", ["acceptsFormSix"])
+    .index("by_acceptsCertificate", ["acceptsCertificate"])
+    .index("by_acceptsDiploma", ["acceptsDiploma"])
+    .searchIndex("search_searchText", {
+      searchField: "searchText",
+      filterFields: [
+        "normalizedInstitutionName",
+        "acceptsFormFourDirect",
+        "acceptsFormSix",
+        "acceptsCertificate",
+        "acceptsDiploma",
+        "acceptsEquivalent",
+        "eligibilityConfidence",
       ],
     }),
 

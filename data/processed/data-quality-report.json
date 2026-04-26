@@ -1,20 +1,40 @@
 {
-  "generatedAt": "2026-04-26T15:59:11.561Z",
-  "baseDataset": "tanzania-post-form-four-dataset",
-  "enrichmentDataset": "tanzania-education-dataset",
+  "generatedAt": "2026-04-26T17:25:37.595Z",
+  "canonicalDataset": "tanzania-education-pathways-dataset",
+  "fallbackDataset": "tanzania-post-form-four-dataset",
+  "enrichmentDatasets": [
+    "tanzania-education-dataset",
+    "institution-logos.seed.csv"
+  ],
   "institutions": {
-    "rawBaseCount": 631,
-    "enrichmentCount": 503,
-    "processedCount": 631,
-    "enrichedCount": 378,
-    "verifiedLogoCount": 72,
-    "needsReviewCount": 263
+    "rawPathwayCount": 621,
+    "rawLegacyCount": 631,
+    "nactvetEnrichmentCount": 503,
+    "processedCount": 742,
+    "fromPathwaysCount": 589,
+    "fallbackOnlyCount": 153,
+    "verifiedLogoCount": 69,
+    "needsReviewCount": 291
   },
   "programmes": {
-    "rawBaseCount": 2743,
-    "enrichmentCount": 1771,
-    "processedCount": 2743,
-    "enrichedCount": 935,
-    "needsReviewCount": 729
+    "rawPathwayCount": 2916,
+    "rawLegacyCount": 2743,
+    "nactvetEnrichmentCount": 1771,
+    "processedCount": 4433,
+    "fromPathwaysCount": 2852,
+    "fallbackOnlyCount": 1581,
+    "degreeCount": 1402,
+    "formSixRouteCount": 1640,
+    "certificateRouteCount": 1205,
+    "diplomaRouteCount": 772,
+    "needsReviewCount": 1576
+  },
+  "entryRequirements": {
+    "rawPathwayCount": 4503,
+    "processedCount": 4503,
+    "formFourRouteCount": 1515,
+    "formSixRouteCount": 1782,
+    "certificateRouteCount": 1625,
+    "diplomaRouteCount": 891
   }
 }

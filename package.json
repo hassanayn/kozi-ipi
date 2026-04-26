@@ -13,8 +13,8 @@
     "convex:dev": "convex dev",
     "convex:deploy": "convex deploy --yes",
     "data:build": "bun scripts/build-processed-data.ts",
-    "data:import": "convex import --replace --yes --table institutions data/processed/institutions.jsonl && convex import --replace --yes --table programmes data/processed/programmes.jsonl",
-    "data:import:prod": "convex import --prod --replace --yes --table institutions data/processed/institutions.jsonl && convex import --prod --replace --yes --table programmes data/processed/programmes.jsonl"
+    "data:import": "convex import --replace --yes --table institutions data/processed/institutions.jsonl && convex import --replace --yes --table programmes data/processed/programmes.jsonl && convex import --replace --yes --table entryRequirements data/processed/entry-requirements.jsonl",
+    "data:import:prod": "convex import --prod --replace --yes --table institutions data/processed/institutions.jsonl && convex import --prod --replace --yes --table programmes data/processed/programmes.jsonl && convex import --prod --replace --yes --table entryRequirements data/processed/entry-requirements.jsonl"
   },
   "dependencies": {
     "@hugeicons/core-free-icons": "^4.1.1",

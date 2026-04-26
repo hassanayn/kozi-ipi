@@ -3,8 +3,12 @@ import Link from "next/link"
 const FOOTER_LINKS = [
   { label: "Kozi", href: "/search" },
   { label: "Vyuo", href: "/vyuo" },
-  { label: "GitHub", href: "https://github.com/Bulalu/kozi-ipi" },
-  { label: "Changia", href: "https://github.com/Bulalu/kozi-ipi/blob/master/CONTRIBUTING.md" },
+  { label: "GitHub", href: "https://github.com/Bulalu/kozi-ipi", external: true },
+  {
+    label: "Changia",
+    href: "https://github.com/Bulalu/kozi-ipi/blob/master/CONTRIBUTING.md",
+    external: true,
+  },
 ]
 
 export function SiteFooter() {
@@ -25,6 +29,8 @@ export function SiteFooter() {
               <Link
                 key={link.label}
                 href={link.href}
+                target={link.external ? "_blank" : undefined}
+                rel={link.external ? "noreferrer" : undefined}
                 className="transition-colors hover:text-brand-ink"
               >
                 {link.label}

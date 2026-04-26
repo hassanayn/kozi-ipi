@@ -203,6 +203,8 @@ const CATEGORIES: Array<{
   tone: "blue" | "yellow" | "ink"
   family: string
   query: string
+  image: string
+  imagePosition?: string
   Icon: (props: { className?: string }) => React.JSX.Element
 }> = [
   {
@@ -211,6 +213,8 @@ const CATEGORIES: Array<{
     tone: "blue",
     family: "engineering",
     query: "Engineering",
+    image: "/category-images/engineering.jpg",
+    imagePosition: "center",
     Icon: GearIcon,
   },
   {
@@ -219,6 +223,8 @@ const CATEGORIES: Array<{
     tone: "yellow",
     family: "business",
     query: "Business",
+    image: "/category-images/business.jpg",
+    imagePosition: "center",
     Icon: BriefcaseIcon,
   },
   {
@@ -227,6 +233,8 @@ const CATEGORIES: Array<{
     tone: "ink",
     family: "health",
     query: "Health",
+    image: "/category-images/health.jpg",
+    imagePosition: "center",
     Icon: PulseIcon,
   },
   {
@@ -235,6 +243,8 @@ const CATEGORIES: Array<{
     tone: "blue",
     family: "tourism_hospitality",
     query: "Tourism",
+    image: "/category-images/tourism.jpg",
+    imagePosition: "center",
     Icon: PalmIcon,
   },
   {
@@ -243,13 +253,15 @@ const CATEGORIES: Array<{
     tone: "yellow",
     family: "ICT",
     query: "ICT",
+    image: "/category-images/tech.jpg",
+    imagePosition: "center",
     Icon: CodeIcon,
   },
 ]
 
 const TONE_BADGE: Record<"blue" | "yellow" | "ink", string> = {
-  blue: "bg-brand-blue/10 text-brand-blue",
-  yellow: "bg-brand-yellow/20 text-brand-ink",
+  blue: "bg-white/90 text-brand-blue",
+  yellow: "bg-brand-yellow text-brand-ink",
   ink: "bg-brand-ink text-white",
 }
 
@@ -273,25 +285,36 @@ function CategoryStrip({ className = "" }: { className?: string }) {
       </div>
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
-        {CATEGORIES.map(({ label, hint, tone, family, query, Icon }) => (
+        {CATEGORIES.map(({ label, hint, tone, family, query, image, imagePosition, Icon }) => (
           <Link
             key={label}
             href={`/search?q=${encodeURIComponent(query)}&family=${encodeURIComponent(family)}`}
-            className="group relative flex flex-col gap-4 rounded-2xl border border-brand-ink/10 bg-white p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-blue/40 hover:shadow-[0_22px_42px_-26px_rgba(29,78,216,0.45)]"
+            className="group relative flex min-h-[154px] overflow-hidden rounded-2xl border border-brand-ink/10 bg-brand-ink p-5 text-white transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-blue/40 hover:shadow-[0_22px_42px_-26px_rgba(29,78,216,0.45)]"
           >
+            <Image
+              src={image}
+              alt=""
+              fill
+              sizes="(min-width: 1024px) 18vw, (min-width: 640px) 30vw, 45vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              style={{ objectPosition: imagePosition }}
+              aria-hidden
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/75 via-black/35 to-black/10" />
+            <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/70 to-transparent" />
             <div
-              className={`grid size-11 place-items-center rounded-xl ${TONE_BADGE[tone]}`}
+              className={`relative grid size-11 place-items-center rounded-xl shadow-sm ${TONE_BADGE[tone]}`}
             >
               <Icon className="size-5" />
             </div>
-            <div className="flex items-end justify-between gap-2">
+            <div className="relative mt-auto flex items-end justify-between gap-2">
               <div>
-                <div className="text-[15px] font-semibold tracking-tight text-brand-ink">
+                <div className="text-[16px] font-semibold tracking-tight text-white">
                   {label}
                 </div>
-                <div className="text-[12px] text-brand-ink/55">{hint}</div>
+                <div className="text-[12px] text-white/75">{hint}</div>
               </div>
-              <ArrowRightIcon className="size-4 shrink-0 text-brand-ink/35 transition-all group-hover:translate-x-0.5 group-hover:text-brand-blue" />
+              <ArrowRightIcon className="size-4 shrink-0 text-white/70 transition-all group-hover:translate-x-0.5 group-hover:text-white" />
             </div>
           </Link>
         ))}

@@ -28,7 +28,6 @@ export function VyuoPageClient({
   const [ownership, setOwnership] = useState<InstitutionOwnership | "">("")
   const [awardLevels, setAwardLevels] = useState<Set<string>>(new Set())
   const [field, setField] = useState("")
-  const [sort, setSort] = useState("popular")
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
   const institutions = usePreloadedQuery(preloadedInstitutions)
 
@@ -63,11 +62,8 @@ export function VyuoPageClient({
       return institution.searchText.includes(q)
     })
 
-    if (sort === "alpha") return [...filtered].sort((a, b) => a.name.localeCompare(b.name))
-    if (sort === "programmes") return [...filtered].sort((a, b) => b.programmes - a.programmes)
-
     return filtered
-  }, [awardLevels, field, institutions, ownership, query, region, sort, types])
+  }, [awardLevels, field, institutions, ownership, query, region, types])
 
   const visibleResults = results.slice(0, visibleCount)
 
@@ -113,25 +109,12 @@ export function VyuoPageClient({
         />
 
         <section className="min-w-0 max-w-full">
-          <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+          <div>
             <p className="text-[12.5px] font-semibold uppercase tracking-[0.16em] text-brand-blue">
               <span>{results.length}</span>
               <span className="mx-2 text-brand-ink/30">.</span>
               <span>Vyuo na Colleges</span>
             </p>
-
-            <label className="flex w-full min-w-0 items-center gap-2 text-[12.5px] text-brand-ink/65 sm:w-auto">
-              <span>Panga kwa:</span>
-              <select
-                value={sort}
-                onChange={(event) => setSort(event.target.value)}
-                className="h-9 min-w-0 flex-1 rounded-lg border border-brand-ink/15 bg-white px-2.5 text-[13px] outline-none focus:border-brand-blue sm:flex-none"
-              >
-                <option value="popular">Umaarufu</option>
-                <option value="alpha">A-Z</option>
-                <option value="programmes">Programu nyingi</option>
-              </select>
-            </label>
           </div>
 
           {results.length === 0 ? (

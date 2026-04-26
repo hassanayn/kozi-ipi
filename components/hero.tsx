@@ -80,14 +80,6 @@ function SiteHeader() {
         >
           <SearchIcon className="size-[18px]" />
         </Link>
-        <Button
-          size="lg"
-          className="h-11 rounded-full bg-brand-ink px-5 text-[13px] font-semibold text-white hover:bg-brand-ink/90"
-          type="button"
-        >
-          <UserIcon className="size-4" />
-          Ingia / Jiunge
-        </Button>
       </div>
     </header>
   )
@@ -324,24 +316,6 @@ function SearchIcon({ className = "" }: { className?: string }) {
     >
       <circle cx={11} cy={11} r={7} />
       <path d="m20 20-3.5-3.5" />
-    </svg>
-  )
-}
-
-function UserIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className={className}
-      aria-hidden
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx={12} cy={8} r={4} />
-      <path d="M4 21c1.5-4 5-6 8-6s6.5 2 8 6" />
     </svg>
   )
 }

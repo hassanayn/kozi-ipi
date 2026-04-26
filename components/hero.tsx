@@ -73,15 +73,17 @@ function SiteHeader() {
       </nav>
 
       <div className="flex items-center gap-2">
-        <button
+        <Link
+          href="/search"
           aria-label="Search"
           className="grid size-10 place-items-center rounded-full text-brand-ink transition-colors hover:bg-black/5"
         >
           <SearchIcon className="size-[18px]" />
-        </button>
+        </Link>
         <Button
           size="lg"
           className="h-11 rounded-full bg-brand-ink px-5 text-[13px] font-semibold text-white hover:bg-brand-ink/90"
+          type="button"
         >
           <UserIcon className="size-4" />
           Ingia / Jiunge
@@ -269,13 +271,13 @@ function CategoryStrip({ className = "" }: { className?: string }) {
         >
           Category
         </h2>
-        <a
-          href="#"
+        <Link
+          href="/search"
           className="hidden items-center gap-1 text-[13px] font-medium text-brand-blue hover:underline sm:inline-flex"
         >
           Tazama zote
           <ArrowRightIcon className="size-3.5" />
-        </a>
+        </Link>
       </div>
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">

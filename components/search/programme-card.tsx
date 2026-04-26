@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import type { ReactNode } from "react"
 import { useState } from "react"
 import type { useQuery } from "convex/react"
@@ -97,7 +98,10 @@ export function ProgrammeCard({ programme }: { programme: ProgrammeSearchResult 
           Verified {programme.lastVerifiedDate}
           {programme.needsReview ? " · Needs review" : ""}
         </p>
-        <button className="inline-flex items-center gap-1.5 rounded-full bg-brand-ink px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-brand-blue">
+        <button
+          className="inline-flex items-center gap-1.5 rounded-full bg-brand-ink px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-brand-blue"
+          type="button"
+        >
           View details
           <ArrowRightIcon className="size-3.5" />
         </button>
@@ -120,13 +124,15 @@ function InstitutionLogo({
   if (logoUrl && !failed) {
     return (
       <div className="grid size-11 shrink-0 place-items-center overflow-hidden rounded-xl border border-brand-ink/10 bg-white p-1.5">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           alt={`${institutionName} logo`}
           className="max-h-full max-w-full object-contain"
+          height={44}
           loading="lazy"
           onError={() => setFailed(true)}
           src={logoUrl}
+          unoptimized
+          width={44}
         />
       </div>
     )

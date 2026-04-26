@@ -157,6 +157,7 @@ export function SearchResultsClient() {
             <div className="mt-4 flex flex-wrap items-center gap-2">
               {activeFilters.map((filter) => (
                 <button
+                  aria-label={`Remove ${filter.label} filter`}
                   className="inline-flex items-center gap-1.5 rounded-full bg-brand-blue/10 px-3 py-1.5 text-[12px] font-medium text-brand-blue hover:bg-brand-blue/15"
                   key={filter.key}
                   onClick={filter.clear}

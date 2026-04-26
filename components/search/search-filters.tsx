@@ -45,6 +45,7 @@ export function SearchFilters({
 
         <div className="border-b border-brand-ink/8 px-5 py-5">
           <button
+            aria-pressed={formFourOnly}
             className="flex w-full cursor-pointer items-center justify-between gap-3 text-left"
             onClick={() => setFilter("formFour", formFourOnly ? "false" : "yes")}
             type="button"
@@ -73,6 +74,7 @@ export function SearchFilters({
           <div className="grid grid-cols-2 gap-1.5">
             {courseFamilies.map((courseFamily) => (
               <button
+                aria-pressed={family === courseFamily.key}
                 className={`flex items-center gap-2 rounded-lg border px-2.5 py-2 text-left text-[12.5px] transition ${
                   family === courseFamily.key
                     ? "border-brand-blue bg-brand-blue/5 text-brand-blue"
@@ -95,6 +97,7 @@ export function SearchFilters({
           <div className="grid grid-cols-1 gap-1">
             {awardLevels.map((level) => (
               <button
+                aria-pressed={awardLevel === level.value}
                 className={`flex items-center justify-between rounded-lg px-3 py-2 text-left text-[13px] transition ${
                   awardLevel === level.value
                     ? "bg-brand-ink text-white"
@@ -121,6 +124,7 @@ export function SearchFilters({
 
         <FilterSection title="Region" hint="Mkoa" last>
           <select
+            aria-label="Filter by region"
             className="h-10 w-full rounded-lg border border-brand-ink/15 bg-white px-3 text-[13px] outline-none transition focus:border-brand-blue"
             onChange={(event) => setFilter("region", event.target.value)}
             value={region}

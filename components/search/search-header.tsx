@@ -6,6 +6,8 @@ import type { Dispatch, FormEvent, SetStateAction } from "react"
 
 import { trendingQueries } from "@/components/search/search-config"
 import { SearchIcon, XIcon } from "@/components/search/search-icons"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 
 type SearchHeaderProps = {
   query: string
@@ -54,9 +56,12 @@ export function SearchHeader({
             </Link>
           </nav>
 
-          <button className="h-10 rounded-full bg-brand-ink px-5 text-[13px] font-semibold text-white">
+          <Button
+            className="h-10 rounded-full bg-brand-ink px-5 text-[13px] font-semibold text-white hover:bg-brand-ink/90"
+            type="button"
+          >
             Ingia / Jiunge
-          </button>
+          </Button>
         </div>
       </header>
 
@@ -81,11 +86,13 @@ export function SearchHeader({
             <label className="flex flex-1 items-center gap-3 px-4">
               <span className="sr-only">Tafuta kozi, chuo, career path</span>
               <SearchIcon className="size-[18px] shrink-0 text-brand-ink/55" />
-              <input
+              <Input
                 aria-label="Tafuta kozi, chuo, career path"
-                className="h-12 min-w-0 flex-1 bg-transparent text-[15px] outline-none placeholder:text-brand-ink/40"
+                className="h-12 min-w-0 flex-1 border-0 bg-transparent px-0 text-[15px] text-brand-ink caret-brand-blue shadow-none placeholder:text-brand-ink/40 focus-visible:ring-0"
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="Tafuta kozi, chuo, career path..."
+                size="xl"
+                variant="ghost"
                 value={query}
               />
               {query ? (
@@ -99,12 +106,12 @@ export function SearchHeader({
                 </button>
               ) : null}
             </label>
-            <button
+            <Button
               className="h-12 shrink-0 rounded-full bg-brand-blue px-7 text-[14px] font-semibold text-white transition hover:bg-brand-blue-deep"
               type="submit"
             >
               Tafuta
-            </button>
+            </Button>
           </form>
 
           <div className="mt-4 flex flex-wrap items-center gap-2 text-[12.5px]">

@@ -1,5 +1,8 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
+import { useState } from "react"
 
 import {
   ArrowRightIcon,
@@ -67,6 +70,8 @@ export function InstitutionCard({ institution }: { institution: Institution }) {
 }
 
 function Crest({ institution }: { institution: Institution }) {
+  const [failed, setFailed] = useState(false)
+
   const tones: Record<InstitutionTone, string> = {
     amber: "bg-amber-50 text-amber-800 ring-amber-200",
     blue: "bg-blue-50 text-blue-700 ring-blue-200",
@@ -76,7 +81,7 @@ function Crest({ institution }: { institution: Institution }) {
     red: "bg-rose-50 text-rose-700 ring-rose-200",
   }
 
-  if (institution.logoUrl) {
+  if (institution.logoUrl && !failed) {
     return (
       <div className="grid size-12 shrink-0 place-items-center overflow-hidden rounded-xl border border-brand-ink/10 bg-white p-1.5">
         <Image
@@ -85,6 +90,8 @@ function Crest({ institution }: { institution: Institution }) {
           width={48}
           height={48}
           className="max-h-full max-w-full object-contain"
+          onError={() => setFailed(true)}
+          unoptimized
         />
       </div>
     )

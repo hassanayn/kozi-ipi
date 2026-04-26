@@ -33,6 +33,7 @@ export const institutions: Institution[] = [
     programmes: 124,
     monogramTone: "blue",
     awardLevels: ["Certificate", "Diploma", "Degree", "Postgraduate"],
+    logoUrl: "https://www.udsm.ac.tz/sites/default/files/udsm%20logo.png",
   },
   {
     id: "ardhi",
@@ -48,6 +49,7 @@ export const institutions: Institution[] = [
     programmes: 45,
     monogramTone: "ink",
     awardLevels: ["Diploma", "Degree", "Postgraduate"],
+    logoUrl: "https://www.aru.ac.tz/site/images/logo.jpg",
   },
   {
     id: "muhas",
@@ -92,6 +94,7 @@ export const institutions: Institution[] = [
     programmes: 41,
     monogramTone: "indigo",
     awardLevels: ["Certificate", "Diploma", "Degree"],
+    logoUrl: "https://www.sjut.ac.tz/images/images/logo-sitename.jpg",
   },
   {
     id: "must",
@@ -106,6 +109,7 @@ export const institutions: Institution[] = [
     programmes: 36,
     monogramTone: "amber",
     awardLevels: ["Certificate", "Diploma", "Degree"],
+    logoUrl: "https://www.must.ac.tz/assets/images/must-logo.png",
   },
   {
     id: "dit",
@@ -121,6 +125,7 @@ export const institutions: Institution[] = [
     programmes: 52,
     monogramTone: "blue",
     awardLevels: ["Certificate", "Diploma", "Degree"],
+    logoUrl: "https://www.dit.ac.tz/storage/images/slogo.png",
   },
   {
     id: "atc",
@@ -135,6 +140,7 @@ export const institutions: Institution[] = [
     programmes: 31,
     monogramTone: "ink",
     awardLevels: ["Certificate", "Diploma"],
+    logoUrl: "https://www.atc.ac.tz/rjm/img/atc%20logo.png",
   },
   {
     id: "ifm",
@@ -149,6 +155,7 @@ export const institutions: Institution[] = [
     programmes: 28,
     monogramTone: "green",
     awardLevels: ["Certificate", "Diploma", "Degree", "Postgraduate"],
+    logoUrl: "https://ifm.ac.tz/storage/logo.png",
   },
   {
     id: "udom",
@@ -164,6 +171,7 @@ export const institutions: Institution[] = [
     programmes: 96,
     monogramTone: "indigo",
     awardLevels: ["Certificate", "Diploma", "Degree", "Postgraduate"],
+    logoUrl: "https://www.udom.ac.tz/images/logo-170x172.png",
   },
   {
     id: "nct",
@@ -193,6 +201,7 @@ export const institutions: Institution[] = [
     programmes: 26,
     monogramTone: "red",
     awardLevels: ["Diploma", "Degree"],
+    logoUrl: "https://www.udsm.ac.tz/sites/default/files/udsm%20logo.png",
   },
 ]
 

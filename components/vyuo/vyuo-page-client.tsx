@@ -1,22 +1,23 @@
 "use client"
 
 import { useMemo, useState } from "react"
+import { useQuery } from "convex/react"
 
 import { InstitutionCard } from "@/components/vyuo/institution-card"
 import {
   fieldMatches,
   popularRegions,
-  type Institution,
   type InstitutionOwnership,
   type InstitutionType,
 } from "@/components/vyuo/institutions"
 import { VyuoFilters } from "@/components/vyuo/vyuo-filters"
 import { VyuoHeader } from "@/components/vyuo/vyuo-header"
 import { SearchIcon } from "@/components/search/search-icons"
+import { api } from "@/convex/_generated/api"
 
 const PAGE_SIZE = 80
 
-export function VyuoPageClient({ institutions }: { institutions: Institution[] }) {
+export function VyuoPageClient() {
   const [query, setQuery] = useState("")
   const [types, setTypes] = useState<Set<InstitutionType>>(new Set())
   const [region, setRegion] = useState("")
@@ -25,6 +26,9 @@ export function VyuoPageClient({ institutions }: { institutions: Institution[] }
   const [field, setField] = useState("")
   const [sort, setSort] = useState("popular")
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
+  const institutionsQuery = useQuery(api.institutions.listForBrowse, { limit: 1000 })
+  const institutions = useMemo(() => institutionsQuery ?? [], [institutionsQuery])
+  const isLoading = institutionsQuery === undefined
 
   const regions = useMemo(() => {
     return [
@@ -128,7 +132,9 @@ export function VyuoPageClient({ institutions }: { institutions: Institution[] }
             </label>
           </div>
 
-          {results.length === 0 ? (
+          {isLoading ? (
+            <LoadingState />
+          ) : results.length === 0 ? (
             <EmptyState onClear={clearAll} />
           ) : (
             <>
@@ -290,6 +296,19 @@ function EmptyState({ onClear }: { onClear: () => void }) {
       >
         Futa vichujio vyote
       </button>
+    </div>
+  )
+}
+
+function LoadingState() {
+  return (
+    <div className="mt-6 grid min-w-0 gap-4 md:grid-cols-2">
+      {Array.from({ length: 6 }).map((_, index) => (
+        <div
+          key={index}
+          className="h-52 animate-pulse rounded-2xl border border-brand-ink/10 bg-brand-ink/[0.03]"
+        />
+      ))}
     </div>
   )
 }

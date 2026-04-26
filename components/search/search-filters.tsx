@@ -12,7 +12,6 @@ type SearchFiltersProps = {
   activeFilters: ActiveFilter[]
   awardLevel: string
   family?: string
-  formFourOnly: boolean
   region: string
   clearAllFilters: () => void
   setFilter: (key: SearchFilterKey, value: string | null) => void
@@ -22,7 +21,6 @@ export function SearchFilters({
   activeFilters,
   awardLevel,
   family,
-  formFourOnly,
   region,
   clearAllFilters,
   setFilter,
@@ -41,35 +39,6 @@ export function SearchFilters({
               Clear all
             </button>
           ) : null}
-        </div>
-
-        <div className="border-b border-brand-ink/8 px-5 py-5">
-          <button
-            aria-pressed={formFourOnly}
-            className="flex w-full cursor-pointer items-center justify-between gap-3 text-left"
-            onClick={() => setFilter("formFour", formFourOnly ? "false" : "yes")}
-            type="button"
-          >
-            <span>
-              <span className="block text-[13.5px] font-semibold">
-                Can join after Form Four
-              </span>
-              <span className="mt-0.5 block text-[12px] text-brand-ink/55">
-                Programmes with a CSEE entry route.
-              </span>
-            </span>
-            <span
-              className={`relative h-6 w-10 shrink-0 rounded-full transition ${
-                formFourOnly ? "bg-brand-blue" : "bg-brand-ink/15"
-              }`}
-            >
-              <span
-                className={`absolute top-0.5 size-5 rounded-full bg-white shadow transition ${
-                  formFourOnly ? "left-[18px]" : "left-0.5"
-                }`}
-              />
-            </span>
-          </button>
         </div>
 
         <FilterSection title="Field of study" hint="Eneo la masomo">

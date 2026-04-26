@@ -184,7 +184,7 @@ function VyuoHero({
           <h1 className="mt-4 max-w-full break-words text-[31px] font-bold leading-[1.08] tracking-tight sm:text-[52px]">
             Tafuta vyuo na colleges
             <br />
-            <span className="text-brand-ink/55">zinazokufaa.</span>
+            <span className="text-brand-ink/55">vinavyokufaa.</span>
           </h1>
           <p className="mt-4 max-w-full text-[15.5px] leading-7 text-brand-ink/65 sm:max-w-xl">
             Gundua taasisi kulingana na eneo, aina ya umiliki, ngazi ya kozi, na programu wanazotoa.

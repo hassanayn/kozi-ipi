@@ -7,12 +7,9 @@ import { type FormEvent, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
-const NAV: Array<{ label: string; href?: string }> = [
+const NAV = [
   { label: "Kozi", href: "/search" },
   { label: "Vyuo", href: "/vyuo" },
-  { label: "Career Paths" },
-  { label: "Compare" },
-  { label: "Quiz" },
 ]
 
 const FEATURED_INSTITUTIONS: Array<{
@@ -106,28 +103,16 @@ function SiteHeader() {
       </Link>
 
       <nav className="hidden items-center gap-8 lg:flex">
-        {NAV.map((item) =>
-          item.href ? (
-            <Link
-              key={item.label}
-              href={item.href}
-              className="group relative text-[14px] font-medium text-brand-ink/85 transition-colors hover:text-brand-blue"
-            >
-              {item.label}
-              <span className="absolute -bottom-1.5 left-0 h-[2px] w-0 bg-brand-blue transition-[width] duration-300 group-hover:w-full" />
-            </Link>
-          ) : (
-            <span
-              key={item.label}
-              className="inline-flex items-center gap-2 text-[14px] font-medium text-brand-ink/45"
-            >
-              {item.label}
-              <span className="rounded-full bg-brand-ink/[0.06] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-brand-ink/55">
-                Inakuja
-              </span>
-            </span>
-          ),
-        )}
+        {NAV.map((item) => (
+          <Link
+            key={item.label}
+            href={item.href}
+            className="group relative text-[14px] font-medium text-brand-ink/85 transition-colors hover:text-brand-blue"
+          >
+            {item.label}
+            <span className="absolute -bottom-1.5 left-0 h-[2px] w-0 bg-brand-blue transition-[width] duration-300 group-hover:w-full" />
+          </Link>
+        ))}
       </nav>
 
       <div className="flex items-center gap-2">

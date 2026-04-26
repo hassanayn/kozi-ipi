@@ -2,6 +2,10 @@
 
 Kozi Ipi is a Tanzania education discovery platform for students planning their next study path after Form Four, A-level, or diploma. It helps students, parents, and guardians search institutions and programmes using course names, careers, locations, subjects, award levels, and eligibility constraints.
 
+## Brand Direction
+
+![Kozi Ipi brand board](docs/assets/kozi-ipi-brand-board.png)
+
 ## Stack
 
 - Next.js

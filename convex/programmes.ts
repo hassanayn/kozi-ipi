@@ -2,6 +2,8 @@ import { paginationOptsValidator } from "convex/server"
 import { v } from "convex/values"
 
 import { query } from "./_generated/server"
+import type { Doc } from "./_generated/dataModel"
+import type { QueryCtx } from "./_generated/server"
 
 const suitability = v.union(v.literal("yes"), v.literal("no"), v.literal("unknown"))
 const confidenceLevel = v.union(v.literal("high"), v.literal("medium"), v.literal("low"))
@@ -30,6 +32,28 @@ type ProgrammeFilters = {
   ownershipType?: string
   suitableForFormFourLeaver?: "yes" | "no" | "unknown"
   confidenceLevel?: "high" | "medium" | "low"
+}
+
+async function attachInstitutionLogos(ctx: QueryCtx, results: Doc<"programmes">[]) {
+  return await Promise.all(
+    results.map(async (programme) => {
+      const institution = await ctx.db
+        .query("institutions")
+        .withIndex("by_normalizedInstitutionName", (q) =>
+          q.eq("normalizedInstitutionName", programme.normalizedInstitutionName),
+        )
+        .take(1)
+
+      const institutionLogo = institution[0]?.logoStatus === "verified" ? institution[0] : undefined
+
+      return {
+        ...programme,
+        institutionLogoUrl: institutionLogo?.logoUrl,
+        institutionLogoSourceUrl: institutionLogo?.logoSourceUrl,
+        institutionWebsite: institution[0]?.website,
+      }
+    }),
+  )
 }
 
 const courseFamilyIntents = [
@@ -108,7 +132,7 @@ export const search = query({
       return []
     }
 
-    return await ctx.db
+    const results = await ctx.db
       .query("programmes")
       .withSearchIndex("search_searchText", (q) => {
         let search = q.search("searchText", text)
@@ -147,6 +171,8 @@ export const search = query({
         return search
       })
       .take(args.limit ?? 25)
+
+    return await attachInstitutionLogos(ctx, results)
   },
 })
 
@@ -208,7 +234,7 @@ export const smartSearch = query({
 
     return {
       interpreted,
-      results,
+      results: await attachInstitutionLogos(ctx, results),
     }
   },
 })

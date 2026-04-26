@@ -515,9 +515,11 @@ function ProgrammeCard({
     <article className="group rounded-2xl border border-brand-ink/10 bg-white p-5 transition hover:border-brand-blue/35 hover:shadow-[0_22px_50px_-32px_rgba(29,78,216,0.45)]">
       <div className="flex items-start justify-between gap-4">
         <div className="flex min-w-0 items-start gap-3">
-          <div className="grid size-11 shrink-0 place-items-center rounded-xl bg-brand-blue/10 font-mono text-[14px] font-semibold text-brand-blue">
-            {meta.mark}
-          </div>
+          <InstitutionLogo
+            fallback={meta.mark}
+            institutionName={programme.institutionName}
+            logoUrl={programme.institutionLogoUrl}
+          />
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2 text-[11.5px] font-semibold uppercase tracking-[0.14em] text-brand-ink/45">
               <span>{programme.awardLevel}</span>
@@ -591,6 +593,39 @@ function ProgrammeCard({
         </button>
       </div>
     </article>
+  )
+}
+
+function InstitutionLogo({
+  fallback,
+  institutionName,
+  logoUrl,
+}: {
+  fallback: string
+  institutionName: string
+  logoUrl?: string
+}) {
+  const [failed, setFailed] = useState(false)
+
+  if (logoUrl && !failed) {
+    return (
+      <div className="grid size-11 shrink-0 place-items-center overflow-hidden rounded-xl border border-brand-ink/10 bg-white p-1.5">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          alt={`${institutionName} logo`}
+          className="max-h-full max-w-full object-contain"
+          loading="lazy"
+          onError={() => setFailed(true)}
+          src={logoUrl}
+        />
+      </div>
+    )
+  }
+
+  return (
+    <div className="grid size-11 shrink-0 place-items-center rounded-xl bg-brand-blue/10 font-mono text-[14px] font-semibold text-brand-blue">
+      {fallback}
+    </div>
   )
 }
 

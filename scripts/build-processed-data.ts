@@ -1,4 +1,4 @@
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs"
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
 import { dirname, join } from "node:path"
 import { fileURLToPath } from "node:url"
 
@@ -9,6 +9,7 @@ const root = join(__dirname, "..")
 
 const baseDir = join(root, "data/raw/tanzania-post-form-four-dataset")
 const enrichmentDir = join(root, "data/raw/tanzania-education-dataset")
+const logoEnrichmentPath = join(root, "data/enrichment/institution-logos.seed.csv")
 const outputDir = join(root, "data/processed")
 
 type Row = Record<string, string>
@@ -32,6 +33,13 @@ function normalizeName(value: string | undefined) {
     .replace(/[^\p{L}\p{N}]+/gu, " ")
     .replace(/\s+/g, " ")
     .trim()
+}
+
+function institutionNameCandidates(value: string | undefined) {
+  return [
+    normalizeName(value),
+    normalizeName(value?.replace(/\([^)]*\)/g, " ")),
+  ].filter(Boolean)
 }
 
 function programmeFingerprint(value: string | undefined) {
@@ -61,6 +69,14 @@ function normalizeConfidence(value: string | undefined) {
     return normalized
   }
   return "low"
+}
+
+function normalizeLogoStatus(value: string | undefined) {
+  const normalized = value?.trim().toLowerCase()
+  if (normalized === "verified" || normalized === "missing" || normalized === "needs_review") {
+    return normalized
+  }
+  return undefined
 }
 
 function firstValue(...values: Array<string | undefined>) {
@@ -168,6 +184,7 @@ const institutionsBase = readCsv(join(baseDir, "institutions.csv"))
 const programmesBase = readCsv(join(baseDir, "programmes.csv"))
 const institutionsEnrichment = readCsv(join(enrichmentDir, "institutions.csv"))
 const programmesEnrichment = readCsv(join(enrichmentDir, "programmes.csv"))
+const logoEnrichment = existsSync(logoEnrichmentPath) ? readCsv(logoEnrichmentPath) : []
 
 const enrichmentInstitutionsByName = new Map(
   institutionsEnrichment.map((row) => [normalizeName(row.institution_name), row]),
@@ -178,6 +195,11 @@ const enrichmentProgrammesByKey = new Map(
     row,
   ]),
 )
+const verifiedLogoByName = new Map(
+  logoEnrichment
+    .filter((row) => normalizeLogoStatus(row.logo_status) === "verified" && blankToUndefined(row.logo_url))
+    .map((row) => [normalizeName(row.normalized_institution_name), row]),
+)
 
 const processedInstitutions = institutionsBase.map((row) => {
   const enrichment = enrichmentInstitutionsByName.get(normalizeName(row.institution_name))
@@ -186,6 +208,7 @@ const processedInstitutions = institutionsBase.map((row) => {
   const institutionName = row.institution_name.trim()
   const normalizedInstitutionName =
     blankToUndefined(row.normalized_institution_name) ?? normalizeName(institutionName)
+  const logoEnrichment = verifiedLogoByName.get(normalizedInstitutionName)
   const region = firstValue(row.region, enrichment?.region)
   const institutionType = firstValue(row.institution_type, enrichment?.institution_category) ?? "unknown"
   const ownershipType = firstValue(row.ownership_type, enrichment?.ownership_type) ?? "unknown"
@@ -204,7 +227,11 @@ const processedInstitutions = institutionsBase.map((row) => {
     districtOrCouncil: firstValue(row.district_or_council, enrichment?.["district/council"]),
     physicalLocation: firstValue(row.physical_location, enrichment?.physical_location),
     mainlandOrZanzibar: blankToUndefined(row.mainland_or_zanzibar),
-    website: firstValue(row.website, enrichment?.website),
+    website: firstValue(row.website, enrichment?.website, logoEnrichment?.website),
+    logoUrl: blankToUndefined(logoEnrichment?.logo_url),
+    logoSourceUrl: blankToUndefined(logoEnrichment?.logo_source_url),
+    logoStatus: normalizeLogoStatus(logoEnrichment?.logo_status),
+    logoVerifiedAt: blankToUndefined(logoEnrichment?.last_checked_date),
     phoneNumbers: firstValue(row.phone_numbers, enrichment?.phone_numbers),
     email: firstValue(row.email, enrichment?.email),
     applicationMethod: firstValue(row.application_method, enrichment?.application_method),
@@ -233,16 +260,29 @@ const processedInstitutions = institutionsBase.map((row) => {
   }
 })
 
-const institutionByName = new Map(
-  processedInstitutions.map((row) => [row.normalizedInstitutionName, row]),
-)
+const institutionByName = new Map<string, (typeof processedInstitutions)[number]>()
+for (const institution of processedInstitutions) {
+  const candidates = [
+    institution.normalizedInstitutionName,
+    ...institutionNameCandidates(institution.institutionName),
+  ]
+
+  for (const candidate of candidates) {
+    if (!institutionByName.has(candidate)) {
+      institutionByName.set(candidate, institution)
+    }
+  }
+}
 
 const processedProgrammes = programmesBase.map((row) => {
   const enrichment = enrichmentProgrammesByKey.get(
     makeProgrammeKey(row.normalized_programme_name, row.institution_name, row.award_level),
   )
-  const normalizedInstitutionName = normalizeName(row.institution_name)
-  const institution = institutionByName.get(normalizedInstitutionName)
+  const rawNormalizedInstitutionName = normalizeName(row.institution_name)
+  const institution = institutionNameCandidates(row.institution_name)
+    .map((candidate) => institutionByName.get(candidate))
+    .find(Boolean)
+  const normalizedInstitutionName = institution?.normalizedInstitutionName ?? rawNormalizedInstitutionName
   const reviewReasons = detectProgrammeReviewReasons(row)
   const keywordData = keywordPack(row.field_category, row.programme_name)
 
@@ -329,6 +369,7 @@ const report = {
     enrichedCount: processedInstitutions.filter((row) =>
       row.sourceDatasets.includes("nactvet_enrichment"),
     ).length,
+    verifiedLogoCount: processedInstitutions.filter((row) => row.logoStatus === "verified").length,
     needsReviewCount: processedInstitutions.filter((row) => row.needsReview).length,
   },
   programmes: {

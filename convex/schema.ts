@@ -3,6 +3,11 @@ import { v } from "convex/values"
 
 const confidenceLevel = v.union(v.literal("high"), v.literal("medium"), v.literal("low"))
 const suitability = v.union(v.literal("yes"), v.literal("no"), v.literal("unknown"))
+const logoStatus = v.union(
+  v.literal("verified"),
+  v.literal("missing"),
+  v.literal("needs_review"),
+)
 
 export default defineSchema({
   institutions: defineTable({
@@ -20,6 +25,10 @@ export default defineSchema({
     physicalLocation: v.optional(v.string()),
     mainlandOrZanzibar: v.optional(v.string()),
     website: v.optional(v.string()),
+    logoUrl: v.optional(v.string()),
+    logoSourceUrl: v.optional(v.string()),
+    logoStatus: v.optional(logoStatus),
+    logoVerifiedAt: v.optional(v.string()),
     phoneNumbers: v.optional(v.string()),
     email: v.optional(v.string()),
     applicationMethod: v.optional(v.string()),
@@ -135,4 +144,3 @@ export default defineSchema({
     languageMode: v.optional(v.string()),
   }).index("by_normalizedQuery", ["normalizedQuery"]),
 })
-

@@ -91,7 +91,7 @@ export function Hero() {
 function SiteHeader() {
   return (
     <header className="flex h-20 items-center justify-between gap-6 lg:h-24">
-      <Link href="/" aria-label="Kozi Ipi home" className="inline-flex">
+      <Link href="/" aria-label="Kozi Ipi home" className="inline-flex items-center gap-2">
         <Image
           src="/kozi-ipi-logo.png"
           alt="Kozi Ipi"
@@ -100,6 +100,9 @@ function SiteHeader() {
           priority
           className="size-12 lg:size-14"
         />
+        <span className="rounded-full bg-brand-blue/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-brand-blue">
+          Beta
+        </span>
       </Link>
 
       <nav className="hidden items-center gap-8 lg:flex">

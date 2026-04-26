@@ -10,9 +10,50 @@ import { Input } from "@/components/ui/input"
 const NAV = [
   { label: "Kozi", href: "/search" },
   { label: "Vyuo", href: "/vyuo" },
-  { label: "Career Paths", href: "/search" },
-  { label: "Compare", href: "/search" },
-  { label: "Quiz", href: "/search" },
+]
+
+const FEATURED_INSTITUTIONS: Array<{
+  name: string
+  short: string
+  region: string
+  image: string
+  query: string
+}> = [
+  {
+    name: "University of Dar es Salaam",
+    short: "UDSM",
+    region: "Dar es Salaam",
+    image: "/institution-campus/udsm.jpg",
+    query: "University of Dar es Salaam",
+  },
+  {
+    name: "University of Dodoma",
+    short: "UDOM",
+    region: "Dodoma",
+    image: "/institution-campus/udom.jpg",
+    query: "University of Dodoma",
+  },
+  {
+    name: "Ardhi University",
+    short: "ARU",
+    region: "Dar es Salaam",
+    image: "/institution-campus/ardhi.jpg",
+    query: "Ardhi University",
+  },
+  {
+    name: "Mbeya University of Science and Technology",
+    short: "MUST",
+    region: "Mbeya",
+    image: "/institution-campus/must.jpg",
+    query: "Mbeya University of Science and Technology",
+  },
+  {
+    name: "St Joseph University in Tanzania",
+    short: "SJUIT",
+    region: "Dar es Salaam",
+    image: "/institution-campus/st-joseph.jpg",
+    query: "St Joseph University",
+  },
 ]
 
 const TRENDING = [
@@ -38,6 +79,8 @@ export function Hero() {
         </div>
 
         <CategoryStrip className="lg:mt-6" />
+
+        <FeaturedInstitutions />
       </div>
     </section>
   )
@@ -203,6 +246,8 @@ const CATEGORIES: Array<{
   tone: "blue" | "yellow" | "ink"
   family: string
   query: string
+  image: string
+  imagePosition?: string
   Icon: (props: { className?: string }) => React.JSX.Element
 }> = [
   {
@@ -211,6 +256,8 @@ const CATEGORIES: Array<{
     tone: "blue",
     family: "engineering",
     query: "Engineering",
+    image: "/category-images/engineering.jpg",
+    imagePosition: "center",
     Icon: GearIcon,
   },
   {
@@ -219,6 +266,8 @@ const CATEGORIES: Array<{
     tone: "yellow",
     family: "business",
     query: "Business",
+    image: "/category-images/business.jpg",
+    imagePosition: "center",
     Icon: BriefcaseIcon,
   },
   {
@@ -227,6 +276,8 @@ const CATEGORIES: Array<{
     tone: "ink",
     family: "health",
     query: "Health",
+    image: "/category-images/health.jpg",
+    imagePosition: "center",
     Icon: PulseIcon,
   },
   {
@@ -235,6 +286,8 @@ const CATEGORIES: Array<{
     tone: "blue",
     family: "tourism_hospitality",
     query: "Tourism",
+    image: "/category-images/tourism.jpg",
+    imagePosition: "center",
     Icon: PalmIcon,
   },
   {
@@ -243,13 +296,15 @@ const CATEGORIES: Array<{
     tone: "yellow",
     family: "ICT",
     query: "ICT",
+    image: "/category-images/tech.jpg",
+    imagePosition: "center",
     Icon: CodeIcon,
   },
 ]
 
 const TONE_BADGE: Record<"blue" | "yellow" | "ink", string> = {
-  blue: "bg-brand-blue/10 text-brand-blue",
-  yellow: "bg-brand-yellow/20 text-brand-ink",
+  blue: "bg-white/90 text-brand-blue",
+  yellow: "bg-brand-yellow text-brand-ink",
   ink: "bg-brand-ink text-white",
 }
 
@@ -272,26 +327,37 @@ function CategoryStrip({ className = "" }: { className?: string }) {
         </Link>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
-        {CATEGORIES.map(({ label, hint, tone, family, query, Icon }) => (
+      <div className="grid min-w-0 grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
+        {CATEGORIES.map(({ label, hint, tone, family, query, image, imagePosition, Icon }) => (
           <Link
             key={label}
             href={`/search?q=${encodeURIComponent(query)}&family=${encodeURIComponent(family)}`}
-            className="group relative flex flex-col gap-4 rounded-2xl border border-brand-ink/10 bg-white p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-blue/40 hover:shadow-[0_22px_42px_-26px_rgba(29,78,216,0.45)]"
+            className="group relative flex min-h-[154px] min-w-0 overflow-hidden rounded-2xl border border-brand-ink/10 bg-brand-ink p-5 text-white transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-blue/40 hover:shadow-[0_22px_42px_-26px_rgba(29,78,216,0.45)]"
           >
+            <Image
+              src={image}
+              alt=""
+              fill
+              sizes="(min-width: 1024px) 18vw, (min-width: 640px) 30vw, 45vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              style={{ objectPosition: imagePosition }}
+              aria-hidden
+            />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/75 via-black/35 to-black/10" />
+            <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/70 to-transparent" />
             <div
-              className={`grid size-11 place-items-center rounded-xl ${TONE_BADGE[tone]}`}
+              className={`relative grid size-11 place-items-center rounded-xl shadow-sm ${TONE_BADGE[tone]}`}
             >
               <Icon className="size-5" />
             </div>
-            <div className="flex items-end justify-between gap-2">
+            <div className="relative mt-auto flex items-end justify-between gap-2">
               <div>
-                <div className="text-[15px] font-semibold tracking-tight text-brand-ink">
+                <div className="text-[16px] font-semibold tracking-tight text-white">
                   {label}
                 </div>
-                <div className="text-[12px] text-brand-ink/55">{hint}</div>
+                <div className="text-[12px] text-white/75">{hint}</div>
               </div>
-              <ArrowRightIcon className="size-4 shrink-0 text-brand-ink/35 transition-all group-hover:translate-x-0.5 group-hover:text-brand-blue" />
+              <ArrowRightIcon className="size-4 shrink-0 text-white/70 transition-all group-hover:translate-x-0.5 group-hover:text-white" />
             </div>
           </Link>
         ))}
@@ -300,7 +366,112 @@ function CategoryStrip({ className = "" }: { className?: string }) {
   )
 }
 
+/* ───────────────────────── Featured institutions ───────────────────────── */
+
+function FeaturedInstitutions() {
+  return (
+    <section aria-labelledby="featured-institutions-heading">
+      <div className="mb-5 flex items-end justify-between gap-4">
+        <h2
+          id="featured-institutions-heading"
+          className="text-[18px] font-semibold tracking-tight text-brand-ink lg:text-[20px]"
+        >
+          Baadhi ya vyuo
+        </h2>
+        <Link
+          href="/vyuo"
+          className="hidden items-center gap-1 text-[13px] font-medium text-brand-blue hover:underline sm:inline-flex"
+        >
+          Tazama vyote
+          <ArrowRightIcon className="size-3.5" />
+        </Link>
+      </div>
+
+      <div className="grid min-w-0 grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
+        {FEATURED_INSTITUTIONS.map((institution) => (
+          <Link
+            key={institution.short}
+            href={`/search?q=${encodeURIComponent(institution.query)}`}
+            className="group flex min-w-0 flex-col overflow-hidden rounded-2xl border border-brand-ink/10 bg-white transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-blue/40 hover:shadow-[0_22px_42px_-26px_rgba(29,78,216,0.45)]"
+          >
+            <CampusImage
+              src={institution.image}
+              alt={`${institution.name} campus`}
+              short={institution.short}
+            />
+            <div className="flex min-w-0 flex-1 flex-col gap-1 p-4">
+              <div className="text-[11px] font-semibold uppercase tracking-wide text-brand-blue">
+                {institution.short}
+              </div>
+              <h3 className="line-clamp-2 min-w-0 break-words text-[13.5px] font-semibold leading-snug text-brand-ink">
+                {institution.name}
+              </h3>
+              <p className="mt-auto inline-flex min-w-0 items-center gap-1 pt-2 text-[12px] text-brand-ink/55">
+                <PinIcon className="size-3" />
+                <span className="min-w-0 truncate">{institution.region}</span>
+              </p>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function CampusImage({
+  src,
+  alt,
+  short,
+}: {
+  src: string
+  alt: string
+  short: string
+}) {
+  const [failed, setFailed] = useState(false)
+
+  if (failed) {
+    return (
+      <div className="grid aspect-[16/10] w-full place-items-center bg-gradient-to-br from-brand-blue/10 to-brand-yellow/20">
+        <span className="text-[18px] font-bold tracking-tight text-brand-ink/40">
+          {short}
+        </span>
+      </div>
+    )
+  }
+
+  return (
+    <div className="relative aspect-[16/10] w-full overflow-hidden bg-brand-ink/[0.04]">
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes="(min-width: 1024px) 18vw, (min-width: 640px) 30vw, 45vw"
+        className="object-cover transition-transform duration-500 group-hover:scale-105"
+        onError={() => setFailed(true)}
+      />
+    </div>
+  )
+}
+
 /* ─────────────────────────────── Icons ─────────────────────────────── */
+
+function PinIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      aria-hidden
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0Z" />
+      <circle cx={12} cy={10} r={3} />
+    </svg>
+  )
+}
 
 function SearchIcon({ className = "" }: { className?: string }) {
   return (

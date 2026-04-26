@@ -17,6 +17,7 @@
     "data:import:prod": "convex import --prod --replace --yes --table institutions data/processed/institutions.jsonl && convex import --prod --replace --yes --table programmes data/processed/programmes.jsonl && convex import --prod --replace --yes --table entryRequirements data/processed/entry-requirements.jsonl"
   },
   "dependencies": {
+    "@convex-dev/rate-limiter": "^0.3.2",
     "@hugeicons/core-free-icons": "^4.1.1",
     "@hugeicons/react": "^1.1.6",
     "class-variance-authority": "^0.7.1",

@@ -3,6 +3,8 @@ import { httpRouter } from "convex/server"
 import { internal } from "./_generated/api"
 import { Id } from "./_generated/dataModel"
 import { httpAction } from "./_generated/server"
+import type { ActionCtx } from "./_generated/server"
+import { rateLimiter } from "./rateLimits"
 
 const http = httpRouter()
 
@@ -44,10 +46,39 @@ function assertAdmin(req: Request) {
   return null
 }
 
+async function assertRateLimit(
+  ctx: ActionCtx,
+  name: "adminHttpRead" | "adminHttpWrite",
+) {
+  const status = await rateLimiter.limit(ctx, name)
+  if (status.ok) {
+    return null
+  }
+
+  return jsonResponse(
+    {
+      error: "Rate limit exceeded.",
+      retryAfterMs: status.retryAfter,
+    },
+    {
+      status: 429,
+      headers:
+        status.retryAfter === undefined
+          ? undefined
+          : { "retry-after": String(Math.ceil(status.retryAfter / 1000)) },
+    },
+  )
+}
+
 http.route({
   path: "/admin/corrections",
   method: "GET",
   handler: httpAction(async (ctx, req) => {
+    const rateLimited = await assertRateLimit(ctx, "adminHttpRead")
+    if (rateLimited) {
+      return rateLimited
+    }
+
     const unauthorized = assertAdmin(req)
     if (unauthorized) {
       return unauthorized
@@ -74,6 +105,11 @@ http.route({
   path: "/admin/corrections/status",
   method: "POST",
   handler: httpAction(async (ctx, req) => {
+    const rateLimited = await assertRateLimit(ctx, "adminHttpWrite")
+    if (rateLimited) {
+      return rateLimited
+    }
+
     const unauthorized = assertAdmin(req)
     if (unauthorized) {
       return unauthorized

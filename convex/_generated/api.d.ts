@@ -13,6 +13,7 @@ import type * as entryRequirements from "../entryRequirements.js";
 import type * as http from "../http.js";
 import type * as institutions from "../institutions.js";
 import type * as programmes from "../programmes.js";
+import type * as rateLimits from "../rateLimits.js";
 import type * as searchEvents from "../searchEvents.js";
 
 import type {
@@ -27,6 +28,7 @@ declare const fullApi: ApiFromModules<{
   http: typeof http;
   institutions: typeof institutions;
   programmes: typeof programmes;
+  rateLimits: typeof rateLimits;
   searchEvents: typeof searchEvents;
 }>;
 
@@ -56,4 +58,6 @@ export declare const internal: FilterApi<
   FunctionReference<any, "internal">
 >;
 
-export declare const components: {};
+export declare const components: {
+  rateLimiter: import("@convex-dev/rate-limiter/_generated/component.js").ComponentApi<"rateLimiter">;
+};

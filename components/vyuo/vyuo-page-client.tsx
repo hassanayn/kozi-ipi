@@ -187,7 +187,7 @@ function VyuoHero({
             <span className="text-brand-ink/55">vinavyokufaa.</span>
           </h1>
           <p className="mt-4 max-w-full text-[15.5px] leading-7 text-brand-ink/65 sm:max-w-xl">
-            Gundua taasisi kulingana na eneo, aina ya umiliki, ngazi ya kozi, na programu wanazotoa.
+            Search taasisi kulingana na eneo, aina ya umiliki, ngazi ya kozi, na programu wanazotoa.
           </p>
 
           <form

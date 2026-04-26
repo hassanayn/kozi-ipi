@@ -17,6 +17,9 @@ export function VyuoHeader() {
             className="size-9"
           />
           <span className="text-[15px] font-semibold tracking-tight">Kozi Ipi</span>
+          <span className="rounded-full bg-brand-blue/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-brand-blue">
+            Beta
+          </span>
         </Link>
         <nav className="hidden items-center gap-7 text-[13.5px] font-medium text-brand-ink/70 md:flex">
           <Link href="/search" className="transition hover:text-brand-blue">
@@ -25,15 +28,6 @@ export function VyuoHeader() {
           <Link href="/vyuo" className="relative text-brand-ink">
             Vyuo
             <span className="absolute -bottom-[22px] left-0 right-0 h-0.5 bg-brand-blue" />
-          </Link>
-          <Link href="/search" className="transition hover:text-brand-blue">
-            Career Paths
-          </Link>
-          <Link href="/search" className="transition hover:text-brand-blue">
-            Compare
-          </Link>
-          <Link href="/search" className="transition hover:text-brand-blue">
-            Quiz
           </Link>
         </nav>
         <Link

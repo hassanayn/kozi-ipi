@@ -1,6 +1,7 @@
 import { v } from "convex/values"
 
 import { mutation } from "./_generated/server"
+import { rateLimiter } from "./rateLimits"
 
 export const log = mutation({
   args: {
@@ -12,10 +13,14 @@ export const log = mutation({
     languageMode: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
+    const status = await rateLimiter.limit(ctx, "searchEventLog")
+    if (!status.ok) {
+      return null
+    }
+
     return await ctx.db.insert("searchEvents", {
       ...args,
       normalizedQuery: args.query.trim().toLowerCase(),
     })
   },
 })
-

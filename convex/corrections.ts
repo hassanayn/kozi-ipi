@@ -1,6 +1,7 @@
 import { v } from "convex/values"
 
 import { internalMutation, internalQuery, mutation } from "./_generated/server"
+import { rateLimiter } from "./rateLimits"
 
 const correctionStatus = v.union(
   v.literal("pending"),
@@ -21,6 +22,8 @@ export const submit = mutation({
     submitterContact: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
+    await rateLimiter.limit(ctx, "correctionSubmit", { throws: true })
+
     const message = args.message.trim()
     if (message.length < 5) {
       throw new Error("Correction message is too short.")

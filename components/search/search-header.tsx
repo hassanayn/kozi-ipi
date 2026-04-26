@@ -71,7 +71,7 @@ export function SearchHeader({
             Tafuta kozi na njia inayokufaa.
           </h1>
           <p className="mt-2 max-w-2xl text-[15px] leading-7 text-brand-ink/65">
-            Gundua kozi, vyuo, na njia za kujiunga kulingana na elimu uliyonayo.
+            fahamu kozi, vyuo, na njia za kujiunga kulingana na elimu uliyonayo.
           </p>
 
           <form

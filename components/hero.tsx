@@ -167,7 +167,7 @@ function SearchBar({ className = "" }: { className?: string }) {
           onChange={(event) => setQuery(event.target.value)}
           placeholder="Tafuta kozi, chuo, career path..."
           aria-label="Tafuta kozi, chuo, au career path"
-          className="h-12 border-0 bg-transparent px-0 text-[15px] shadow-none placeholder:text-brand-ink/40 focus-visible:ring-0"
+          className="h-12 border-0 bg-transparent px-0 text-[15px] text-brand-ink caret-brand-blue shadow-none placeholder:text-brand-ink/40 focus-visible:ring-0"
         />
       </label>
 

@@ -36,9 +36,9 @@ export function InstitutionCard({ institution }: { institution: Institution }) {
       </p>
 
       <div className="mt-3 flex flex-wrap gap-1.5">
-        {institution.fields.slice(0, 3).map((item) => (
+        {institution.fields.slice(0, 3).map((item, index) => (
           <span
-            key={item}
+            key={`${institution.id}-${item}-${index}`}
             className="rounded-md bg-brand-ink/[0.05] px-2 py-1 text-[11.5px] font-medium text-brand-ink/65"
           >
             {item}

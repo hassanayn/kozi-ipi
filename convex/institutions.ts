@@ -159,16 +159,18 @@ function toBrowseInstitution(institution: Doc<"institutions">, index: number) {
 }
 
 function topLabels(values: string[], limit: number) {
-  return [...new Set(values)]
+  const labels = [...new Set(values)]
     .filter((value) => value && value.toLowerCase() !== "unknown")
-    .slice(0, limit)
     .map((value) => fieldLabels[value] ?? titleCase(value))
+
+  return [...new Set(labels)].slice(0, limit)
 }
 
 function fallbackFields(institution: Doc<"institutions">) {
-  return fallbackFieldSlugs(institution)
+  const labels = fallbackFieldSlugs(institution)
     .map((value) => fieldLabels[value] ?? titleCase(value))
-    .slice(0, 3)
+
+  return [...new Set(labels)].slice(0, 3)
 }
 
 function fallbackFieldSlugs(institution: Doc<"institutions">) {

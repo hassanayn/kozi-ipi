@@ -18,6 +18,10 @@ import { SearchHeader } from "@/components/search/search-header"
 import { XIcon } from "@/components/search/search-icons"
 import { api } from "@/convex/_generated/api"
 
+const INITIAL_RESULT_LIMIT = 20
+const RESULT_LIMIT_STEP = 20
+const MAX_VISIBLE_RESULTS = 200
+
 export function SearchResultsClient() {
   const router = useRouter()
   const pathname = usePathname()
@@ -29,6 +33,13 @@ export function SearchResultsClient() {
   const awardLevel = searchParams.get("level") ?? "all"
   const region = searchParams.get("region") ?? ""
   const formFourOnly = searchParams.get("formFour") === "yes"
+  const resultSetKey = `${queryFromUrl}|${family ?? ""}|${awardLevel}|${region}|${formFourOnly}`
+  const [resultLimitState, setResultLimitState] = useState({
+    key: resultSetKey,
+    limit: INITIAL_RESULT_LIMIT,
+  })
+  const resultLimit =
+    resultLimitState.key === resultSetKey ? resultLimitState.limit : INITIAL_RESULT_LIMIT
 
   const filters = useMemo(() => {
     return {
@@ -46,7 +57,7 @@ export function SearchResultsClient() {
         query: activeQuery,
         filters: hasFilters ? filters : undefined,
         formFourOnly,
-        limit: 20,
+        limit: resultLimit,
       }
     : "skip"
 
@@ -63,6 +74,14 @@ export function SearchResultsClient() {
   const count = useQuery(api.programmes.smartSearchCount, countArgs)
   const isResultsLoading = activeQuery && search === undefined
   const isCountLoading = activeQuery && count === undefined
+  const totalMatches = count?.count ?? search?.results.length ?? 0
+  const renderedCount = search?.results.length ?? 0
+  const canLoadMore =
+    Boolean(activeQuery) &&
+    !isResultsLoading &&
+    renderedCount > 0 &&
+    renderedCount < totalMatches &&
+    resultLimit < MAX_VISIBLE_RESULTS
 
   const inferredFamily = search?.interpreted.inferredCourseFamily
   const activeFilters = [
@@ -124,6 +143,11 @@ export function SearchResultsClient() {
     routeWith(updateParams(searchParams, { q: nextQuery, family: null }))
   }
 
+  function loadMoreResults() {
+    const nextLimit = Math.min(resultLimit + RESULT_LIMIT_STEP, totalMatches, MAX_VISIBLE_RESULTS)
+    setResultLimitState({ key: resultSetKey, limit: nextLimit })
+  }
+
   return (
     <main className="min-h-screen bg-white text-brand-ink">
       <SearchHeader
@@ -176,9 +200,18 @@ export function SearchResultsClient() {
             ) : isResultsLoading ? (
               <LoadingState />
             ) : search?.results.length ? (
-              search.results.map((programme) => (
-                <ProgrammeCard key={programme._id} programme={programme} />
-              ))
+              <>
+                {search.results.map((programme) => (
+                  <ProgrammeCard key={programme._id} programme={programme} />
+                ))}
+                <SearchResultsFooter
+                  canLoadMore={canLoadMore}
+                  isCapped={Boolean(count?.capped)}
+                  onLoadMore={loadMoreResults}
+                  renderedCount={renderedCount}
+                  totalMatches={totalMatches}
+                />
+              </>
             ) : (
               <EmptyState message="No matching programmes. Try a broader search or remove a filter." />
             )}
@@ -186,6 +219,38 @@ export function SearchResultsClient() {
         </section>
       </div>
     </main>
+  )
+}
+
+function SearchResultsFooter({
+  canLoadMore,
+  isCapped,
+  onLoadMore,
+  renderedCount,
+  totalMatches,
+}: {
+  canLoadMore: boolean
+  isCapped: boolean
+  onLoadMore: () => void
+  renderedCount: number
+  totalMatches: number
+}) {
+  return (
+    <div className="flex flex-col items-center gap-3 border-t border-brand-ink/8 pt-5 text-center">
+      <p className="text-[12.5px] text-brand-ink/55">
+        Showing {renderedCount} of {totalMatches}
+        {isCapped ? "+" : ""} matches
+      </p>
+      {canLoadMore ? (
+        <button
+          className="rounded-full border border-brand-ink/15 px-5 py-2.5 text-[13px] font-semibold text-brand-ink transition hover:border-brand-blue hover:bg-brand-blue hover:text-white"
+          onClick={onLoadMore}
+          type="button"
+        >
+          Load more
+        </button>
+      ) : null}
+    </div>
   )
 }
 

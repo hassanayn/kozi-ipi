@@ -52,6 +52,7 @@ export default defineSchema({
     .index("by_registrationNumber", ["registrationNumber"])
     .index("by_region", ["region"])
     .index("by_regulator", ["regulator"])
+    .index("by_programmeCount", ["programmeCount"])
     .searchIndex("search_searchText", {
       searchField: "searchText",
       filterFields: [

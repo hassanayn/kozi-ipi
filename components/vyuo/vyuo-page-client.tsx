@@ -1,7 +1,7 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import { useQuery } from "convex/react"
+import { type Preloaded, usePreloadedQuery } from "convex/react"
 
 import { InstitutionCard } from "@/components/vyuo/institution-card"
 import {
@@ -17,7 +17,11 @@ import { api } from "@/convex/_generated/api"
 
 const PAGE_SIZE = 80
 
-export function VyuoPageClient() {
+export function VyuoPageClient({
+  preloadedInstitutions,
+}: {
+  preloadedInstitutions: Preloaded<typeof api.institutions.listForBrowse>
+}) {
   const [query, setQuery] = useState("")
   const [types, setTypes] = useState<Set<InstitutionType>>(new Set())
   const [region, setRegion] = useState("")
@@ -26,9 +30,7 @@ export function VyuoPageClient() {
   const [field, setField] = useState("")
   const [sort, setSort] = useState("popular")
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
-  const institutionsQuery = useQuery(api.institutions.listForBrowse, { limit: 1000 })
-  const institutions = useMemo(() => institutionsQuery ?? [], [institutionsQuery])
-  const isLoading = institutionsQuery === undefined
+  const institutions = usePreloadedQuery(preloadedInstitutions)
 
   const regions = useMemo(() => {
     return [
@@ -132,9 +134,7 @@ export function VyuoPageClient() {
             </label>
           </div>
 
-          {isLoading ? (
-            <LoadingState />
-          ) : results.length === 0 ? (
+          {results.length === 0 ? (
             <EmptyState onClear={clearAll} />
           ) : (
             <>
@@ -296,19 +296,6 @@ function EmptyState({ onClear }: { onClear: () => void }) {
       >
         Futa vichujio vyote
       </button>
-    </div>
-  )
-}
-
-function LoadingState() {
-  return (
-    <div className="mt-6 grid min-w-0 gap-4 md:grid-cols-2">
-      {Array.from({ length: 6 }).map((_, index) => (
-        <div
-          key={index}
-          className="h-52 animate-pulse rounded-2xl border border-brand-ink/10 bg-brand-ink/[0.03]"
-        />
-      ))}
     </div>
   )
 }

@@ -55,12 +55,13 @@ export const listForBrowse = query({
   },
   handler: async (ctx, args) => {
     const limit = Math.min(args.limit ?? 1000, 1000)
-    const institutions = await ctx.db.query("institutions").take(1000)
+    const institutions = await ctx.db
+      .query("institutions")
+      .withIndex("by_programmeCount")
+      .order("desc")
+      .take(limit)
 
-    return institutions
-      .sort((a, b) => (b.programmeCount ?? 0) - (a.programmeCount ?? 0))
-      .slice(0, limit)
-      .map(toBrowseInstitution)
+    return institutions.map(toBrowseInstitution)
   },
 })
 

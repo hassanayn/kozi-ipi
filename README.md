@@ -1,6 +1,6 @@
 # Kozi Ipi
 
-Kozi Ipi is a Tanzania post-Form Four education discovery platform. It helps students, parents, and guardians search institutions and programmes using course names, careers, locations, subjects, and eligibility constraints.
+Kozi Ipi is a Tanzania education discovery platform for students planning their next study path after Form Four, A-level, or diploma. It helps students, parents, and guardians search institutions and programmes using course names, careers, locations, subjects, award levels, and eligibility constraints.
 
 ## Stack
 
@@ -56,7 +56,7 @@ data/raw/tanzania-post-form-four-dataset
 data/raw/tanzania-education-dataset
 ```
 
-The broader post-Form Four dataset is the canonical base. The NACTVET-focused dataset enriches matching institutions and programmes.
+The broader education dataset is the canonical base. The NACTVET-focused dataset enriches matching institutions and programmes.
 
 Processed import files are generated in:
 

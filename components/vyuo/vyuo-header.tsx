@@ -21,7 +21,7 @@ export function VyuoHeader() {
             Beta
           </span>
         </Link>
-        <nav className="hidden items-center gap-7 text-[13.5px] font-medium text-brand-ink/70 md:flex">
+        <nav className="flex items-center gap-5 text-[13.5px] font-medium text-brand-ink/70 md:gap-7">
           <Link href="/search" className="transition hover:text-brand-blue">
             Kozi
           </Link>

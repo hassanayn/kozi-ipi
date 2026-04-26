@@ -105,7 +105,7 @@ function SiteHeader() {
         </span>
       </Link>
 
-      <nav className="hidden items-center gap-8 lg:flex">
+      <nav className="flex items-center gap-5 lg:gap-8">
         {NAV.map((item) => (
           <Link
             key={item.label}

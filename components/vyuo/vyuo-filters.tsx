@@ -51,8 +51,8 @@ export function VyuoFilters({
   types,
 }: VyuoFiltersProps) {
   return (
-    <aside className="h-fit lg:sticky lg:top-6">
-      <div className="rounded-2xl border border-brand-ink/10 bg-white">
+    <aside className="h-fit min-w-0 max-w-full lg:sticky lg:top-6">
+      <div className="w-full max-w-full overflow-hidden rounded-2xl border border-brand-ink/10 bg-white">
         <div className="flex items-center justify-between border-b border-brand-ink/8 px-5 py-4">
           <p className="text-[13.5px] font-semibold tracking-tight">Filters</p>
           {hasFilters ? (
@@ -84,7 +84,7 @@ export function VyuoFilters({
           <select
             value={region}
             onChange={(event) => setRegion(event.target.value)}
-            className="h-10 w-full rounded-lg border border-brand-ink/15 bg-white px-3 text-[13px] outline-none transition focus:border-brand-blue"
+            className="box-border h-10 w-full rounded-lg border border-brand-ink/15 bg-white px-3 text-[13px] outline-none transition focus:border-brand-blue"
           >
             <option value="">Mkoa wote</option>
             {regions.map((item) => (
@@ -130,7 +130,7 @@ export function VyuoFilters({
           <select
             value={field}
             onChange={(event) => setField(event.target.value)}
-            className="h-10 w-full rounded-lg border border-brand-ink/15 bg-white px-3 text-[13px] outline-none transition focus:border-brand-blue"
+            className="box-border h-10 w-full rounded-lg border border-brand-ink/15 bg-white px-3 text-[13px] outline-none transition focus:border-brand-blue"
           >
             <option value="">Chagua field ya masomo</option>
             {fieldFocus.map((item) => (
@@ -162,7 +162,7 @@ function FilterBlock({
   title: string
 }) {
   return (
-    <div className={last ? "px-5 py-5" : "border-b border-brand-ink/8 px-5 py-5"}>
+    <div className={last ? "min-w-0 px-5 py-5" : "min-w-0 border-b border-brand-ink/8 px-5 py-5"}>
       <p className="mb-3 text-[12.5px] font-semibold tracking-tight">{title}</p>
       {children}
     </div>

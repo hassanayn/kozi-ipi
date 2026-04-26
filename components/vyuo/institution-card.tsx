@@ -10,7 +10,7 @@ import { CheckIcon } from "@/components/vyuo/vyuo-icons"
 
 export function InstitutionCard({ institution }: { institution: Institution }) {
   return (
-    <article className="group flex h-full flex-col rounded-2xl border border-brand-ink/10 bg-white p-5 transition hover:border-brand-blue/35 hover:shadow-[0_22px_50px_-32px_rgba(29,78,216,0.45)]">
+    <article className="group flex h-full max-w-full flex-col overflow-hidden rounded-2xl border border-brand-ink/10 bg-white p-5 transition hover:border-brand-blue/35 hover:shadow-[0_22px_50px_-32px_rgba(29,78,216,0.45)]">
       <div className="flex items-start gap-4">
         <Crest institution={institution} />
         <div className="min-w-0 flex-1">
@@ -50,13 +50,13 @@ export function InstitutionCard({ institution }: { institution: Institution }) {
         ))}
       </div>
 
-      <div className="mt-auto flex items-center justify-between gap-3 pt-5">
+      <div className="mt-auto flex flex-col items-start gap-3 pt-5 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-[12.5px] font-semibold text-brand-blue">
           Programu {institution.programmes}+
         </p>
         <Link
           href={`/search?q=${encodeURIComponent(institution.name)}`}
-          className="inline-flex items-center gap-1.5 rounded-full border border-brand-ink/15 px-3.5 py-1.5 text-[12.5px] font-semibold text-brand-ink transition group-hover:border-brand-ink group-hover:bg-brand-ink group-hover:text-white"
+          className="inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-brand-ink/15 px-3.5 py-1.5 text-[12.5px] font-semibold text-brand-ink transition group-hover:border-brand-ink group-hover:bg-brand-ink group-hover:text-white sm:w-auto"
         >
           Tazama chuo
           <ArrowRightIcon className="size-3.5" />

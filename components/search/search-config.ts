@@ -88,7 +88,7 @@ export function familyMeta(key?: string) {
 
 export function formFourLabel(value?: string) {
   if (value === "yes") {
-    return "Form Four direct"
+    return "Can join after Form Four"
   }
 
   if (value === "no") {

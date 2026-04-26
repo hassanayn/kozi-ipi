@@ -102,7 +102,7 @@ export function SearchResultsClient() {
     },
     formFourOnly && {
       key: "formFour",
-      label: "Form Four direct",
+      label: "Can join after Form Four",
       clear: () => setFilter("formFour", "false"),
     },
   ].filter(isActiveFilter)

@@ -51,9 +51,11 @@ export function SearchFilters({
             type="button"
           >
             <span>
-              <span className="block text-[13.5px] font-semibold">Form Four direct</span>
+              <span className="block text-[13.5px] font-semibold">
+                Can join after Form Four
+              </span>
               <span className="mt-0.5 block text-[12px] text-brand-ink/55">
-                Show programmes you can join straight after CSEE.
+                Programmes with a CSEE entry route.
               </span>
             </span>
             <span

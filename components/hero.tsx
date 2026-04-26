@@ -8,11 +8,11 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 const NAV = [
-  { label: "Kozi", href: "#" },
-  { label: "Vyuo", href: "#" },
-  { label: "Career Paths", href: "#" },
-  { label: "Compare", href: "#" },
-  { label: "Quiz", href: "#" },
+  { label: "Kozi", href: "/search" },
+  { label: "Vyuo", href: "/vyuo" },
+  { label: "Career Paths", href: "/search" },
+  { label: "Compare", href: "/search" },
+  { label: "Quiz", href: "/search" },
 ]
 
 const TRENDING = [
@@ -61,14 +61,14 @@ function SiteHeader() {
 
       <nav className="hidden items-center gap-8 lg:flex">
         {NAV.map((item) => (
-          <a
+          <Link
             key={item.label}
             href={item.href}
             className="group relative text-[14px] font-medium text-brand-ink/85 transition-colors hover:text-brand-blue"
           >
             {item.label}
             <span className="absolute -bottom-1.5 left-0 h-[2px] w-0 bg-brand-blue transition-[width] duration-300 group-hover:w-full" />
-          </a>
+          </Link>
         ))}
       </nav>
 

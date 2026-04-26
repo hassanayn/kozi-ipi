@@ -100,7 +100,7 @@ export function SearchFilters({
             onChange={(event) => setFilter("region", event.target.value)}
             value={region}
           >
-            <option value="">Tanzania (all)</option>
+            <option value="">All</option>
             {regions.map((regionName) => (
               <option key={regionName} value={regionName}>
                 {regionName}

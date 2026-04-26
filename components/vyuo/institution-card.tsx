@@ -9,7 +9,6 @@ import {
   PinIcon,
 } from "@/components/search/search-icons"
 import type { Institution, InstitutionTone } from "@/components/vyuo/institutions"
-import { CheckIcon } from "@/components/vyuo/vyuo-icons"
 
 export function InstitutionCard({ institution }: { institution: Institution }) {
   return (
@@ -24,12 +23,6 @@ export function InstitutionCard({ institution }: { institution: Institution }) {
             <span className="inline-flex items-center rounded-md bg-brand-blue/10 px-2 py-0.5 text-[11px] font-semibold text-brand-blue">
               {institution.type}
             </span>
-            {institution.accredited ? (
-              <span className="inline-flex items-center gap-1 text-[11.5px] font-medium text-emerald-700">
-                <CheckIcon className="size-3.5" />
-                Imethibitishwa
-              </span>
-            ) : null}
           </div>
           <p className="mt-2 inline-flex items-center gap-1.5 text-[12.5px] text-brand-ink/65">
             <PinIcon className="size-3.5" />
@@ -43,9 +36,9 @@ export function InstitutionCard({ institution }: { institution: Institution }) {
       </p>
 
       <div className="mt-3 flex flex-wrap gap-1.5">
-        {institution.fields.slice(0, 3).map((item) => (
+        {institution.fields.slice(0, 3).map((item, index) => (
           <span
-            key={item}
+            key={`${institution.id}-${item}-${index}`}
             className="rounded-md bg-brand-ink/[0.05] px-2 py-1 text-[11.5px] font-medium text-brand-ink/65"
           >
             {item}

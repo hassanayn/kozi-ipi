@@ -33,6 +33,11 @@ export default defineSchema({
     email: v.optional(v.string()),
     applicationMethod: v.optional(v.string()),
     hasFormFourDirectProgramme: suitability,
+    programmeCount: v.optional(v.number()),
+    awardLevels: v.optional(v.array(v.string())),
+    fieldCategories: v.optional(v.array(v.string())),
+    courseFamilies: v.optional(v.array(v.string())),
+    browseSearchText: v.optional(v.string()),
     officialSourceUrl: v.string(),
     sourceType: v.string(),
     sourceDatasets: v.array(v.string()),
@@ -47,6 +52,7 @@ export default defineSchema({
     .index("by_registrationNumber", ["registrationNumber"])
     .index("by_region", ["region"])
     .index("by_regulator", ["regulator"])
+    .index("by_programmeCount", ["programmeCount"])
     .searchIndex("search_searchText", {
       searchField: "searchText",
       filterFields: [

@@ -1,17 +1,14 @@
+import { preloadQuery } from "convex/nextjs"
+
 import { VyuoPageClient } from "@/components/vyuo/vyuo-page-client"
-import {
-  buildInstitutions,
-  type RawInstitution,
-  type RawProgramme,
-} from "@/components/vyuo/institutions"
-import rawInstitutions from "@/data/processed/institutions.json"
-import rawProgrammes from "@/data/processed/programmes.json"
+import { api } from "@/convex/_generated/api"
 
-export default function VyuoPage() {
-  const institutions = buildInstitutions(
-    rawInstitutions as RawInstitution[],
-    rawProgrammes as RawProgramme[]
-  )
+export const dynamic = "force-dynamic"
 
-  return <VyuoPageClient institutions={institutions} />
+export default async function VyuoPage() {
+  const preloadedInstitutions = await preloadQuery(api.institutions.listForBrowse, {
+    limit: 1000,
+  })
+
+  return <VyuoPageClient preloadedInstitutions={preloadedInstitutions} />
 }

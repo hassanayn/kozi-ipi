@@ -1,30 +1,35 @@
 "use client"
 
 import { useMemo, useState } from "react"
+import { type Preloaded, usePreloadedQuery } from "convex/react"
 
 import { InstitutionCard } from "@/components/vyuo/institution-card"
 import {
   fieldMatches,
   popularRegions,
-  type Institution,
   type InstitutionOwnership,
   type InstitutionType,
 } from "@/components/vyuo/institutions"
 import { VyuoFilters } from "@/components/vyuo/vyuo-filters"
 import { VyuoHeader } from "@/components/vyuo/vyuo-header"
 import { SearchIcon } from "@/components/search/search-icons"
+import { api } from "@/convex/_generated/api"
 
 const PAGE_SIZE = 80
 
-export function VyuoPageClient({ institutions }: { institutions: Institution[] }) {
+export function VyuoPageClient({
+  preloadedInstitutions,
+}: {
+  preloadedInstitutions: Preloaded<typeof api.institutions.listForBrowse>
+}) {
   const [query, setQuery] = useState("")
   const [types, setTypes] = useState<Set<InstitutionType>>(new Set())
   const [region, setRegion] = useState("")
   const [ownership, setOwnership] = useState<InstitutionOwnership | "">("")
   const [awardLevels, setAwardLevels] = useState<Set<string>>(new Set())
   const [field, setField] = useState("")
-  const [sort, setSort] = useState("popular")
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
+  const institutions = usePreloadedQuery(preloadedInstitutions)
 
   const regions = useMemo(() => {
     return [
@@ -57,11 +62,8 @@ export function VyuoPageClient({ institutions }: { institutions: Institution[] }
       return institution.searchText.includes(q)
     })
 
-    if (sort === "alpha") return [...filtered].sort((a, b) => a.name.localeCompare(b.name))
-    if (sort === "programmes") return [...filtered].sort((a, b) => b.programmes - a.programmes)
-
     return filtered
-  }, [awardLevels, field, institutions, ownership, query, region, sort, types])
+  }, [awardLevels, field, institutions, ownership, query, region, types])
 
   const visibleResults = results.slice(0, visibleCount)
 
@@ -107,25 +109,12 @@ export function VyuoPageClient({ institutions }: { institutions: Institution[] }
         />
 
         <section className="min-w-0 max-w-full">
-          <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+          <div>
             <p className="text-[12.5px] font-semibold uppercase tracking-[0.16em] text-brand-blue">
               <span>{results.length}</span>
               <span className="mx-2 text-brand-ink/30">.</span>
               <span>Vyuo na Colleges</span>
             </p>
-
-            <label className="flex w-full min-w-0 items-center gap-2 text-[12.5px] text-brand-ink/65 sm:w-auto">
-              <span>Panga kwa:</span>
-              <select
-                value={sort}
-                onChange={(event) => setSort(event.target.value)}
-                className="h-9 min-w-0 flex-1 rounded-lg border border-brand-ink/15 bg-white px-2.5 text-[13px] outline-none focus:border-brand-blue sm:flex-none"
-              >
-                <option value="popular">Umaarufu</option>
-                <option value="alpha">A-Z</option>
-                <option value="programmes">Programu nyingi</option>
-              </select>
-            </label>
           </div>
 
           {results.length === 0 ? (
@@ -178,10 +167,10 @@ function VyuoHero({
           <h1 className="mt-4 max-w-full break-words text-[31px] font-bold leading-[1.08] tracking-tight sm:text-[52px]">
             Tafuta vyuo na colleges
             <br />
-            <span className="text-brand-ink/55">zinazokufaa.</span>
+            <span className="text-brand-ink/55">vinavyokufaa.</span>
           </h1>
           <p className="mt-4 max-w-full text-[15.5px] leading-7 text-brand-ink/65 sm:max-w-xl">
-            Gundua taasisi kulingana na eneo, aina ya umiliki, ngazi ya kozi, na programu wanazotoa.
+            Search taasisi kulingana na eneo, aina ya umiliki, ngazi ya kozi, na programu wanazotoa.
           </p>
 
           <form

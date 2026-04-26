@@ -376,6 +376,79 @@ const processedProgrammes = programmesBase.map((row) => {
   }
 })
 
+type InstitutionSummary = {
+  programmeCount: number
+  awardLevels: Map<string, number>
+  fieldCategories: Map<string, number>
+  courseFamilies: Map<string, number>
+  browseTerms: Set<string>
+}
+
+function emptyInstitutionSummary(): InstitutionSummary {
+  return {
+    programmeCount: 0,
+    awardLevels: new Map(),
+    fieldCategories: new Map(),
+    courseFamilies: new Map(),
+    browseTerms: new Set(),
+  }
+}
+
+function addSummaryValue(map: Map<string, number>, value: string | undefined) {
+  const normalized = value?.trim()
+  if (!normalized || normalized.toLowerCase() === "unknown") {
+    return
+  }
+
+  map.set(normalized, (map.get(normalized) ?? 0) + 1)
+}
+
+function rankedSummaryValues(values: Map<string, number>, limit: number) {
+  return [...values]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, limit)
+    .map(([value]) => value)
+}
+
+const institutionSummaries = new Map<string, InstitutionSummary>()
+
+for (const programme of processedProgrammes) {
+  const summary =
+    institutionSummaries.get(programme.normalizedInstitutionName) ?? emptyInstitutionSummary()
+
+  summary.programmeCount += 1
+  addSummaryValue(summary.awardLevels, programme.awardLevel)
+  addSummaryValue(summary.fieldCategories, programme.fieldCategory)
+  addSummaryValue(summary.courseFamilies, programme.courseFamily)
+  summary.browseTerms.add(programme.awardLevel)
+  summary.browseTerms.add(programme.fieldCategory)
+  if (programme.courseFamily) summary.browseTerms.add(programme.courseFamily)
+
+  institutionSummaries.set(programme.normalizedInstitutionName, summary)
+}
+
+for (const institution of processedInstitutions) {
+  const summary = institutionSummaries.get(institution.normalizedInstitutionName)
+
+  if (summary) {
+    Object.assign(institution, {
+      programmeCount: summary.programmeCount,
+      awardLevels: rankedSummaryValues(summary.awardLevels, 8),
+      fieldCategories: rankedSummaryValues(summary.fieldCategories, 8),
+      courseFamilies: rankedSummaryValues(summary.courseFamilies, 8),
+      browseSearchText: [...summary.browseTerms].join(" "),
+    })
+  } else {
+    Object.assign(institution, {
+      programmeCount: 0,
+      awardLevels: [],
+      fieldCategories: [],
+      courseFamilies: [],
+      browseSearchText: "",
+    })
+  }
+}
+
 const report = {
   generatedAt: new Date().toISOString(),
   baseDataset: "tanzania-post-form-four-dataset",

@@ -22,30 +22,32 @@ export function ProgrammeCard({ programme }: { programme: ProgrammeSearchResult 
   const meta = familyMeta(programme.courseFamily)
 
   return (
-    <article className="group rounded-2xl border border-brand-ink/10 bg-white p-5 transition hover:border-brand-blue/35 hover:shadow-[0_22px_50px_-32px_rgba(29,78,216,0.45)]">
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex min-w-0 items-start gap-3">
+    <article className="group max-w-full overflow-hidden rounded-2xl border border-brand-ink/10 bg-white p-4 transition hover:border-brand-blue/35 hover:shadow-[0_22px_50px_-32px_rgba(29,78,216,0.45)] sm:p-5">
+      <div className="flex min-w-0 items-start justify-between gap-3 sm:gap-4">
+        <div className="flex min-w-0 flex-1 items-start gap-3">
           <InstitutionLogo
             fallback={meta.mark}
             institutionName={programme.institutionName}
             logoUrl={programme.institutionLogoUrl}
           />
-          <div className="min-w-0">
-            <div className="flex flex-wrap items-center gap-2 text-[11.5px] font-semibold uppercase tracking-[0.14em] text-brand-ink/45">
-              <span>{programme.awardLevel}</span>
+          <div className="min-w-0 flex-1">
+            <div className="flex min-w-0 flex-wrap items-center gap-1.5 text-[10.5px] font-semibold uppercase tracking-[0.11em] text-brand-ink/45 sm:gap-2 sm:text-[11.5px] sm:tracking-[0.14em]">
+              <span className="min-w-0 max-w-full break-words">{programme.awardLevel}</span>
               <span className="size-1 rounded-full bg-brand-ink/30" />
-              <span>{programme.regulator}</span>
+              <span className="min-w-0 max-w-full break-words">{programme.regulator}</span>
               {programme.ownershipType ? (
                 <>
                   <span className="size-1 rounded-full bg-brand-ink/30" />
-                  <span>{programme.ownershipType}</span>
+                  <span className="min-w-0 max-w-full break-words">
+                    {programme.ownershipType}
+                  </span>
                 </>
               ) : null}
             </div>
-            <h3 className="mt-1.5 truncate text-[17px] font-bold tracking-tight">
+            <h3 className="mt-1.5 line-clamp-2 break-words text-[17px] font-bold tracking-tight">
               {programme.programmeName}
             </h3>
-            <p className="mt-0.5 truncate text-[13.5px] font-medium text-brand-ink/65">
+            <p className="mt-0.5 line-clamp-2 break-words text-[13.5px] font-medium text-brand-ink/65">
               {programme.institutionName}
             </p>
           </div>
@@ -59,16 +61,12 @@ export function ProgrammeCard({ programme }: { programme: ProgrammeSearchResult 
         </button>
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-1.5 text-[12px] text-brand-ink/70">
+      <div className="mt-4 flex min-w-0 flex-wrap gap-1.5 text-[12px] text-brand-ink/70">
         {programme.region ? (
-          <Tag>
-            <PinIcon className="size-3.5" />
-            {programme.region}
-          </Tag>
+          <Tag icon={<PinIcon className="size-3.5 shrink-0" />}>{programme.region}</Tag>
         ) : null}
         {programme.duration ? (
-          <Tag>
-            <ClockIcon className="size-3.5" />
+          <Tag icon={<ClockIcon className="size-3.5 shrink-0" />}>
             {programme.duration} years
           </Tag>
         ) : null}
@@ -80,19 +78,19 @@ export function ProgrammeCard({ programme }: { programme: ProgrammeSearchResult 
           <p className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-brand-ink/40">
             Entry requirements
           </p>
-          <p className="mt-1.5 line-clamp-2 text-[13px] leading-6 text-brand-ink/70">
+          <p className="mt-1.5 line-clamp-2 break-words text-[13px] leading-6 text-brand-ink/70">
             {programme.minimumEntryRequirements}
           </p>
         </div>
       ) : null}
 
-      <div className="mt-4 flex items-center justify-between gap-3">
-        <p className="text-[11.5px] text-brand-ink/45">
+      <div className="mt-4 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <p className="break-words text-[11.5px] text-brand-ink/45">
           Verified {programme.lastVerifiedDate}
           {programme.needsReview ? " · Needs review" : ""}
         </p>
         <button
-          className="inline-flex items-center gap-1.5 rounded-full bg-brand-ink px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-brand-blue"
+          className="inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-brand-ink px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-brand-blue sm:w-auto"
           type="button"
         >
           View details
@@ -116,7 +114,7 @@ function InstitutionLogo({
 
   if (logoUrl && !failed) {
     return (
-      <div className="grid size-11 shrink-0 place-items-center overflow-hidden rounded-xl border border-brand-ink/10 bg-white p-1.5">
+      <div className="grid size-10 shrink-0 place-items-center overflow-hidden rounded-xl border border-brand-ink/10 bg-white p-1.5 sm:size-11">
         <Image
           alt={`${institutionName} logo`}
           className="max-h-full max-w-full object-contain"
@@ -132,7 +130,7 @@ function InstitutionLogo({
   }
 
   return (
-    <div className="grid size-11 shrink-0 place-items-center rounded-xl bg-brand-blue/10 font-mono text-[14px] font-semibold text-brand-blue">
+    <div className="grid size-10 shrink-0 place-items-center rounded-xl bg-brand-blue/10 font-mono text-[14px] font-semibold text-brand-blue sm:size-11">
       {fallback}
     </div>
   )
@@ -140,9 +138,11 @@ function InstitutionLogo({
 
 function Tag({
   children,
+  icon,
   tone = "neutral",
 }: {
   children: ReactNode
+  icon?: ReactNode
   tone?: "neutral" | "green" | "ink"
 }) {
   const tones = {
@@ -152,8 +152,11 @@ function Tag({
   }
 
   return (
-    <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 font-medium ${tones[tone]}`}>
-      {children}
+    <span
+      className={`inline-flex max-w-full min-w-0 items-center gap-1 truncate rounded-full px-2.5 py-1 font-medium ${tones[tone]}`}
+    >
+      {icon}
+      <span className="min-w-0 truncate">{children}</span>
     </span>
   )
 }

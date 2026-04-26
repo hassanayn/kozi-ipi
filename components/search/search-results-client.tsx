@@ -148,7 +148,7 @@ export function SearchResultsClient() {
         onTrending={runTrending}
       />
 
-      <div className="mx-auto grid max-w-[1280px] gap-8 px-6 py-8 sm:px-8 lg:grid-cols-[19rem_1fr]">
+      <div className="mx-auto grid max-w-[1280px] gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[19rem_1fr] lg:px-8">
         <SearchFilters
           activeFilters={activeFilters}
           awardLevel={awardLevel}
@@ -168,23 +168,23 @@ export function SearchResultsClient() {
           />
 
           {activeFilters.length > 0 ? (
-            <div className="mt-4 flex flex-wrap items-center gap-2">
+            <div className="mt-4 flex min-w-0 flex-wrap items-center gap-2">
               {activeFilters.map((filter) => (
                 <button
                   aria-label={`Remove ${filter.label} filter`}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-brand-blue/10 px-3 py-1.5 text-[12px] font-medium text-brand-blue hover:bg-brand-blue/15"
+                  className="inline-flex max-w-full items-center gap-1.5 rounded-full bg-brand-blue/10 px-3 py-1.5 text-[12px] font-medium text-brand-blue hover:bg-brand-blue/15"
                   key={filter.key}
                   onClick={filter.clear}
                   type="button"
                 >
-                  {filter.label}
-                  <XIcon className="size-3" />
+                  <span className="min-w-0 truncate">{filter.label}</span>
+                  <XIcon className="size-3 shrink-0" />
                 </button>
               ))}
             </div>
           ) : null}
 
-          <div className="mt-5 grid gap-4">
+          <div className="mt-5 grid min-w-0 gap-4">
             {!activeQuery ? (
               <EmptyState />
             ) : isResultsLoading ? (
@@ -263,19 +263,19 @@ function SearchResultsHeader({
   resultCount?: number
 }) {
   return (
-    <div className="flex flex-wrap items-end justify-between gap-4 border-b border-brand-ink/8 pb-4">
-      <div>
+    <div className="flex min-w-0 flex-wrap items-end justify-between gap-4 border-b border-brand-ink/8 pb-4">
+      <div className="min-w-0">
         <p className="text-[12.5px] font-medium uppercase tracking-[0.16em] text-brand-blue">
           {isCountLoading
             ? "Searching"
             : `${count?.count ?? resultCount ?? 0}${count?.capped ? "+" : ""} matches`}
         </p>
-        <h2 className="mt-1 text-[22px] font-bold tracking-tight">
+        <h2 className="mt-1 break-words text-[22px] font-bold tracking-tight">
           {activeQuery ? `Results for "${activeQuery}"` : "All programmes"}
         </h2>
       </div>
       {inferredFamily ? (
-        <span className="rounded-full bg-brand-blue/10 px-3 py-1.5 text-[12px] font-medium text-brand-blue">
+        <span className="max-w-full shrink-0 truncate rounded-full bg-brand-blue/10 px-3 py-1.5 text-[12px] font-medium text-brand-blue">
           {familyMeta(inferredFamily).label}
         </span>
       ) : null}

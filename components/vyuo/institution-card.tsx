@@ -55,7 +55,9 @@ export function InstitutionCard({ institution }: { institution: Institution }) {
 
       <div className="mt-auto flex flex-col items-start gap-3 pt-5 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-[12.5px] font-semibold text-brand-blue">
-          Programu {institution.programmes}+
+          {institution.programmes > 0
+            ? `Programu ${institution.programmes}+`
+            : "Programu zinahakikiwa"}
         </p>
         <Link
           href={`/search?q=${encodeURIComponent(institution.name)}`}

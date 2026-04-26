@@ -4,8 +4,9 @@ import { useMemo, useState } from "react"
 
 import { InstitutionCard } from "@/components/vyuo/institution-card"
 import {
-  institutions,
+  fieldMatches,
   popularRegions,
+  type Institution,
   type InstitutionOwnership,
   type InstitutionType,
 } from "@/components/vyuo/institutions"
@@ -13,7 +14,9 @@ import { VyuoFilters } from "@/components/vyuo/vyuo-filters"
 import { VyuoHeader } from "@/components/vyuo/vyuo-header"
 import { SearchIcon } from "@/components/search/search-icons"
 
-export function VyuoPageClient() {
+const PAGE_SIZE = 80
+
+export function VyuoPageClient({ institutions }: { institutions: Institution[] }) {
   const [query, setQuery] = useState("")
   const [types, setTypes] = useState<Set<InstitutionType>>(new Set())
   const [region, setRegion] = useState("")
@@ -21,10 +24,18 @@ export function VyuoPageClient() {
   const [awardLevels, setAwardLevels] = useState<Set<string>>(new Set())
   const [field, setField] = useState("")
   const [sort, setSort] = useState("popular")
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
 
   const regions = useMemo(() => {
-    return [...new Set([...popularRegions, ...institutions.map((item) => item.region)])].sort()
-  }, [])
+    return [
+      ...new Set([
+        ...popularRegions,
+        ...institutions
+          .map((item) => item.region)
+          .filter((item) => item && item !== "Region not verified"),
+      ]),
+    ].sort()
+  }, [institutions])
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -38,36 +49,21 @@ export function VyuoPageClient() {
       ) {
         return false
       }
-      if (
-        field &&
-        !institution.fields
-          .map((item) => item.toLowerCase())
-          .join(" ")
-          .includes(field.toLowerCase())
-      ) {
+      if (field && !fieldMatches(institution, field)) {
         return false
       }
       if (!q) return true
 
-      return [
-        institution.name,
-        institution.short,
-        institution.region,
-        institution.ownership,
-        institution.type,
-        institution.fields.join(" "),
-        institution.blurb,
-      ]
-        .join(" ")
-        .toLowerCase()
-        .includes(q)
+      return institution.searchText.includes(q)
     })
 
     if (sort === "alpha") return [...filtered].sort((a, b) => a.name.localeCompare(b.name))
     if (sort === "programmes") return [...filtered].sort((a, b) => b.programmes - a.programmes)
 
     return filtered
-  }, [awardLevels, field, ownership, query, region, sort, types])
+  }, [awardLevels, field, institutions, ownership, query, region, sort, types])
+
+  const visibleResults = results.slice(0, visibleCount)
 
   const hasFilters =
     types.size > 0 ||
@@ -84,6 +80,7 @@ export function VyuoPageClient() {
     setAwardLevels(new Set())
     setField("")
     setQuery("")
+    setVisibleCount(PAGE_SIZE)
   }
 
   return (
@@ -106,6 +103,7 @@ export function VyuoPageClient() {
           setRegion={setRegion}
           setTypes={setTypes}
           types={types}
+          institutions={institutions}
         />
 
         <section className="min-w-0 max-w-full">
@@ -133,11 +131,24 @@ export function VyuoPageClient() {
           {results.length === 0 ? (
             <EmptyState onClear={clearAll} />
           ) : (
-            <div className="mt-6 grid min-w-0 gap-4 md:grid-cols-2">
-              {results.map((institution) => (
-                <InstitutionCard institution={institution} key={institution.id} />
-              ))}
-            </div>
+            <>
+              <div className="mt-6 grid min-w-0 gap-4 md:grid-cols-2">
+                {visibleResults.map((institution) => (
+                  <InstitutionCard institution={institution} key={institution.id} />
+                ))}
+              </div>
+              {visibleResults.length < results.length ? (
+                <div className="mt-7 flex justify-center">
+                  <button
+                    onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
+                    className="rounded-full border border-brand-ink/15 px-5 py-2 text-[13px] font-semibold text-brand-ink transition hover:border-brand-ink hover:bg-brand-ink hover:text-white"
+                    type="button"
+                  >
+                    Onyesha vingine {Math.min(PAGE_SIZE, results.length - visibleResults.length)}
+                  </button>
+                </div>
+              ) : null}
+            </>
           )}
         </section>
       </div>

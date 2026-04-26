@@ -1,13 +1,11 @@
 import type { ReactNode } from "react"
 
 import type {
+  Institution,
   InstitutionOwnership,
   InstitutionType,
 } from "@/components/vyuo/institutions"
-import {
-  fieldFocus,
-  institutions,
-} from "@/components/vyuo/institutions"
+import { fieldFocus } from "@/components/vyuo/institutions"
 import { CheckIcon } from "@/components/vyuo/vyuo-icons"
 
 const institutionTypes: Array<{ key: InstitutionType; label: string }> = [
@@ -16,8 +14,8 @@ const institutionTypes: Array<{ key: InstitutionType; label: string }> = [
   { key: "TVET", label: "TVET" },
 ]
 
-const awardLevelOptions = ["Certificate", "Diploma", "Degree", "Postgraduate"]
-const ownershipOptions: InstitutionOwnership[] = ["Public", "Private"]
+const awardLevelOptions = ["Certificate", "Diploma", "Degree", "Short Course"]
+const ownershipOptions: InstitutionOwnership[] = ["Public", "Private", "Unknown"]
 
 type VyuoFiltersProps = {
   awardLevels: Set<string>
@@ -33,6 +31,7 @@ type VyuoFiltersProps = {
   setRegion: (value: string) => void
   setTypes: (value: Set<InstitutionType>) => void
   types: Set<InstitutionType>
+  institutions: Institution[]
 }
 
 export function VyuoFilters({
@@ -49,6 +48,7 @@ export function VyuoFilters({
   setRegion,
   setTypes,
   types,
+  institutions,
 }: VyuoFiltersProps) {
   return (
     <aside className="h-fit min-w-0 max-w-full lg:sticky lg:top-6">

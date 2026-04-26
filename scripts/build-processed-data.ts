@@ -160,9 +160,9 @@ function normalizeAwardLevel(value: string | undefined) {
   if (!normalized || normalized === "unknown") return "unknown"
   if (normalized.includes("short")) return "short course"
   if (normalized.includes("diploma")) return "ordinary diploma"
+  if (normalized.includes("vocational")) return "vocational certificate"
   if (normalized.includes("certificate")) return "certificate"
   if (normalized.includes("degree") || normalized.includes("bachelor")) return "degree"
-  if (normalized.includes("vocational")) return "vocational certificate"
   return normalized
 }
 
@@ -278,8 +278,8 @@ function uniqueValues(values: Array<string | undefined>) {
 
 function mergeSuitability(left: Suitability, right: Suitability): Suitability {
   if (left === "yes" || right === "yes") return "yes"
-  if (left === "unknown" || right === "unknown") return "unknown"
-  return "no"
+  if (left === "no" || right === "no") return "no"
+  return "unknown"
 }
 
 function makeProgrammeKey(

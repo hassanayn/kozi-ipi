@@ -583,7 +583,7 @@
     "physicalLocation": "Bagamoyo District Council - Pwani",
     "mainlandOrZanzibar": "Mainland",
     "applicationMethod": "direct institution",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://www.nactvet.go.tz/storage/public/files/GUIDEBOOK_FOR_ALL_NTA_2025_2026.pdf",
     "sourceType": "NACTVET NTA admission guidebook 2025/2026 - technical institutions",
     "sourceDatasets": [
@@ -625,7 +625,7 @@
     "physicalLocation": "Mbeya City Council - Mbeya",
     "mainlandOrZanzibar": "Mainland",
     "applicationMethod": "direct institution",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://www.nactvet.go.tz/storage/public/files/GUIDEBOOK_FOR_ALL_NTA_2025_2026.pdf",
     "sourceType": "NACTVET NTA admission guidebook 2025/2026 - technical institutions",
     "sourceDatasets": [
@@ -665,7 +665,7 @@
     "physicalLocation": "Ilemela Municipal Council - Mwanza",
     "mainlandOrZanzibar": "Mainland",
     "applicationMethod": "direct institution",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://www.nactvet.go.tz/storage/public/files/GUIDEBOOK_FOR_ALL_NTA_2025_2026.pdf",
     "sourceType": "NACTVET NTA admission guidebook 2025/2026 - technical institutions",
     "sourceDatasets": [
@@ -1522,7 +1522,7 @@
     "physicalLocation": "Nyamagana Municipal Council - Mwanza",
     "mainlandOrZanzibar": "Mainland",
     "applicationMethod": "direct institution",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://www.nactvet.go.tz/storage/public/files/GUIDEBOOK_FOR_ALL_NTA_2025_2026.pdf",
     "sourceType": "NACTVET NTA admission guidebook 2025/2026 - technical institutions",
     "sourceDatasets": [
@@ -2629,7 +2629,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://www.nactvet.go.tz/storage/public/files/GUIDEBOOK_FOR_ALL_UNIVERSITIES_2025_2026.pdf",
     "sourceType": "NACTVET admission guidebook 2025/2026 - universities offering certificate/diploma programmes",
     "sourceDatasets": [
@@ -2676,7 +2676,7 @@
     "physicalLocation": "Mbeya City Council - Mbeya",
     "mainlandOrZanzibar": "Mainland",
     "applicationMethod": "direct institution",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://www.nactvet.go.tz/storage/public/files/GUIDEBOOK_FOR_ALL_UNIVERSITIES_2025_2026.pdf",
     "sourceType": "NACTVET admission guidebook 2025/2026 - universities offering certificate/diploma programmes",
     "sourceDatasets": [
@@ -3497,7 +3497,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "direct institution",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://www.nactvet.go.tz/storage/public/files/GUIDEBOOK_FOR_ALL_UNIVERSITIES_2025_2026.pdf",
     "sourceType": "NACTVET admission guidebook 2025/2026 - universities offering certificate/diploma programmes",
     "sourceDatasets": [
@@ -4659,7 +4659,7 @@
     "physicalLocation": "Arusha City Council - Arusha",
     "mainlandOrZanzibar": "Mainland",
     "applicationMethod": "direct institution",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://www.nactvet.go.tz/storage/public/files/GUIDEBOOK_FOR_ALL_NTA_2025_2026.pdf",
     "sourceType": "NACTVET NTA admission guidebook 2025/2026 - technical institutions",
     "sourceDatasets": [
@@ -7476,7 +7476,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://www.nactvet.go.tz/storage/public/files/GUIDEBOOK_FOR_ALL_UNIVERSITIES_2025_2026.pdf",
     "sourceType": "NACTVET admission guidebook 2025/2026 - universities offering certificate/diploma programmes",
     "sourceDatasets": [
@@ -12578,7 +12578,7 @@
     "region": "Kilimanjaro",
     "districtOrCouncil": "Moshi Municipal Council",
     "mainlandOrZanzibar": "Mainland",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://www.nactvet.go.tz/storage/public/files/GUIDEBOOK_FOR_ALL_UNIVERSITIES_2025_2026.pdf",
     "sourceType": "NACTVET admission guidebook 2025/2026 - universities offering certificate/diploma programmes",
     "sourceDatasets": [
@@ -13676,7 +13676,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "direct institution",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://www.nactvet.go.tz/storage/public/files/GUIDEBOOK_FOR_ALL_UNIVERSITIES_2025_2026.pdf",
     "sourceType": "NACTVET admission guidebook 2025/2026 - universities offering certificate/diploma programmes",
     "sourceDatasets": [
@@ -13716,7 +13716,7 @@
     "region": "Mbeya",
     "districtOrCouncil": "Mbeya City Council",
     "mainlandOrZanzibar": "Mainland",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://www.nactvet.go.tz/storage/public/files/GUIDEBOOK_FOR_ALL_UNIVERSITIES_2025_2026.pdf",
     "sourceType": "NACTVET admission guidebook 2025/2026 - universities offering certificate/diploma programmes",
     "sourceDatasets": [
@@ -17241,7 +17241,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://www.nactvet.go.tz/storage/public/files/GUIDEBOOK_FOR_ALL_UNIVERSITIES_2025_2026.pdf",
     "sourceType": "NACTVET admission guidebook 2025/2026 - universities offering certificate/diploma programmes",
     "sourceDatasets": [
@@ -20030,7 +20030,7 @@
     "physicalLocation": "Kinondoni Municipal Council - Dar es Salaam",
     "mainlandOrZanzibar": "Mainland",
     "applicationMethod": "direct institution",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://www.nactvet.go.tz/storage/public/files/GUIDEBOOK_FOR_ALL_UNIVERSITIES_2025_2026.pdf",
     "sourceType": "NACTVET admission guidebook 2025/2026 - universities offering certificate/diploma programmes",
     "sourceDatasets": [
@@ -21478,7 +21478,7 @@
     "physicalLocation": "Songea Municipal Council - Ruvuma",
     "mainlandOrZanzibar": "Mainland",
     "applicationMethod": "CAS ; TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -21531,7 +21531,7 @@
     "physicalLocation": "Dar es Salaam",
     "mainlandOrZanzibar": "Mainland",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -21567,7 +21567,7 @@
     "institutionType": "Higher Education Institution",
     "region": "Mweka- Kilimanjaro",
     "mainlandOrZanzibar": "Mainland",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -21610,7 +21610,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -21654,7 +21654,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -21711,7 +21711,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -21760,7 +21760,7 @@
     "physicalLocation": "Arusha",
     "mainlandOrZanzibar": "Mainland",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -21806,7 +21806,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -21846,7 +21846,7 @@
     "institutionType": "Higher Education Institution",
     "region": "Dar es Salaam",
     "mainlandOrZanzibar": "Mainland",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -21895,7 +21895,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications",
     "sourceDatasets": [
@@ -21944,7 +21944,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -21991,7 +21991,7 @@
     "institutionType": "Higher Education Institution",
     "region": "Dar es Salaam",
     "mainlandOrZanzibar": "Mainland",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -22029,7 +22029,7 @@
     "physicalLocation": "Dar es Salaam",
     "mainlandOrZanzibar": "Mainland",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -22082,7 +22082,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "CAS ; TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -22131,7 +22131,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications",
     "sourceDatasets": [
@@ -22175,7 +22175,7 @@
     "physicalLocation": "Zanzibar",
     "mainlandOrZanzibar": "Zanzibar",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -22226,7 +22226,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -22265,7 +22265,7 @@
     "institutionType": "Higher Education Institution",
     "region": "Shinyanga",
     "mainlandOrZanzibar": "Mainland",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -22302,7 +22302,7 @@
     "physicalLocation": "Dodoma",
     "mainlandOrZanzibar": "Mainland",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -22353,7 +22353,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -22397,7 +22397,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -22443,7 +22443,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -22481,7 +22481,7 @@
     "institutionType": "Higher Education Institution",
     "region": "Kilimanjaro",
     "mainlandOrZanzibar": "Mainland",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -22529,7 +22529,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -22575,7 +22575,7 @@
     "institutionType": "Higher Education Institution",
     "region": "Musoma",
     "mainlandOrZanzibar": "Mainland",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -22615,7 +22615,7 @@
     "physicalLocation": "Dar es Salaam",
     "mainlandOrZanzibar": "Mainland",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -22713,7 +22713,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -22756,7 +22756,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications",
     "sourceDatasets": [
@@ -22804,7 +22804,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications",
     "sourceDatasets": [
@@ -22874,7 +22874,7 @@
     "physicalLocation": "Zanzibar",
     "mainlandOrZanzibar": "Zanzibar",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -22945,7 +22945,7 @@
     "physicalLocation": "Dodoma",
     "mainlandOrZanzibar": "Mainland",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -22994,7 +22994,7 @@
     "physicalLocation": "Dar es Salaam",
     "mainlandOrZanzibar": "Mainland",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -23050,7 +23050,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications",
     "sourceDatasets": [
@@ -23093,7 +23093,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -23149,7 +23149,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -23201,7 +23201,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -23244,7 +23244,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -23304,7 +23304,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "CAS",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -23354,7 +23354,7 @@
     "physicalLocation": "Ilala Municipal Council - Dar es Salaam",
     "mainlandOrZanzibar": "Mainland",
     "applicationMethod": "CAS",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -23401,7 +23401,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "CAS",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -23445,7 +23445,7 @@
     "physicalLocation": "Dar es Salaam",
     "mainlandOrZanzibar": "Mainland",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -23488,7 +23488,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -23545,7 +23545,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -23596,7 +23596,7 @@
     "physicalLocation": "Dar es Salaam",
     "mainlandOrZanzibar": "Mainland",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -23635,7 +23635,7 @@
     "physicalLocation": "Dar es Salaam",
     "mainlandOrZanzibar": "Mainland",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -23681,7 +23681,7 @@
     "logoStatus": "verified",
     "logoVerifiedAt": "2026-04-26",
     "applicationMethod": "TCU",
-    "hasFormFourDirectProgramme": "unknown",
+    "hasFormFourDirectProgramme": "no",
     "officialSourceUrl": "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf; https://tcu.go.tz/sites/default/files/file_uploads/guide_books/2025-07/Admissions%20Guidebook%20for%20Holders%20of%20Diploma%20or%20Equivalent%20Qualifications_2025_2026.pdf",
     "sourceType": "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications; TCU 2025/2026 Bachelor degree admission guidebook - ordinary diploma/equivalent qualifications",
     "sourceDatasets": [
@@ -23758,8 +23758,7 @@
     "searchText": "Arusha VTC arusha vtc VETA Vocational Education and Training centre Public Arusha Mainland Arusha VTC arusha vtc VETA vocational centre public Arusha Mainland",
     "programmeCount": 13,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "vocational trade",
@@ -23780,7 +23779,7 @@
       "engineering",
       "mechanical automotive"
     ],
-    "browseSearchText": "vocational certificate other needs classification other vocational trade engineering technology engineering civil built environment mechanical automotive certificate electrical beauty fashion ICT mechanical"
+    "browseSearchText": "vocational certificate other needs classification other vocational trade engineering technology engineering civil built environment mechanical automotive electrical beauty fashion ICT mechanical"
   },
   {
     "institutionName": "Busokelo DVTC",
@@ -23819,8 +23818,7 @@
     "searchText": "Busokelo DVTC busokelo dvtc VETA Vocational Education and Training centre Public Mbeya Mainland Busokelo DVTC busokelo dvtc VETA vocational centre public Mbeya Tukuyu Mainland",
     "programmeCount": 4,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "vocational trade",
@@ -23832,7 +23830,7 @@
       "beauty fashion",
       "engineering"
     ],
-    "browseSearchText": "vocational certificate vocational trade other engineering technology engineering certificate beauty fashion"
+    "browseSearchText": "vocational certificate vocational trade other engineering technology engineering beauty fashion"
   },
   {
     "institutionName": "Dakawa VTC",
@@ -23870,8 +23868,7 @@
     "searchText": "Dakawa VTC dakawa vtc VETA Vocational Education and Training centre Public Morogoro Mainland Dakawa VTC dakawa vtc VETA vocational centre public Morogoro Mainland",
     "programmeCount": 10,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "vocational trade",
@@ -23886,7 +23883,7 @@
       "civil built environment",
       "engineering"
     ],
-    "browseSearchText": "vocational certificate other needs classification other vocational trade engineering technology engineering civil built environment certificate beauty fashion"
+    "browseSearchText": "vocational certificate other needs classification other vocational trade engineering technology engineering civil built environment beauty fashion"
   },
   {
     "institutionName": "Dar es Salaam RVTSC",
@@ -23925,8 +23922,7 @@
     "searchText": "Dar es Salaam RVTSC dar es salaam rvtsc VETA Vocational Education and Training centre Public Dar es Salaam Mainland Dar es Salaam RVTSC dar es salaam rvtsc VETA vocational centre public Dar es Salaam Barabara Chang'Ombe Mainland",
     "programmeCount": 30,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "vocational trade",
@@ -23948,7 +23944,7 @@
       "beauty fashion",
       "civil built environment"
     ],
-    "browseSearchText": "vocational certificate other needs classification other vocational trade engineering technology engineering mechanical automotive ICT health allied sciences health civil built environment certificate beauty fashion electrical media mechanical"
+    "browseSearchText": "vocational certificate other needs classification other vocational trade engineering technology engineering mechanical automotive ICT health allied sciences health civil built environment beauty fashion electrical media mechanical"
   },
   {
     "institutionName": "Dodoma RVTSC",
@@ -23986,8 +23982,7 @@
     "searchText": "Dodoma RVTSC dodoma rvtsc VETA Vocational Education and Training centre Public Dodoma Mainland Dodoma RVTSC dodoma rvtsc VETA vocational centre public Dodoma Mainland",
     "programmeCount": 24,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "vocational trade",
@@ -24009,7 +24004,7 @@
       "ICT",
       "mechanical"
     ],
-    "browseSearchText": "vocational certificate vocational trade other engineering technology engineering mechanical automotive tourism hospitality tourism_hospitality other needs classification civil built environment certificate hospitality construction ICT mechanical"
+    "browseSearchText": "vocational certificate vocational trade other engineering technology engineering mechanical automotive tourism hospitality tourism_hospitality other needs classification civil built environment hospitality construction ICT mechanical"
   },
   {
     "institutionName": "Ileje DVTC",
@@ -24046,8 +24041,7 @@
     "searchText": "Ileje DVTC ileje dvtc VETA Vocational Education and Training centre Public Songwe Mainland Ileje DVTC ileje dvtc VETA vocational centre public Songwe Ileje Mainland",
     "programmeCount": 4,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "vocational trade",
@@ -24058,7 +24052,7 @@
       "other",
       "engineering"
     ],
-    "browseSearchText": "vocational certificate vocational trade other engineering technology engineering certificate"
+    "browseSearchText": "vocational certificate vocational trade other engineering technology engineering"
   },
   {
     "institutionName": "Iringa RVTSC",
@@ -24096,8 +24090,7 @@
     "searchText": "Iringa RVTSC iringa rvtsc VETA Vocational Education and Training centre Public Iringa Mainland Iringa RVTSC iringa rvtsc VETA vocational centre public Iringa Mainland",
     "programmeCount": 16,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "vocational trade",
@@ -24116,7 +24109,7 @@
       "civil built environment",
       "engineering"
     ],
-    "browseSearchText": "vocational certificate vocational trade other engineering technology engineering mechanical automotive tourism hospitality tourism_hospitality civil built environment certificate beauty fashion mechanical"
+    "browseSearchText": "vocational certificate vocational trade other engineering technology engineering mechanical automotive tourism hospitality tourism_hospitality civil built environment beauty fashion mechanical"
   },
   {
     "institutionName": "Kagera VTC",
@@ -24155,8 +24148,7 @@
     "searchText": "Kagera VTC kagera vtc VETA Vocational Education and Training centre Public Kagera Mainland Kagera VTC kagera vtc VETA vocational centre public Kagera Bukoba Mainland",
     "programmeCount": 10,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "vocational trade",
@@ -24174,7 +24166,7 @@
       "engineering",
       "mechanical"
     ],
-    "browseSearchText": "vocational certificate vocational trade other engineering technology engineering civil built environment mechanical automotive certificate beauty fashion ICT mechanical"
+    "browseSearchText": "vocational certificate vocational trade other engineering technology engineering civil built environment mechanical automotive beauty fashion ICT mechanical"
   },
   {
     "institutionName": "Kanadi VTC",
@@ -24210,8 +24202,7 @@
     "searchText": "Kanadi VTC kanadi vtc VETA Vocational Education and Training centre Public Shinyanga Mainland Kanadi VTC kanadi vtc VETA vocational centre public Simiyu Mainland",
     "programmeCount": 5,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "vocational trade",
@@ -24225,7 +24216,7 @@
       "engineering",
       "ICT"
     ],
-    "browseSearchText": "vocational certificate vocational trade other engineering technology engineering certificate beauty fashion ICT"
+    "browseSearchText": "vocational certificate vocational trade other engineering technology engineering beauty fashion ICT"
   },
   {
     "institutionName": "Kigoma RVTSC",
@@ -24263,8 +24254,7 @@
     "searchText": "Kigoma RVTSC kigoma rvtsc VETA Vocational Education and Training centre Public Kigoma Mainland Kigoma RVTSC kigoma rvtsc VETA vocational centre public Kigoma Mainland",
     "programmeCount": 21,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "vocational trade",
@@ -24286,7 +24276,7 @@
       "civil built environment",
       "electrical"
     ],
-    "browseSearchText": "vocational certificate other needs classification other vocational trade electrical electronics engineering technology engineering ICT civil built environment mechanical automotive certificate beauty fashion hospitality tourism_hospitality mechanical electrical"
+    "browseSearchText": "vocational certificate other needs classification other vocational trade electrical electronics engineering technology engineering ICT civil built environment mechanical automotive beauty fashion hospitality tourism_hospitality mechanical electrical"
   },
   {
     "institutionName": "Kihonda RVTSC",
@@ -24324,8 +24314,7 @@
     "searchText": "Kihonda RVTSC kihonda rvtsc VETA Vocational Education and Training centre Public Morogoro Mainland Kihonda RVTSC kihonda rvtsc VETA vocational centre public Morogoro Mainland",
     "programmeCount": 13,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "vocational trade",
@@ -24345,7 +24334,7 @@
       "electrical electronics",
       "mechanical"
     ],
-    "browseSearchText": "vocational certificate other needs classification other vocational trade electrical electronics engineering technology engineering mechanical automotive civil built environment certificate beauty fashion mechanical electrical"
+    "browseSearchText": "vocational certificate other needs classification other vocational trade electrical electronics engineering technology engineering mechanical automotive civil built environment beauty fashion mechanical electrical"
   },
   {
     "institutionName": "Lindi RVTSC",
@@ -24381,8 +24370,7 @@
     "searchText": "Lindi RVTSC lindi rvtsc VETA Vocational Education and Training centre Public Lindi Mainland Lindi RVTSC lindi rvtsc VETA vocational centre public Lindi Mainland",
     "programmeCount": 17,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "vocational trade",
@@ -24404,7 +24392,7 @@
       "beauty fashion",
       "business"
     ],
-    "browseSearchText": "vocational certificate business finance management business vocational trade other engineering technology engineering tourism hospitality tourism_hospitality civil built environment mechanical automotive ICT certificate beauty fashion hospitality health mechanical"
+    "browseSearchText": "vocational certificate business finance management business vocational trade other engineering technology engineering tourism hospitality tourism_hospitality civil built environment mechanical automotive ICT beauty fashion hospitality health mechanical"
   },
   {
     "institutionName": "Makete VTC",
@@ -24489,8 +24477,7 @@
     "searchText": "Manyara RVTSC manyara rvtsc VETA Vocational Education and Training centre Public Manyara Mainland Manyara RVTSC manyara rvtsc VETA vocational centre public Manyara Babati Mainland",
     "programmeCount": 11,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "vocational trade",
@@ -24509,7 +24496,7 @@
       "ICT",
       "mechanical"
     ],
-    "browseSearchText": "vocational certificate other needs classification other vocational trade engineering technology engineering health allied sciences health civil built environment mechanical automotive certificate ICT mechanical"
+    "browseSearchText": "vocational certificate other needs classification other vocational trade engineering technology engineering health allied sciences health civil built environment mechanical automotive ICT mechanical"
   },
   {
     "institutionName": "Mara VTC",
@@ -24548,7 +24535,6 @@
     "searchText": "Mara VTC mara vtc VETA Vocational Education and Training centre Public Mara Mainland Mara VTC mara vtc VETA vocational centre public Mara Musoma Mainland",
     "programmeCount": 18,
     "awardLevels": [
-      "certificate",
       "vocational certificate"
     ],
     "fieldCategories": [
@@ -24571,7 +24557,7 @@
       "construction",
       "electrical electronics"
     ],
-    "browseSearchText": "vocational certificate vocational trade electrical electronics other engineering technology engineering civil built environment mechanical automotive certificate construction beauty fashion hospitality tourism_hospitality ICT mechanical"
+    "browseSearchText": "vocational certificate vocational trade electrical electronics other engineering technology engineering civil built environment mechanical automotive construction beauty fashion hospitality tourism_hospitality ICT mechanical"
   },
   {
     "institutionName": "Mbeya RVTCS",
@@ -24661,8 +24647,7 @@
     "searchText": "Mikumi VTC mikumi vtc VETA Vocational Education and Training centre Public Morogoro Mainland Mikumi VTC mikumi vtc VETA vocational centre public Morogoro Mainland",
     "programmeCount": 18,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "tourism hospitality",
@@ -24683,7 +24668,7 @@
       "engineering",
       "mechanical"
     ],
-    "browseSearchText": "vocational certificate vocational trade other tourism hospitality tourism_hospitality engineering technology engineering mechanical automotive other needs classification ICT civil built environment certificate tourism hospitality mechanical"
+    "browseSearchText": "vocational certificate vocational trade other tourism hospitality tourism_hospitality engineering technology engineering mechanical automotive other needs classification ICT civil built environment tourism hospitality mechanical"
   },
   {
     "institutionName": "Moshi RVTSC",
@@ -24722,8 +24707,7 @@
     "searchText": "Moshi RVTSC moshi rvtsc VETA Vocational Education and Training centre Public Kilimanjaro Mainland Moshi RVTSC moshi rvtsc VETA vocational centre public Kilimanjaro Moshi Mainland",
     "programmeCount": 22,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "other needs classification",
@@ -24745,7 +24729,7 @@
       "ICT",
       "tourism_hospitality"
     ],
-    "browseSearchText": "vocational certificate other needs classification other engineering technology engineering vocational trade electrical electronics mechanical automotive tourism hospitality tourism_hospitality certificate mechanical electrical ICT"
+    "browseSearchText": "vocational certificate other needs classification other engineering technology engineering vocational trade electrical electronics mechanical automotive tourism hospitality tourism_hospitality mechanical electrical ICT"
   },
   {
     "institutionName": "Mpanda VTC",
@@ -24784,8 +24768,7 @@
     "searchText": "Mpanda VTC mpanda vtc VETA Vocational Education and Training centre Public Katavi Mainland Mpanda VTC mpanda vtc VETA vocational centre public Katavi Barabara Ya Shanwe Mainland",
     "programmeCount": 14,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "vocational trade",
@@ -24807,7 +24790,7 @@
       "engineering",
       "ICT"
     ],
-    "browseSearchText": "vocational certificate other needs classification other vocational trade engineering technology engineering civil built environment mechanical automotive certificate beauty fashion electrical mechanical ICT"
+    "browseSearchText": "vocational certificate other needs classification other vocational trade engineering technology engineering civil built environment mechanical automotive beauty fashion electrical mechanical ICT"
   },
   {
     "institutionName": "Mtwara RVTSC",
@@ -24846,8 +24829,7 @@
     "searchText": "Mtwara RVTSC mtwara rvtsc VETA Vocational Education and Training centre Public Mtwara Mainland Mtwara RVTSC mtwara rvtsc VETA vocational centre public Mtwara Shangani Mainland",
     "programmeCount": 19,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "vocational trade",
@@ -24869,7 +24851,7 @@
       "civil built environment",
       "electrical electronics"
     ],
-    "browseSearchText": "vocational certificate vocational trade electrical electronics business finance management business other engineering technology engineering tourism hospitality tourism_hospitality health allied sciences health civil built environment mechanical automotive certificate beauty fashion hospitality ICT"
+    "browseSearchText": "vocational certificate vocational trade electrical electronics business finance management business other engineering technology engineering tourism hospitality tourism_hospitality health allied sciences health civil built environment mechanical automotive beauty fashion hospitality ICT"
   },
   {
     "institutionName": "Mwanza RVTSC",
@@ -24907,8 +24889,7 @@
     "searchText": "Mwanza RVTSC mwanza rvtsc VETA Vocational Education and Training centre Public Mwanza Mainland Mwanza RVTSC mwanza rvtsc VETA vocational centre public Mwanza Mainland",
     "programmeCount": 14,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "vocational trade",
@@ -24927,7 +24908,7 @@
       "mechanical",
       "tourism_hospitality"
     ],
-    "browseSearchText": "vocational certificate vocational trade other engineering technology engineering mechanical automotive tourism hospitality tourism_hospitality other needs classification civil built environment certificate beauty fashion mechanical"
+    "browseSearchText": "vocational certificate vocational trade other engineering technology engineering mechanical automotive tourism hospitality tourism_hospitality other needs classification civil built environment beauty fashion mechanical"
   },
   {
     "institutionName": "Namtumbo DVTC",
@@ -24964,8 +24945,7 @@
     "searchText": "Namtumbo DVTC namtumbo dvtc VETA Vocational Education and Training centre Public Ruvuma Mainland Namtumbo DVTC namtumbo dvtc VETA vocational centre public Ruvuma Namtumbo Mainland",
     "programmeCount": 11,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "vocational trade",
@@ -24985,7 +24965,7 @@
       "engineering",
       "mechanical"
     ],
-    "browseSearchText": "vocational certificate vocational trade other engineering technology engineering other needs classification civil built environment certificate electrical beauty fashion ICT mechanical"
+    "browseSearchText": "vocational certificate vocational trade other engineering technology engineering other needs classification civil built environment electrical beauty fashion ICT mechanical"
   },
   {
     "institutionName": "Nkasi DVTC",
@@ -25022,7 +25002,6 @@
     "searchText": "Nkasi DVTC nkasi dvtc VETA Vocational Education and Training centre Public Rukwa Mainland Nkasi DVTC nkasi dvtc VETA vocational centre public Katavi Nkasi Mainland",
     "programmeCount": 8,
     "awardLevels": [
-      "certificate",
       "vocational certificate"
     ],
     "fieldCategories": [
@@ -25041,7 +25020,7 @@
       "ICT",
       "mechanical"
     ],
-    "browseSearchText": "vocational certificate vocational trade other engineering technology engineering certificate construction beauty fashion mechanical ICT"
+    "browseSearchText": "vocational certificate vocational trade other engineering technology engineering construction beauty fashion mechanical ICT"
   },
   {
     "institutionName": "Nyamidaho VTC",
@@ -25078,8 +25057,7 @@
     "searchText": "Nyamidaho VTC nyamidaho vtc VETA Vocational Education and Training centre Public Kigoma Mainland Nyamidaho VTC nyamidaho vtc VETA vocational centre public Kigoma Kasulu Mainland",
     "programmeCount": 6,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "vocational trade",
@@ -25094,7 +25072,7 @@
       "engineering",
       "ICT"
     ],
-    "browseSearchText": "vocational certificate vocational trade other engineering technology engineering civil built environment certificate beauty fashion ICT"
+    "browseSearchText": "vocational certificate vocational trade other engineering technology engineering civil built environment beauty fashion ICT"
   },
   {
     "institutionName": "Pwani RVTSC",
@@ -25132,8 +25110,7 @@
     "searchText": "Pwani RVTSC pwani rvtsc VETA Vocational Education and Training centre Public Pwani Mainland Pwani RVTSC pwani rvtsc VETA vocational centre public Pwani Kongowe, Kibaha Mainland",
     "programmeCount": 11,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "vocational trade",
@@ -25150,7 +25127,7 @@
       "ICT",
       "mechanical automotive"
     ],
-    "browseSearchText": "vocational certificate vocational trade electrical electronics other engineering technology engineering health allied sciences health mechanical automotive certificate ICT"
+    "browseSearchText": "vocational certificate vocational trade electrical electronics other engineering technology engineering health allied sciences health mechanical automotive ICT"
   },
   {
     "institutionName": "Shinyanga VTC",
@@ -25188,8 +25165,7 @@
     "searchText": "Shinyanga VTC shinyanga vtc VETA Vocational Education and Training centre Public Shinyanga Mainland Shinyanga VTC shinyanga vtc VETA vocational centre public Shinyanga Mainland",
     "programmeCount": 13,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "vocational trade",
@@ -25205,7 +25181,7 @@
       "ICT",
       "mechanical automotive"
     ],
-    "browseSearchText": "vocational certificate vocational trade other engineering technology engineering other needs classification civil built environment mechanical automotive certificate ICT"
+    "browseSearchText": "vocational certificate vocational trade other engineering technology engineering other needs classification civil built environment mechanical automotive ICT"
   },
   {
     "institutionName": "Singida VTC",
@@ -25243,8 +25219,7 @@
     "searchText": "Singida VTC singida vtc VETA Vocational Education and Training centre Public Singida Mainland Singida VTC singida vtc VETA vocational centre public Singida Mainland",
     "programmeCount": 13,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "vocational trade",
@@ -25265,7 +25240,7 @@
       "ICT",
       "mechanical"
     ],
-    "browseSearchText": "vocational certificate agriculture fisheries livestock agriculture vocational trade other engineering technology engineering civil built environment mechanical automotive certificate beauty fashion ICT mechanical"
+    "browseSearchText": "vocational certificate agriculture fisheries livestock agriculture vocational trade other engineering technology engineering civil built environment mechanical automotive beauty fashion ICT mechanical"
   },
   {
     "institutionName": "Songea VTC",
@@ -25304,7 +25279,6 @@
     "searchText": "Songea VTC songea vtc VETA Vocational Education and Training centre Public Ruvuma Mainland Songea VTC songea vtc VETA vocational centre public Ruvuma Songea Mainland",
     "programmeCount": 17,
     "awardLevels": [
-      "certificate",
       "vocational certificate"
     ],
     "fieldCategories": [
@@ -25326,7 +25300,7 @@
       "electrical electronics",
       "engineering"
     ],
-    "browseSearchText": "vocational certificate vocational trade electrical electronics other engineering technology engineering civil built environment mechanical automotive certificate ICT hospitality tourism_hospitality construction mechanical"
+    "browseSearchText": "vocational certificate vocational trade electrical electronics other engineering technology engineering civil built environment mechanical automotive ICT hospitality tourism_hospitality construction mechanical"
   },
   {
     "institutionName": "Tabora RVTSC",
@@ -25364,8 +25338,7 @@
     "searchText": "Tabora RVTSC tabora rvtsc VETA Vocational Education and Training centre Public Tabora Mainland Tabora RVTSC tabora rvtsc VETA vocational centre public Tabora Mainland",
     "programmeCount": 13,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "vocational trade",
@@ -25384,7 +25357,7 @@
       "engineering",
       "mechanical"
     ],
-    "browseSearchText": "vocational certificate other needs classification other vocational trade electrical electronics engineering technology engineering civil built environment mechanical automotive certificate beauty fashion mechanical"
+    "browseSearchText": "vocational certificate other needs classification other vocational trade electrical electronics engineering technology engineering civil built environment mechanical automotive beauty fashion mechanical"
   },
   {
     "institutionName": "Tanga RVTSC",
@@ -25422,8 +25395,7 @@
     "searchText": "Tanga RVTSC tanga rvtsc VETA Vocational Education and Training centre Public Tanga Mainland Tanga RVTSC tanga rvtsc VETA vocational centre public Tanga Mainland",
     "programmeCount": 21,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "vocational trade",
@@ -25445,7 +25417,7 @@
       "construction",
       "electrical electronics"
     ],
-    "browseSearchText": "vocational certificate other needs classification other vocational trade electrical electronics engineering technology engineering mechanical automotive tourism hospitality tourism_hospitality civil built environment certificate construction beauty fashion mechanical ICT"
+    "browseSearchText": "vocational certificate other needs classification other vocational trade electrical electronics engineering technology engineering mechanical automotive tourism hospitality tourism_hospitality civil built environment construction beauty fashion mechanical ICT"
   },
   {
     "institutionName": "Ulyankulu VTC",
@@ -25483,8 +25455,7 @@
     "searchText": "Ulyankulu VTC ulyankulu vtc VETA Vocational Education and Training centre Public Tabora Mainland Ulyankulu VTC ulyankulu vtc VETA vocational centre public Tabora Mainland",
     "programmeCount": 12,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "vocational trade",
@@ -25504,7 +25475,7 @@
       "ICT",
       "mechanical automotive"
     ],
-    "browseSearchText": "vocational certificate vocational trade other engineering technology engineering civil built environment mechanical automotive certificate beauty fashion construction mechanical ICT"
+    "browseSearchText": "vocational certificate vocational trade other engineering technology engineering civil built environment mechanical automotive beauty fashion construction mechanical ICT"
   },
   {
     "institutionName": "Urambo DVTC",
@@ -25541,8 +25512,7 @@
     "searchText": "Urambo DVTC urambo dvtc VETA Vocational Education and Training centre Public Tabora Mainland Urambo DVTC urambo dvtc VETA vocational centre public Tabora Urambo Mainland",
     "programmeCount": 6,
     "awardLevels": [
-      "vocational certificate",
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "vocational trade",
@@ -25557,7 +25527,7 @@
       "engineering",
       "ICT"
     ],
-    "browseSearchText": "vocational certificate vocational trade other engineering technology engineering civil built environment certificate beauty fashion ICT"
+    "browseSearchText": "vocational certificate vocational trade other engineering technology engineering civil built environment beauty fashion ICT"
   },
   {
     "institutionName": "VETA Kipawa Centre of ICT",
@@ -25639,7 +25609,6 @@
     "programmeCount": 33,
     "awardLevels": [
       "vocational certificate",
-      "certificate",
       "short course"
     ],
     "fieldCategories": [
@@ -25662,7 +25631,7 @@
       "electrical",
       "electrical electronics"
     ],
-    "browseSearchText": "vocational certificate vocational trade electrical electronics other agriculture fisheries livestock agriculture engineering technology engineering other needs classification tourism hospitality tourism_hospitality arts media communication ICT mechanical automotive short course mechanical hospitality tourism certificate construction electrical beauty fashion"
+    "browseSearchText": "vocational certificate vocational trade electrical electronics other agriculture fisheries livestock agriculture engineering technology engineering other needs classification tourism hospitality tourism_hospitality arts media communication ICT mechanical automotive short course mechanical hospitality tourism construction electrical beauty fashion"
   },
   {
     "institutionName": "VTC-Makunduchi",
@@ -25698,7 +25667,6 @@
     "programmeCount": 30,
     "awardLevels": [
       "vocational certificate",
-      "certificate",
       "short course"
     ],
     "fieldCategories": [
@@ -25721,7 +25689,7 @@
       "other",
       "mechanical automotive"
     ],
-    "browseSearchText": "vocational certificate other needs classification other engineering technology engineering agriculture tourism hospitality tourism_hospitality short course arts media communication ICT agriculture fisheries livestock vocational trade mechanical automotive electrical hospitality beauty fashion tourism certificate"
+    "browseSearchText": "vocational certificate other needs classification other engineering technology engineering agriculture tourism hospitality tourism_hospitality short course arts media communication ICT agriculture fisheries livestock vocational trade mechanical automotive electrical hospitality beauty fashion tourism"
   },
   {
     "institutionName": "VTC-Mkokotoni",
@@ -28495,7 +28463,7 @@
     "searchText": "Karatu DVTC karatu dvtc VETA vocational centre public Arusha Mainland",
     "programmeCount": 3,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "beauty fashion",
@@ -28507,7 +28475,7 @@
       "electrical",
       "mechanical"
     ],
-    "browseSearchText": "certificate beauty fashion electrical mechanical"
+    "browseSearchText": "vocational certificate beauty fashion electrical mechanical"
   },
   {
     "institutionName": "Longido DVTC",
@@ -28536,7 +28504,7 @@
     "searchText": "Longido DVTC longido dvtc VETA vocational centre public Arusha Longido Mainland",
     "programmeCount": 2,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "construction",
@@ -28546,7 +28514,7 @@
       "construction",
       "electrical"
     ],
-    "browseSearchText": "certificate electrical construction"
+    "browseSearchText": "vocational certificate electrical construction"
   },
   {
     "institutionName": "Monduli DVTC",
@@ -28575,7 +28543,7 @@
     "searchText": "Monduli DVTC monduli dvtc VETA vocational centre public Arusha Monduli Mainland",
     "programmeCount": 2,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "beauty fashion",
@@ -28585,7 +28553,7 @@
       "beauty fashion",
       "construction"
     ],
-    "browseSearchText": "certificate beauty fashion construction"
+    "browseSearchText": "vocational certificate beauty fashion construction"
   },
   {
     "institutionName": "Ngorongoro DVTC",
@@ -28614,7 +28582,7 @@
     "searchText": "Ngorongoro DVTC ngorongoro dvtc VETA vocational centre public Arusha Loliondo Mainland",
     "programmeCount": 3,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "beauty fashion",
@@ -28626,7 +28594,7 @@
       "construction",
       "electrical"
     ],
-    "browseSearchText": "certificate beauty fashion electrical construction"
+    "browseSearchText": "vocational certificate beauty fashion electrical construction"
   },
   {
     "institutionName": "Ngorongoro Teachers College",
@@ -28720,7 +28688,7 @@
     "searchText": "Kipawa ICT Centre kipawa ict centre VETA vocational centre public Dar es Salaam Mainland",
     "programmeCount": 4,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "ICT"
@@ -28728,7 +28696,7 @@
     "courseFamilies": [
       "ICT"
     ],
-    "browseSearchText": "certificate ICT"
+    "browseSearchText": "vocational certificate ICT"
   },
   {
     "institutionName": "NATIONAL COLLEGE OF TOURISM",
@@ -28829,7 +28797,7 @@
     "searchText": "Bahi DVTC bahi dvtc VETA vocational centre public Dodoma Bahi Mainland",
     "programmeCount": 2,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "construction",
@@ -28839,7 +28807,7 @@
       "construction",
       "mechanical"
     ],
-    "browseSearchText": "certificate construction mechanical"
+    "browseSearchText": "vocational certificate construction mechanical"
   },
   {
     "institutionName": "Chemba DVTC",
@@ -28868,7 +28836,7 @@
     "searchText": "Chemba DVTC chemba dvtc VETA vocational centre public Dodoma Chemba Mainland",
     "programmeCount": 3,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "beauty fashion",
@@ -28880,7 +28848,7 @@
       "construction",
       "electrical"
     ],
-    "browseSearchText": "certificate beauty fashion electrical construction"
+    "browseSearchText": "vocational certificate beauty fashion electrical construction"
   },
   {
     "institutionName": "Kongwa DVTC",
@@ -28909,7 +28877,7 @@
     "searchText": "Kongwa DVTC kongwa dvtc VETA vocational centre public Dodoma Kongwa Mainland",
     "programmeCount": 6,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "construction",
@@ -28925,7 +28893,7 @@
       "mechanical",
       "other"
     ],
-    "browseSearchText": "certificate construction other electrical mechanical ICT"
+    "browseSearchText": "vocational certificate construction other electrical mechanical ICT"
   },
   {
     "institutionName": "Mpwapwa Teachers College",
@@ -28994,7 +28962,7 @@
     "searchText": "Chato DVTC chato dvtc VETA vocational centre public Geita Chato Mainland",
     "programmeCount": 9,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "mechanical",
@@ -29016,7 +28984,7 @@
       "other",
       "tourism_hospitality"
     ],
-    "browseSearchText": "certificate agriculture beauty fashion electrical hospitality tourism_hospitality other ICT construction mechanical"
+    "browseSearchText": "vocational certificate agriculture beauty fashion electrical hospitality tourism_hospitality other ICT construction mechanical"
   },
   {
     "institutionName": "Geita RVTSC",
@@ -29044,7 +29012,7 @@
     "searchText": "Geita RVTSC geita rvtsc VETA vocational centre public Geita Mainland",
     "programmeCount": 6,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "construction",
@@ -29058,7 +29026,7 @@
       "ICT",
       "mechanical"
     ],
-    "browseSearchText": "certificate electrical construction mechanical ICT"
+    "browseSearchText": "vocational certificate electrical construction mechanical ICT"
   },
   {
     "institutionName": "Iringa DVTC",
@@ -29086,7 +29054,7 @@
     "searchText": "Iringa DVTC iringa dvtc VETA vocational centre public Iringa Mainland",
     "programmeCount": 4,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "beauty fashion",
@@ -29100,7 +29068,7 @@
       "electrical",
       "mechanical"
     ],
-    "browseSearchText": "certificate beauty fashion electrical construction mechanical"
+    "browseSearchText": "vocational certificate beauty fashion electrical construction mechanical"
   },
   {
     "institutionName": "Kagera RVTSC",
@@ -29129,7 +29097,7 @@
     "searchText": "Kagera RVTSC kagera rvtsc VETA vocational centre public Kagera Bukoba Mainland",
     "programmeCount": 7,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "mechanical",
@@ -29145,7 +29113,7 @@
       "ICT",
       "other"
     ],
-    "browseSearchText": "certificate electrical ICT mechanical construction other"
+    "browseSearchText": "vocational certificate electrical ICT mechanical construction other"
   },
   {
     "institutionName": "Karagwe VTC",
@@ -29174,7 +29142,7 @@
     "searchText": "Karagwe VTC karagwe vtc VETA vocational centre public Kagera Karagwe Mainland",
     "programmeCount": 8,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "construction",
@@ -29190,7 +29158,7 @@
       "beauty fashion",
       "ICT"
     ],
-    "browseSearchText": "certificate construction beauty fashion electrical mechanical ICT"
+    "browseSearchText": "vocational certificate construction beauty fashion electrical mechanical ICT"
   },
   {
     "institutionName": "Ndolage VTC",
@@ -29218,7 +29186,7 @@
     "searchText": "Ndolage VTC ndolage vtc VETA vocational centre public Kagera Mainland",
     "programmeCount": 4,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "beauty fashion",
@@ -29232,7 +29200,7 @@
       "electrical",
       "mechanical"
     ],
-    "browseSearchText": "certificate beauty fashion construction electrical mechanical"
+    "browseSearchText": "vocational certificate beauty fashion construction electrical mechanical"
   },
   {
     "institutionName": "Rukwa RVTSC",
@@ -29261,7 +29229,7 @@
     "searchText": "Rukwa RVTSC rukwa rvtsc VETA vocational centre public Katavi Sumbawanga Mainland",
     "programmeCount": 4,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "beauty fashion",
@@ -29275,7 +29243,7 @@
       "electrical",
       "mechanical"
     ],
-    "browseSearchText": "certificate beauty fashion electrical construction mechanical"
+    "browseSearchText": "vocational certificate beauty fashion electrical construction mechanical"
   },
   {
     "institutionName": "Buhigwe DVTC",
@@ -29304,7 +29272,7 @@
     "searchText": "Buhigwe DVTC buhigwe dvtc VETA vocational centre public Kigoma Buhigwe Mainland",
     "programmeCount": 5,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "mechanical",
@@ -29318,7 +29286,7 @@
       "construction",
       "electrical"
     ],
-    "browseSearchText": "certificate beauty fashion electrical construction mechanical"
+    "browseSearchText": "vocational certificate beauty fashion electrical construction mechanical"
   },
   {
     "institutionName": "Chuo cha Ualimu Kabanga",
@@ -29386,7 +29354,7 @@
     "searchText": "Kasulu DVTC kasulu dvtc VETA vocational centre public Kigoma Kasulu Mainland",
     "programmeCount": 6,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "mechanical",
@@ -29402,7 +29370,7 @@
       "electrical",
       "ICT"
     ],
-    "browseSearchText": "certificate beauty fashion electrical construction mechanical ICT"
+    "browseSearchText": "vocational certificate beauty fashion electrical construction mechanical ICT"
   },
   {
     "institutionName": "Uvinza DVTC",
@@ -29431,7 +29399,7 @@
     "searchText": "Uvinza DVTC uvinza dvtc VETA vocational centre public Kigoma Uvinza Mainland",
     "programmeCount": 4,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "beauty fashion",
@@ -29445,7 +29413,7 @@
       "electrical",
       "mechanical"
     ],
-    "browseSearchText": "certificate beauty fashion electrical construction mechanical"
+    "browseSearchText": "vocational certificate beauty fashion electrical construction mechanical"
   },
   {
     "institutionName": "College of African Wildlife Management Mweka (CAWM)",
@@ -29590,7 +29558,7 @@
     "searchText": "Ruangwa DVTC ruangwa dvtc VETA vocational centre public Lindi Ruangwa Mainland",
     "programmeCount": 4,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "beauty fashion",
@@ -29604,7 +29572,7 @@
       "electrical",
       "mechanical"
     ],
-    "browseSearchText": "certificate beauty fashion electrical construction mechanical"
+    "browseSearchText": "vocational certificate beauty fashion electrical construction mechanical"
   },
   {
     "institutionName": "Gorowa DVTC",
@@ -29633,7 +29601,7 @@
     "searchText": "Gorowa DVTC gorowa dvtc VETA vocational centre public Manyara Babati Mainland",
     "programmeCount": 6,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "agriculture",
@@ -29651,7 +29619,7 @@
       "mechanical",
       "other"
     ],
-    "browseSearchText": "certificate beauty fashion electrical agriculture ICT mechanical other"
+    "browseSearchText": "vocational certificate beauty fashion electrical agriculture ICT mechanical other"
   },
   {
     "institutionName": "Simanjiro VTC",
@@ -29679,7 +29647,7 @@
     "searchText": "Simanjiro VTC simanjiro vtc VETA vocational centre public Manyara Mainland",
     "programmeCount": 3,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "construction",
@@ -29689,7 +29657,7 @@
       "construction",
       "mechanical"
     ],
-    "browseSearchText": "certificate construction mechanical"
+    "browseSearchText": "vocational certificate construction mechanical"
   },
   {
     "institutionName": "BUHEMBA COMMUNITY DEVELOPMENT TRAINING INSTITUTE",
@@ -29753,7 +29721,7 @@
     "searchText": "Butiama DVTC butiama dvtc VETA vocational centre public Mara Mainland",
     "programmeCount": 4,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "beauty fashion",
@@ -29767,7 +29735,7 @@
       "electrical",
       "other"
     ],
-    "browseSearchText": "certificate beauty fashion electrical construction other"
+    "browseSearchText": "vocational certificate beauty fashion electrical construction other"
   },
   {
     "institutionName": "Chuo cha Ualimu Bunda",
@@ -29904,7 +29872,7 @@
     "searchText": "Chunya DVTC chunya dvtc VETA vocational centre public Mbeya Chunya Mainland",
     "programmeCount": 3,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "beauty fashion",
@@ -29916,7 +29884,7 @@
       "construction",
       "electrical"
     ],
-    "browseSearchText": "certificate beauty fashion electrical construction"
+    "browseSearchText": "vocational certificate beauty fashion electrical construction"
   },
   {
     "institutionName": "KAPS COMMUNITY DEVELOPMENT INSTITUTE",
@@ -29981,7 +29949,7 @@
     "searchText": "Mbarali DVTC mbarali dvtc VETA vocational centre public Mbeya Mbarali Mainland",
     "programmeCount": 6,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "mechanical",
@@ -29997,7 +29965,7 @@
       "electrical",
       "ICT"
     ],
-    "browseSearchText": "certificate beauty fashion electrical construction mechanical ICT"
+    "browseSearchText": "vocational certificate beauty fashion electrical construction mechanical ICT"
   },
   {
     "institutionName": "Mbeya Moravian",
@@ -30061,7 +30029,7 @@
     "searchText": "Mbeya RVTSC mbeya rvtsc VETA vocational centre public Mbeya Mainland",
     "programmeCount": 11,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "mechanical",
@@ -30079,7 +30047,7 @@
       "ICT",
       "tourism_hospitality"
     ],
-    "browseSearchText": "certificate other electrical construction mechanical hospitality tourism_hospitality ICT"
+    "browseSearchText": "vocational certificate other electrical construction mechanical hospitality tourism_hospitality ICT"
   },
   {
     "institutionName": "Chuo cha Ualimu Dakawa",
@@ -30217,7 +30185,7 @@
     "searchText": "Ulanga DVTC ulanga dvtc VETA vocational centre public Morogoro Ulanga Mainland",
     "programmeCount": 3,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "beauty fashion",
@@ -30229,7 +30197,7 @@
       "construction",
       "mechanical"
     ],
-    "browseSearchText": "certificate beauty fashion construction mechanical"
+    "browseSearchText": "vocational certificate beauty fashion construction mechanical"
   },
   {
     "institutionName": "Kitangali DVTC",
@@ -30257,7 +30225,7 @@
     "searchText": "Kitangali DVTC kitangali dvtc VETA vocational centre public Mtwara Mainland",
     "programmeCount": 4,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "beauty fashion",
@@ -30271,7 +30239,7 @@
       "ICT",
       "other"
     ],
-    "browseSearchText": "certificate other beauty fashion electrical ICT"
+    "browseSearchText": "vocational certificate other beauty fashion electrical ICT"
   },
   {
     "institutionName": "Masasi DVTC",
@@ -30300,7 +30268,7 @@
     "searchText": "Masasi DVTC masasi dvtc VETA vocational centre public Mtwara Masasi Mainland",
     "programmeCount": 2,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "construction",
@@ -30310,7 +30278,7 @@
       "construction",
       "mechanical"
     ],
-    "browseSearchText": "certificate construction mechanical"
+    "browseSearchText": "vocational certificate construction mechanical"
   },
   {
     "institutionName": "Chuo cha Ualimu Butimba",
@@ -30453,7 +30421,7 @@
     "searchText": "Kwimba DVTC kwimba dvtc VETA vocational centre public Mwanza Ngudu Mainland",
     "programmeCount": 7,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "mechanical",
@@ -30467,7 +30435,7 @@
       "beauty fashion",
       "construction"
     ],
-    "browseSearchText": "certificate electrical beauty fashion construction mechanical"
+    "browseSearchText": "vocational certificate electrical beauty fashion construction mechanical"
   },
   {
     "institutionName": "SCHOOL OF LIBRARY ARCHIVES AND DOCUMENTATION STUDIES",
@@ -30537,7 +30505,7 @@
     "searchText": "Ukerewe DVTC ukerewe dvtc VETA vocational centre public Mwanza Nansio Mainland",
     "programmeCount": 6,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "mechanical",
@@ -30553,7 +30521,7 @@
       "ICT",
       "other"
     ],
-    "browseSearchText": "certificate other electrical construction mechanical ICT"
+    "browseSearchText": "vocational certificate other electrical construction mechanical ICT"
   },
   {
     "institutionName": "AMANI COLLEGE OF MANAGEMENT AND TECHNOLOGY",
@@ -30620,7 +30588,7 @@
     "searchText": "Makete DVTC makete dvtc VETA vocational centre public Njombe Makete Mainland",
     "programmeCount": 4,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "construction",
@@ -30632,7 +30600,7 @@
       "beauty fashion",
       "mechanical"
     ],
-    "browseSearchText": "certificate construction beauty fashion mechanical"
+    "browseSearchText": "vocational certificate construction beauty fashion mechanical"
   },
   {
     "institutionName": "Njombe RVTSC",
@@ -30660,7 +30628,7 @@
     "searchText": "Njombe RVTSC njombe rvtsc VETA vocational centre public Njombe Mainland",
     "programmeCount": 5,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "beauty fashion",
@@ -30676,7 +30644,7 @@
       "ICT",
       "mechanical"
     ],
-    "browseSearchText": "certificate beauty fashion electrical ICT construction mechanical"
+    "browseSearchText": "vocational certificate beauty fashion electrical ICT construction mechanical"
   },
   {
     "institutionName": "Wanging'ombe DVTC",
@@ -30704,7 +30672,7 @@
     "searchText": "Wanging'ombe DVTC wanging ombe dvtc VETA vocational centre public Njombe Mainland",
     "programmeCount": 3,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "beauty fashion",
@@ -30716,7 +30684,7 @@
       "construction",
       "electrical"
     ],
-    "browseSearchText": "certificate beauty fashion electrical construction"
+    "browseSearchText": "vocational certificate beauty fashion electrical construction"
   },
   {
     "institutionName": "Mafia DVTC",
@@ -30744,7 +30712,7 @@
     "searchText": "Mafia DVTC mafia dvtc VETA vocational centre public Pwani Mainland",
     "programmeCount": 4,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "beauty fashion",
@@ -30758,7 +30726,7 @@
       "electrical",
       "tourism_hospitality"
     ],
-    "browseSearchText": "certificate beauty fashion hospitality tourism_hospitality construction electrical"
+    "browseSearchText": "vocational certificate beauty fashion hospitality tourism_hospitality construction electrical"
   },
   {
     "institutionName": "Rufiji DVTC",
@@ -30787,7 +30755,7 @@
     "searchText": "Rufiji DVTC rufiji dvtc VETA vocational centre public Pwani Rufiji Mainland",
     "programmeCount": 3,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "construction",
@@ -30799,7 +30767,7 @@
       "ICT",
       "mechanical"
     ],
-    "browseSearchText": "certificate construction ICT mechanical"
+    "browseSearchText": "vocational certificate construction ICT mechanical"
   },
   {
     "institutionName": "Rukwa",
@@ -30900,7 +30868,7 @@
     "searchText": "Nyasa DVTC nyasa dvtc VETA vocational centre public Ruvuma Nyasa Mainland",
     "programmeCount": 6,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "construction",
@@ -30916,7 +30884,7 @@
       "ICT",
       "mechanical"
     ],
-    "browseSearchText": "certificate construction beauty fashion electrical mechanical ICT"
+    "browseSearchText": "vocational certificate construction beauty fashion electrical mechanical ICT"
   },
   {
     "institutionName": "Chuo cha Ualimu Shinyanga",
@@ -31015,7 +30983,7 @@
     "searchText": "Kishapu DVTC kishapu dvtc VETA vocational centre public Simiyu Kishapu Mainland",
     "programmeCount": 2,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "beauty fashion",
@@ -31025,7 +30993,7 @@
       "beauty fashion",
       "electrical"
     ],
-    "browseSearchText": "certificate beauty fashion electrical"
+    "browseSearchText": "vocational certificate beauty fashion electrical"
   },
   {
     "institutionName": "Simiyu RVTSC",
@@ -31054,7 +31022,7 @@
     "searchText": "Simiyu RVTSC simiyu rvtsc VETA vocational centre public Simiyu Bariadi Mainland",
     "programmeCount": 4,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "mechanical",
@@ -31066,7 +31034,7 @@
       "beauty fashion",
       "electrical"
     ],
-    "browseSearchText": "certificate beauty fashion electrical mechanical"
+    "browseSearchText": "vocational certificate beauty fashion electrical mechanical"
   },
   {
     "institutionName": "Ikungi DVTC",
@@ -31094,7 +31062,7 @@
     "searchText": "Ikungi DVTC ikungi dvtc VETA vocational centre public Singida Mainland",
     "programmeCount": 2,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "beauty fashion",
@@ -31104,7 +31072,7 @@
       "beauty fashion",
       "electrical"
     ],
-    "browseSearchText": "certificate beauty fashion electrical"
+    "browseSearchText": "vocational certificate beauty fashion electrical"
   },
   {
     "institutionName": "Chuo cha Ualimu Tabora",
@@ -31168,7 +31136,7 @@
     "searchText": "Igunga DVTC igunga dvtc VETA vocational centre public Tabora Igunga Mainland",
     "programmeCount": 3,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "beauty fashion",
@@ -31180,7 +31148,7 @@
       "electrical",
       "mechanical"
     ],
-    "browseSearchText": "certificate beauty fashion electrical mechanical"
+    "browseSearchText": "vocational certificate beauty fashion electrical mechanical"
   },
   {
     "institutionName": "MINERAL RESOURCE INSTITUTE",
@@ -31245,7 +31213,7 @@
     "searchText": "Uyui DVTC uyui dvtc VETA vocational centre public Tabora Uyui Mainland",
     "programmeCount": 3,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "beauty fashion",
@@ -31257,7 +31225,7 @@
       "construction",
       "electrical"
     ],
-    "browseSearchText": "certificate beauty fashion electrical construction"
+    "browseSearchText": "vocational certificate beauty fashion electrical construction"
   },
   {
     "institutionName": "INSTITUTE OF JUDICIAL ADMINISTRATION",
@@ -31322,7 +31290,7 @@
     "searchText": "Kilindi DVTC kilindi dvtc VETA vocational centre public Tanga Songe Mainland",
     "programmeCount": 3,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "beauty fashion",
@@ -31334,7 +31302,7 @@
       "construction",
       "electrical"
     ],
-    "browseSearchText": "certificate beauty fashion electrical construction"
+    "browseSearchText": "vocational certificate beauty fashion electrical construction"
   },
   {
     "institutionName": "Korogwe DVTC",
@@ -31363,7 +31331,7 @@
     "searchText": "Korogwe DVTC korogwe dvtc VETA vocational centre public Tanga Korogwe Mainland",
     "programmeCount": 4,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "mechanical",
@@ -31375,7 +31343,7 @@
       "beauty fashion",
       "electrical"
     ],
-    "browseSearchText": "certificate beauty fashion electrical mechanical"
+    "browseSearchText": "vocational certificate beauty fashion electrical mechanical"
   },
   {
     "institutionName": "Lushoto DVTC",
@@ -31404,7 +31372,7 @@
     "searchText": "Lushoto DVTC lushoto dvtc VETA vocational centre public Tanga Lushoto Mainland",
     "programmeCount": 4,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "beauty fashion",
@@ -31418,7 +31386,7 @@
       "electrical",
       "ICT"
     ],
-    "browseSearchText": "certificate beauty fashion electrical ICT construction"
+    "browseSearchText": "vocational certificate beauty fashion electrical ICT construction"
   },
   {
     "institutionName": "Mabalanga VTC",
@@ -31447,7 +31415,7 @@
     "searchText": "Mabalanga VTC mabalanga vtc VETA vocational centre public Tanga Handeni Mainland",
     "programmeCount": 6,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "construction",
@@ -31463,7 +31431,7 @@
       "mechanical",
       "other"
     ],
-    "browseSearchText": "certificate construction other electrical ICT mechanical"
+    "browseSearchText": "vocational certificate construction other electrical ICT mechanical"
   },
   {
     "institutionName": "Mkinga DVTC",
@@ -31491,7 +31459,7 @@
     "searchText": "Mkinga DVTC mkinga dvtc VETA vocational centre public Tanga Mainland",
     "programmeCount": 3,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "beauty fashion",
@@ -31503,7 +31471,7 @@
       "electrical",
       "mechanical"
     ],
-    "browseSearchText": "certificate beauty fashion electrical mechanical"
+    "browseSearchText": "vocational certificate beauty fashion electrical mechanical"
   },
   {
     "institutionName": "Pangani DVTC",
@@ -31532,7 +31500,7 @@
     "searchText": "Pangani DVTC pangani dvtc VETA vocational centre public Tanga Pangani Mainland",
     "programmeCount": 4,
     "awardLevels": [
-      "certificate"
+      "vocational certificate"
     ],
     "fieldCategories": [
       "mechanical",
@@ -31544,6 +31512,6 @@
       "beauty fashion",
       "electrical"
     ],
-    "browseSearchText": "certificate beauty fashion electrical mechanical"
+    "browseSearchText": "vocational certificate beauty fashion electrical mechanical"
   }
 ]

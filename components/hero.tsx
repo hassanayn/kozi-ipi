@@ -327,12 +327,12 @@ function CategoryStrip({ className = "" }: { className?: string }) {
         </Link>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
+      <div className="grid min-w-0 grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
         {CATEGORIES.map(({ label, hint, tone, family, query, image, imagePosition, Icon }) => (
           <Link
             key={label}
             href={`/search?q=${encodeURIComponent(query)}&family=${encodeURIComponent(family)}`}
-            className="group relative flex min-h-[154px] overflow-hidden rounded-2xl border border-brand-ink/10 bg-brand-ink p-5 text-white transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-blue/40 hover:shadow-[0_22px_42px_-26px_rgba(29,78,216,0.45)]"
+            className="group relative flex min-h-[154px] min-w-0 overflow-hidden rounded-2xl border border-brand-ink/10 bg-brand-ink p-5 text-white transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-blue/40 hover:shadow-[0_22px_42px_-26px_rgba(29,78,216,0.45)]"
           >
             <Image
               src={image}
@@ -387,28 +387,28 @@ function FeaturedInstitutions() {
         </Link>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
+      <div className="grid min-w-0 grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
         {FEATURED_INSTITUTIONS.map((institution) => (
           <Link
             key={institution.short}
             href={`/search?q=${encodeURIComponent(institution.query)}`}
-            className="group flex flex-col overflow-hidden rounded-2xl border border-brand-ink/10 bg-white transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-blue/40 hover:shadow-[0_22px_42px_-26px_rgba(29,78,216,0.45)]"
+            className="group flex min-w-0 flex-col overflow-hidden rounded-2xl border border-brand-ink/10 bg-white transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-blue/40 hover:shadow-[0_22px_42px_-26px_rgba(29,78,216,0.45)]"
           >
             <CampusImage
               src={institution.image}
               alt={`${institution.name} campus`}
               short={institution.short}
             />
-            <div className="flex flex-1 flex-col gap-1 p-4">
+            <div className="flex min-w-0 flex-1 flex-col gap-1 p-4">
               <div className="text-[11px] font-semibold uppercase tracking-wide text-brand-blue">
                 {institution.short}
               </div>
-              <h3 className="line-clamp-2 text-[13.5px] font-semibold leading-snug text-brand-ink">
+              <h3 className="line-clamp-2 min-w-0 break-words text-[13.5px] font-semibold leading-snug text-brand-ink">
                 {institution.name}
               </h3>
-              <p className="mt-auto inline-flex items-center gap-1 pt-2 text-[12px] text-brand-ink/55">
+              <p className="mt-auto inline-flex min-w-0 items-center gap-1 pt-2 text-[12px] text-brand-ink/55">
                 <PinIcon className="size-3" />
-                {institution.region}
+                <span className="min-w-0 truncate">{institution.region}</span>
               </p>
             </div>
           </Link>

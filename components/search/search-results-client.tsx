@@ -116,12 +116,12 @@ export function SearchResultsClient() {
       return
     }
 
-    routeWith(updateParams(searchParams, { q: nextQuery }))
+    routeWith(updateParams(searchParams, { q: nextQuery, family: null }))
   }
 
   function runTrending(nextQuery: string) {
     setQuery(nextQuery)
-    routeWith(updateParams(searchParams, { q: nextQuery }))
+    routeWith(updateParams(searchParams, { q: nextQuery, family: null }))
   }
 
   return (

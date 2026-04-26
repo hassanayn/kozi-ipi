@@ -248,7 +248,7 @@ const CATEGORIES: Array<{
     hint: "Teknolojia",
     tone: "yellow",
     family: "ICT",
-    query: "Tech",
+    query: "ICT",
     Icon: CodeIcon,
   },
 ]

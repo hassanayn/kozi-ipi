@@ -100,6 +100,8 @@ export function ProgrammeCard({ programme }: { programme: ProgrammeSearchResult 
 }
 
 function ProgrammeDetails({ programme }: { programme: ProgrammeSearchResult }) {
+  const officialSourceHref = normalizeExternalHref(programme.officialSourceUrl)
+  const institutionWebsiteHref = normalizeExternalHref(programme.institutionWebsite)
   const detailRows = [
     { label: "Institution", value: programme.institutionName },
     { label: "Award level", value: programme.awardLevel },
@@ -130,18 +132,30 @@ function ProgrammeDetails({ programme }: { programme: ProgrammeSearchResult }) {
         ))}
       </dl>
 
-      {programme.officialSourceUrl || programme.institutionWebsite ? (
+      {officialSourceHref || institutionWebsiteHref ? (
         <div className="mt-4 flex flex-wrap gap-2">
-          {programme.officialSourceUrl ? (
-            <DetailLink href={programme.officialSourceUrl}>Official source</DetailLink>
+          {officialSourceHref ? (
+            <DetailLink href={officialSourceHref}>Official source</DetailLink>
           ) : null}
-          {programme.institutionWebsite ? (
-            <DetailLink href={programme.institutionWebsite}>Institution website</DetailLink>
+          {institutionWebsiteHref ? (
+            <DetailLink href={institutionWebsiteHref}>Institution website</DetailLink>
           ) : null}
         </div>
       ) : null}
     </div>
   )
+}
+
+function normalizeExternalHref(href?: string) {
+  const value = href?.trim().split(/[;\s]+/)[0]
+  if (!value) return null
+  if (/^https?:\/\//i.test(value)) return value
+  if (/^\/\//.test(value)) return `https:${value}`
+  if (/^(www\.)?[a-z0-9-]+(\.[a-z0-9-]+)+(\/.*)?$/i.test(value)) {
+    return `https://${value}`
+  }
+
+  return null
 }
 
 function DetailLink({ children, href }: { children: ReactNode; href: string }) {

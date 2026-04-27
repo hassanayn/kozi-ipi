@@ -7,6 +7,7 @@ import type { QueryCtx } from "./_generated/server"
 
 const suitability = v.union(v.literal("yes"), v.literal("no"), v.literal("unknown"))
 const confidenceLevel = v.union(v.literal("high"), v.literal("medium"), v.literal("low"))
+const INSTITUTION_PROGRAMME_SCAN_LIMIT = 1000
 
 const filtersValidator = v.optional(
   v.object({
@@ -208,15 +209,16 @@ export const smartSearch = query({
             interpreted.appliedFilters.normalizedInstitutionName!,
           ),
         )
-        .take(args.limit ?? 25)
+        .take(INSTITUTION_PROGRAMME_SCAN_LIMIT)
+      const filteredResults = institutionResults.filter((programme) =>
+        matchesProgrammeFilters(programme, interpreted.appliedFilters),
+      )
 
       return {
         interpreted,
         results: await attachInstitutionLogos(
           ctx,
-          rankProgrammes(institutionResults.filter((programme) =>
-            matchesProgrammeFilters(programme, interpreted.appliedFilters),
-          ), interpreted.query).slice(0, args.limit ?? 25),
+          rankProgrammes(filteredResults, interpreted.query).slice(0, args.limit ?? 25),
         ),
       }
     }

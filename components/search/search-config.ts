@@ -35,7 +35,7 @@ export const trendingQueries = [
   "Hotel management",
 ] as const
 
-export type SearchFilterKey = "family" | "level" | "region"
+export type SearchFilterKey = "family" | "level" | "region" | "institution"
 
 export type ActiveFilter = {
   key: string

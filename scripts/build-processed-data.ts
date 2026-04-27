@@ -147,6 +147,37 @@ function blankToUndefined(value: string | undefined) {
   return trimmed ? trimmed : undefined
 }
 
+function cleanDataArtifactText(value: string | undefined) {
+  return (value ?? "")
+    .replace(/\.{5,}\s*\d*/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+}
+
+function cleanDataArtifactValue(value: string | undefined) {
+  return blankToUndefined(cleanDataArtifactText(value))
+}
+
+function cleanProgrammeNameArtifact(value: string | undefined) {
+  return blankToUndefined(
+    cleanDataArtifactText(value)
+      .replace(/\s+subjects?:.*$/i, "")
+      .replace(/\s+\d+\s+\d+\s+duration\s*\(yrs\).*$/i, ""),
+  )
+}
+
+function dataArtifactReviewReasons(label: string, value: string | undefined) {
+  const text = value ?? ""
+  const reasons: string[] = []
+  if (/\.{5,}\s*\d*/.test(text)) {
+    reasons.push(`${label}_contains_dotted_filler`)
+  }
+  if (label === "programme_name" && /\bsubjects?:\b/i.test(text)) {
+    reasons.push("programme_name_contains_entry_requirement_fragment")
+  }
+  return reasons
+}
+
 function normalizeName(value: string | undefined) {
   return (value ?? "")
     .toLowerCase()
@@ -269,11 +300,11 @@ function normalizeLogoStatus(value: string | undefined): LogoStatus | undefined 
 }
 
 function firstValue(...values: Array<string | undefined>) {
-  return values.map(blankToUndefined).find(Boolean)
+  return values.map(cleanDataArtifactValue).find(Boolean)
 }
 
 function uniqueValues(values: Array<string | undefined>) {
-  return [...new Set(values.map(blankToUndefined).filter(Boolean) as string[])]
+  return [...new Set(values.map(cleanDataArtifactValue).filter(Boolean) as string[])]
 }
 
 function mergeSuitability(left: Suitability, right: Suitability): Suitability {
@@ -309,6 +340,11 @@ function detectProgrammeReviewReasons(row: Row) {
   if (/Bachelor (Degree )?of\s*$/i.test(name.trim())) {
     reasons.push("programme_name_looks_incomplete")
   }
+  reasons.push(
+    ...dataArtifactReviewReasons("programme_name", row.programme_name),
+    ...dataArtifactReviewReasons("minimum_entry_requirements", row.minimum_entry_requirements),
+    ...dataArtifactReviewReasons("raw_requirement_text", row.raw_requirement_text),
+  )
   if ((row.award_level ?? "").trim().toLowerCase() === "unknown") {
     reasons.push("unknown_award_level")
   }
@@ -334,6 +370,10 @@ function detectInstitutionReviewReasons(row: Row) {
   if (normalizeConfidence(row.confidence_level) !== "high") {
     reasons.push("not_high_confidence")
   }
+  reasons.push(
+    ...dataArtifactReviewReasons("institution_name", row.institution_name),
+    ...dataArtifactReviewReasons("region", row.region),
+  )
 
   return reasons
 }
@@ -474,8 +514,8 @@ function findVerifiedLogo(normalizedInstitutionName: string, institutionName: st
 }
 
 const processedEntryRequirements: ProcessedEntryRequirement[] = pathwayEntryRequirements.map((row) => {
-  const programmeName = row.programme_name.trim()
-  const institutionName = row.institution_name.trim()
+  const programmeName = cleanProgrammeNameArtifact(row.programme_name) ?? ""
+  const institutionName = cleanDataArtifactText(row.institution_name)
   const normalizedProgrammeName =
     blankToUndefined(row.normalized_programme_name) ?? normalizeName(programmeName)
   const normalizedInstitutionName =
@@ -486,7 +526,7 @@ const processedEntryRequirements: ProcessedEntryRequirement[] = pathwayEntryRequ
     normalizedProgrammeName,
     institutionName,
     normalizedInstitutionName,
-    rawRequirementText: row.raw_requirement_text.trim(),
+    rawRequirementText: cleanDataArtifactText(row.raw_requirement_text),
     acceptsFormFourDirect: normalizeSuitability(row.accepts_form_four_direct),
     acceptsFormSix: normalizeSuitability(row.accepts_form_six),
     acceptsCertificate: normalizeSuitability(row.accepts_certificate),
@@ -497,21 +537,21 @@ const processedEntryRequirements: ProcessedEntryRequirement[] = pathwayEntryRequ
       row.minimum_acsee_principal_passes_if_available,
     ),
     minimumPointsIfAvailable: blankToUndefined(row.minimum_points_if_available),
-    requiredSubjects: blankToUndefined(row.required_subjects),
-    requiredSubjectGradesIfAvailable: blankToUndefined(row.required_subject_grades_if_available),
-    requiredPriorFieldIfAvailable: blankToUndefined(row.required_prior_field_if_available),
+    requiredSubjects: cleanDataArtifactValue(row.required_subjects),
+    requiredSubjectGradesIfAvailable: cleanDataArtifactValue(row.required_subject_grades_if_available),
+    requiredPriorFieldIfAvailable: cleanDataArtifactValue(row.required_prior_field_if_available),
     bridgeOrFoundationRequired: normalizeSuitability(row.bridge_or_foundation_required),
     eligibilityConfidence: normalizeConfidence(row.eligibility_confidence),
-    officialSourceUrl: row.official_source_url.trim(),
-    notes: blankToUndefined(row.notes),
+    officialSourceUrl: cleanDataArtifactText(row.official_source_url),
+    notes: cleanDataArtifactValue(row.notes),
     searchText: [
       programmeName,
       normalizedProgrammeName,
       institutionName,
       normalizedInstitutionName,
-      row.raw_requirement_text,
-      row.required_subjects,
-      row.required_prior_field_if_available,
+      cleanDataArtifactText(row.raw_requirement_text),
+      cleanDataArtifactText(row.required_subjects),
+      cleanDataArtifactText(row.required_prior_field_if_available),
     ]
       .filter(Boolean)
       .join(" "),
@@ -537,7 +577,7 @@ function buildInstitution(row: Row, sourceDataset: string): ProcessedInstitution
     ...(row.review_reasons ?? "").split(/[;,|]/),
   ])
 
-  const institutionName = row.institution_name.trim()
+  const institutionName = cleanDataArtifactText(row.institution_name)
   const normalizedInstitutionName =
     blankToUndefined(row.normalized_institution_name) ?? normalizeName(institutionName)
   const logoEnrichment = findVerifiedLogo(normalizedInstitutionName, institutionName)
@@ -557,7 +597,7 @@ function buildInstitution(row: Row, sourceDataset: string): ProcessedInstitution
     registrationNumber: firstValue(row.registration_number, nactvetEnrichment?.registration_number),
     registrationNumberAsShown: firstValue(nactvetEnrichment?.registration_number_as_shown),
     regulator: firstValue(row.regulator, nactvetEnrichment?.regulator) ?? "unknown",
-    accreditationStatus: blankToUndefined(row.accreditation_status),
+    accreditationStatus: cleanDataArtifactValue(row.accreditation_status),
     ownershipType,
     institutionType,
     institutionCategory: firstValue(row.institution_category, nactvetEnrichment?.institution_category),
@@ -568,14 +608,14 @@ function buildInstitution(row: Row, sourceDataset: string): ProcessedInstitution
       nactvetEnrichment?.["district/council"],
     ),
     physicalLocation: firstValue(row.physical_location, nactvetEnrichment?.physical_location),
-    mainlandOrZanzibar: blankToUndefined(row.mainland_or_zanzibar),
+    mainlandOrZanzibar: cleanDataArtifactValue(row.mainland_or_zanzibar),
     website: firstValue(row.website, enrichment?.website, nactvetEnrichment?.website, logoEnrichment?.website),
     admissionsUrl: firstValue(row.admissions_url, enrichment?.admissions_url),
     applicationUrl: firstValue(row.application_url, enrichment?.application_url),
-    logoUrl: blankToUndefined(logoEnrichment?.logo_url),
-    logoSourceUrl: blankToUndefined(logoEnrichment?.logo_source_url),
+    logoUrl: cleanDataArtifactValue(logoEnrichment?.logo_url),
+    logoSourceUrl: cleanDataArtifactValue(logoEnrichment?.logo_source_url),
     logoStatus: normalizeLogoStatus(logoEnrichment?.logo_status),
-    logoVerifiedAt: blankToUndefined(logoEnrichment?.last_checked_date),
+    logoVerifiedAt: cleanDataArtifactValue(logoEnrichment?.last_checked_date),
     phoneNumbers: firstValue(row.phone_numbers, enrichment?.phone_numbers, nactvetEnrichment?.phone_numbers),
     email: firstValue(row.email, enrichment?.email, nactvetEnrichment?.email),
     applicationMethod: firstValue(row.application_method, nactvetEnrichment?.application_method),
@@ -705,7 +745,7 @@ function buildProgramme(row: Row, sourceDataset: string): ProcessedProgramme {
   const rawNormalizedInstitutionName =
     blankToUndefined(row.normalized_institution_name) ?? normalizeName(row.institution_name)
   const normalizedInstitutionName = institution?.normalizedInstitutionName ?? rawNormalizedInstitutionName
-  const programmeName = row.programme_name.trim()
+  const programmeName = cleanProgrammeNameArtifact(row.programme_name) ?? ""
   const normalizedProgrammeName =
     blankToUndefined(row.normalized_programme_name) ?? normalizeName(programmeName)
   const fieldCategory = normalizeFieldCategory(row.field_category)
@@ -736,7 +776,7 @@ function buildProgramme(row: Row, sourceDataset: string): ProcessedProgramme {
     pathwayType: blankToUndefined(row.pathway_type),
     fieldCategory,
     courseFamily: keywordData.courseFamily,
-    institutionName: row.institution_name.trim(),
+    institutionName: cleanDataArtifactText(row.institution_name),
     normalizedInstitutionName,
     institutionRegistrationNumber: firstValue(
       row.institution_registration_number,
@@ -774,15 +814,15 @@ function buildProgramme(row: Row, sourceDataset: string): ProcessedProgramme {
       normalizeSuitability(nactvetEnrichment?.accepts_form_four_direct),
       routeSummary.acceptsFormFourDirect,
     ),
-    accreditationStatusIfAvailable: blankToUndefined(row.accreditation_status_if_available),
+    accreditationStatusIfAvailable: cleanDataArtifactValue(row.accreditation_status_if_available),
     applicationLink: firstValue(row.application_link, row.application_method),
-    officialSourceUrl: row.official_source_url.trim(),
-    sourceType: row.source_type.trim(),
+    officialSourceUrl: cleanDataArtifactText(row.official_source_url),
+    sourceType: cleanDataArtifactText(row.source_type),
     sourceDatasets: sourceDataset === "post_form_four" && nactvetEnrichment
       ? ["post_form_four", "nactvet_enrichment"]
       : [sourceDataset],
     confidenceLevel: normalizeConfidence(row.confidence_level),
-    lastVerifiedDate: row.last_verified_date.trim(),
+    lastVerifiedDate: cleanDataArtifactText(row.last_verified_date),
     notes: firstValue(row.notes, nactvetEnrichment?.notes),
     needsReview: normalizeBoolean(row.needs_review) || reviewReasons.length > 0,
     reviewReasons,
@@ -792,10 +832,10 @@ function buildProgramme(row: Row, sourceDataset: string): ProcessedProgramme {
       programmeName,
       normalizedProgrammeName,
       row.programme_code,
-      row.institution_name,
+      cleanDataArtifactText(row.institution_name),
       awardLevel,
-      row.qualification_level,
-      row.pathway_type,
+      cleanDataArtifactText(row.qualification_level),
+      cleanDataArtifactText(row.pathway_type),
       fieldCategory,
       keywordData.courseFamily,
       institution?.institutionType,
@@ -803,9 +843,9 @@ function buildProgramme(row: Row, sourceDataset: string): ProcessedProgramme {
       institution?.region,
       institution?.districtOrCouncil,
       row.regulator,
-      row.minimum_entry_requirements,
+      cleanDataArtifactText(row.minimum_entry_requirements),
       routeSummary.rawRequirementText,
-      row.required_subjects,
+      cleanDataArtifactText(row.required_subjects),
       routeSummary.requiredSubjects,
       routeSummary.entryRouteTypes,
       ...keywordData.careerKeywords,

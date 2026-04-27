@@ -1,11 +1,10 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import { type Preloaded, usePreloadedQuery } from "convex/react"
+import { useQuery } from "convex/react"
 
 import { InstitutionCard } from "@/components/vyuo/institution-card"
 import {
-  fieldMatches,
   popularRegions,
   type InstitutionOwnership,
   type InstitutionType,
@@ -17,55 +16,48 @@ import { api } from "@/convex/_generated/api"
 
 const PAGE_SIZE = 80
 
-export function VyuoPageClient({
-  preloadedInstitutions,
-}: {
-  preloadedInstitutions: Preloaded<typeof api.institutions.listForBrowse>
-}) {
+export function VyuoPageClient() {
   const [query, setQuery] = useState("")
   const [types, setTypes] = useState<Set<InstitutionType>>(new Set())
   const [region, setRegion] = useState("")
   const [ownership, setOwnership] = useState<InstitutionOwnership | "">("")
   const [awardLevels, setAwardLevels] = useState<Set<string>>(new Set())
   const [field, setField] = useState("")
-  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
-  const institutions = usePreloadedQuery(preloadedInstitutions)
+  const filterKey = `${query.trim()}|${[...types].sort().join(",")}|${region}|${ownership}|${[
+    ...awardLevels,
+  ]
+    .sort()
+    .join(",")}|${field}`
+  const [visibleCountState, setVisibleCountState] = useState({
+    key: filterKey,
+    count: PAGE_SIZE,
+  })
+  const visibleCount =
+    visibleCountState.key === filterKey ? visibleCountState.count : PAGE_SIZE
+  const browseResult = useQuery(api.institutions.browse, {
+    filters: {
+      ...(query.trim() ? { query: query.trim() } : {}),
+      ...(types.size > 0 ? { types: [...types] } : {}),
+      ...(region ? { region } : {}),
+      ...(ownership ? { ownership } : {}),
+      ...(awardLevels.size > 0 ? { awardLevels: [...awardLevels] } : {}),
+      ...(field ? { field } : {}),
+    },
+    limit: visibleCount,
+  })
+  const institutions = browseResult?.results ?? []
+  const totalResults = browseResult?.total ?? 0
 
   const regions = useMemo(() => {
     return [
       ...new Set([
         ...popularRegions,
-        ...institutions
-          .map((item) => item.region)
-          .filter((item) => item && item !== "Region not verified"),
+        ...(browseResult?.facets.regions ?? []),
       ]),
     ].sort()
-  }, [institutions])
+  }, [browseResult?.facets.regions])
 
-  const results = useMemo(() => {
-    const q = query.trim().toLowerCase()
-    const filtered = institutions.filter((institution) => {
-      if (types.size > 0 && !types.has(institution.type)) return false
-      if (region && institution.region !== region) return false
-      if (ownership && institution.ownership !== ownership) return false
-      if (
-        awardLevels.size > 0 &&
-        !institution.awardLevels.some((award) => awardLevels.has(award))
-      ) {
-        return false
-      }
-      if (field && !fieldMatches(institution, field)) {
-        return false
-      }
-      if (!q) return true
-
-      return institution.searchText.includes(q)
-    })
-
-    return filtered
-  }, [awardLevels, field, institutions, ownership, query, region, types])
-
-  const visibleResults = results.slice(0, visibleCount)
+  const isLoading = browseResult === undefined
 
   const hasFilters =
     types.size > 0 ||
@@ -82,7 +74,7 @@ export function VyuoPageClient({
     setAwardLevels(new Set())
     setField("")
     setQuery("")
-    setVisibleCount(PAGE_SIZE)
+    setVisibleCountState({ key: "", count: PAGE_SIZE })
   }
 
   return (
@@ -105,35 +97,42 @@ export function VyuoPageClient({
           setRegion={setRegion}
           setTypes={setTypes}
           types={types}
-          institutions={institutions}
+          counts={browseResult?.facets}
         />
 
         <section className="min-w-0 max-w-full">
           <div>
             <p className="text-[12.5px] font-semibold uppercase tracking-[0.16em] text-brand-blue">
-              <span>{results.length}</span>
+              <span>{isLoading ? "..." : totalResults}</span>
               <span className="mx-2 text-brand-ink/30">.</span>
               <span>Vyuo na Colleges</span>
             </p>
           </div>
 
-          {results.length === 0 ? (
+          {isLoading ? (
+            <LoadingState />
+          ) : totalResults === 0 ? (
             <EmptyState onClear={clearAll} />
           ) : (
             <>
               <div className="mt-6 grid min-w-0 gap-4 md:grid-cols-2">
-                {visibleResults.map((institution) => (
+                {institutions.map((institution) => (
                   <InstitutionCard institution={institution} key={institution.id} />
                 ))}
               </div>
-              {visibleResults.length < results.length ? (
+              {institutions.length < totalResults ? (
                 <div className="mt-7 flex justify-center">
                   <button
-                    onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}
+                    onClick={() =>
+                      setVisibleCountState({
+                        key: filterKey,
+                        count: visibleCount + PAGE_SIZE,
+                      })
+                    }
                     className="rounded-full border border-brand-ink/15 px-5 py-2 text-[13px] font-semibold text-brand-ink transition hover:border-brand-ink hover:bg-brand-ink hover:text-white"
                     type="button"
                   >
-                    Onyesha vingine {Math.min(PAGE_SIZE, results.length - visibleResults.length)}
+                    Onyesha vingine {Math.min(PAGE_SIZE, totalResults - institutions.length)}
                   </button>
                 </div>
               ) : null}
@@ -279,6 +278,19 @@ function EmptyState({ onClear }: { onClear: () => void }) {
       >
         Futa vichujio vyote
       </button>
+    </div>
+  )
+}
+
+function LoadingState() {
+  return (
+    <div className="mt-6 grid gap-4 md:grid-cols-2">
+      {[0, 1, 2, 3].map((item) => (
+        <div
+          className="h-56 animate-pulse rounded-2xl border border-brand-ink/10 bg-brand-ink/[0.03]"
+          key={item}
+        />
+      ))}
     </div>
   )
 }

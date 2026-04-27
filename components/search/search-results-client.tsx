@@ -1,8 +1,8 @@
 "use client"
 
-import { type FormEvent, useMemo, useState } from "react"
+import { type FormEvent, useEffect, useMemo, useState } from "react"
 import { useQuery } from "convex/react"
-import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 
 import { ProgrammeCard } from "@/components/search/programme-card"
 import {
@@ -22,17 +22,27 @@ const INITIAL_RESULT_LIMIT = 20
 const RESULT_LIMIT_STEP = 20
 const MAX_VISIBLE_RESULTS = 200
 
-export function SearchResultsClient() {
+export function SearchResultsClient({
+  initialSearchParams,
+}: {
+  initialSearchParams: readonly (readonly [string, string])[]
+}) {
   const router = useRouter()
   const pathname = usePathname()
-  const searchParams = useSearchParams()
+  // Keep /search server-rendered; this replaces useSearchParams without forcing a Suspense shell.
+  const [searchParamsKey, setSearchParamsKey] = useState(() =>
+    new URLSearchParams(initialSearchParams.map(([key, value]) => [key, value])).toString(),
+  )
+  const searchParams = useMemo(() => new URLSearchParams(searchParamsKey), [searchParamsKey])
   const queryFromUrl = getInitialQuery(searchParams)
   const [query, setQuery] = useState(queryFromUrl)
 
   const family = searchParams.get("family") ?? undefined
   const awardLevel = searchParams.get("level") ?? "all"
   const region = searchParams.get("region") ?? ""
-  const resultSetKey = `${queryFromUrl}|${family ?? ""}|${awardLevel}|${region}`
+  const institution = searchParams.get("institution") ?? undefined
+  const institutionLabel = searchParams.get("institutionLabel") ?? undefined
+  const resultSetKey = `${queryFromUrl}|${family ?? ""}|${awardLevel}|${region}|${institution ?? ""}|${institutionLabel ?? ""}`
   const [resultLimitState, setResultLimitState] = useState({
     key: resultSetKey,
     limit: INITIAL_RESULT_LIMIT,
@@ -45,11 +55,13 @@ export function SearchResultsClient() {
       ...(family ? { courseFamily: family } : {}),
       ...(awardLevel !== "all" ? { awardLevel } : {}),
       ...(region ? { region } : {}),
+      ...(institution ? { normalizedInstitutionName: institution } : {}),
     }
-  }, [awardLevel, family, region])
+  }, [awardLevel, family, institution, region])
 
   const activeQuery = queryFromUrl
-  const hasFilters = Boolean(family) || awardLevel !== "all" || Boolean(region)
+  const hasFilters =
+    Boolean(family) || awardLevel !== "all" || Boolean(region) || Boolean(institution)
 
   const searchArgs = activeQuery
     ? {
@@ -97,15 +109,36 @@ export function SearchResultsClient() {
       label: region,
       clear: () => setFilter("region", null),
     },
+    institution && {
+      key: "institution",
+      label: institutionLabel ?? "Selected institution",
+      clear: () => setFilter("institution", null),
+    },
   ].filter(isActiveFilter)
+
+  useEffect(() => {
+    function syncFromLocation() {
+      setSearchParamsKey(new URLSearchParams(window.location.search).toString())
+    }
+
+    window.addEventListener("popstate", syncFromLocation)
+
+    return () => window.removeEventListener("popstate", syncFromLocation)
+  }, [])
 
   function routeWith(nextParams: URLSearchParams) {
     const queryString = nextParams.toString()
+    setSearchParamsKey(queryString)
     router.push(queryString ? `${pathname}?${queryString}` : pathname)
   }
 
   function setFilter(key: SearchFilterKey, value: string | null) {
-    routeWith(updateParams(searchParams, { [key]: value }))
+    routeWith(
+      updateParams(searchParams, {
+        [key]: value,
+        ...(key === "institution" ? { institutionLabel: null } : {}),
+      }),
+    )
   }
 
   function clearAllFilters() {
@@ -114,6 +147,8 @@ export function SearchResultsClient() {
         family: null,
         level: null,
         region: null,
+        institution: null,
+        institutionLabel: null,
       }),
     )
   }
@@ -126,12 +161,26 @@ export function SearchResultsClient() {
       return
     }
 
-    routeWith(updateParams(searchParams, { q: nextQuery, family: null }))
+    routeWith(
+      updateParams(searchParams, {
+        q: nextQuery,
+        family: null,
+        institution: null,
+        institutionLabel: null,
+      }),
+    )
   }
 
   function runTrending(nextQuery: string) {
     setQuery(nextQuery)
-    routeWith(updateParams(searchParams, { q: nextQuery, family: null }))
+    routeWith(
+      updateParams(searchParams, {
+        q: nextQuery,
+        family: null,
+        institution: null,
+        institutionLabel: null,
+      }),
+    )
   }
 
   function loadMoreResults() {

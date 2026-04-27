@@ -1,19 +1,21 @@
-import { Suspense } from "react"
-
 import { SearchResultsClient } from "@/components/search/search-results-client"
 
-export default function SearchPage() {
-  return (
-    <Suspense
-      fallback={
-        <main className="min-h-svh bg-white p-8 text-brand-ink">
-          <div className="mx-auto max-w-[1280px] rounded-2xl border border-brand-ink/10 bg-white p-8 text-brand-ink/60">
-            Loading search...
-          </div>
-        </main>
-      }
-    >
-      <SearchResultsClient />
-    </Suspense>
-  )
+type SearchPageProps = {
+  searchParams: Promise<Record<string, string | string[] | undefined>>
+}
+
+export default async function SearchPage({ searchParams }: SearchPageProps) {
+  const resolvedSearchParams = await searchParams
+
+  return <SearchResultsClient initialSearchParams={serializeSearchParams(resolvedSearchParams)} />
+}
+
+function serializeSearchParams(searchParams: Record<string, string | string[] | undefined>) {
+  return Object.entries(searchParams).flatMap(([key, value]) => {
+    if (Array.isArray(value)) {
+      return value.map((item) => [key, item] as const)
+    }
+
+    return value ? ([[key, value] as const]) : []
+  })
 }

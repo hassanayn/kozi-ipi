@@ -1,7 +1,6 @@
 import type { ReactNode } from "react"
 
 import type {
-  Institution,
   InstitutionOwnership,
   InstitutionType,
 } from "@/components/vyuo/institutions"
@@ -31,7 +30,11 @@ type VyuoFiltersProps = {
   setRegion: (value: string) => void
   setTypes: (value: Set<InstitutionType>) => void
   types: Set<InstitutionType>
-  institutions: Institution[]
+  counts?: {
+    typeCounts: Record<string, number>
+    ownershipCounts: Record<string, number>
+    awardLevelCounts: Record<string, number>
+  }
 }
 
 export function VyuoFilters({
@@ -48,7 +51,7 @@ export function VyuoFilters({
   setRegion,
   setTypes,
   types,
-  institutions,
+  counts,
 }: VyuoFiltersProps) {
   return (
     <aside className="h-fit min-w-0 max-w-full lg:sticky lg:top-6">
@@ -72,7 +75,7 @@ export function VyuoFilters({
               <CheckRow
                 key={item.key}
                 label={item.label}
-                count={institutions.filter((institution) => institution.type === item.key).length}
+                count={counts?.typeCounts[item.key] ?? 0}
                 checked={types.has(item.key)}
                 onChange={() => setTypes(toggleSet(types, item.key))}
               />
@@ -86,7 +89,7 @@ export function VyuoFilters({
             onChange={(event) => setRegion(event.target.value)}
             className="box-border h-10 w-full rounded-lg border border-brand-ink/15 bg-white px-3 text-[13px] outline-none transition focus:border-brand-blue"
           >
-            <option value="">Mkoa wote</option>
+            <option value="">All</option>
             {regions.map((item) => (
               <option key={item} value={item}>
                 {item}
@@ -101,7 +104,7 @@ export function VyuoFilters({
               <CheckRow
                 key={item}
                 label={item}
-                count={institutions.filter((institution) => institution.ownership === item).length}
+                count={counts?.ownershipCounts[item] ?? 0}
                 checked={ownership === item}
                 onChange={() => setOwnership(ownership === item ? "" : item)}
               />
@@ -115,10 +118,7 @@ export function VyuoFilters({
               <CheckRow
                 key={item}
                 label={item}
-                count={
-                  institutions.filter((institution) => institution.awardLevels.includes(item))
-                    .length
-                }
+                count={counts?.awardLevelCounts[item] ?? 0}
                 checked={awardLevels.has(item)}
                 onChange={() => setAwardLevels(toggleSet(awardLevels, item))}
               />

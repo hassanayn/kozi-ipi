@@ -5,6 +5,7 @@ export type InstitutionTone = "amber" | "blue" | "green" | "indigo" | "ink" | "r
 export type Institution = {
   id: string
   name: string
+  normalizedName: string
   short: string
   type: InstitutionType
   accredited: boolean

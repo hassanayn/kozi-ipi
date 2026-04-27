@@ -152,6 +152,7 @@ export function SearchResultsClient({
       query: submittedQuery,
       filtersJson,
       resultCount: count.count,
+      resultCountCapped: Boolean(count.capped),
       source: "search_page",
     })
   }, [count, filtersJson, isCountLoading, isResultsLoading, logSearchEvent, submittedQuery])

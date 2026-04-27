@@ -8,7 +8,6 @@ import type { useQuery } from "convex/react"
 import { familyMeta } from "@/components/search/search-config"
 import {
   ArrowRightIcon,
-  BookmarkIcon,
   ClockIcon,
   PinIcon,
 } from "@/components/search/search-icons"
@@ -20,6 +19,7 @@ type ProgrammeSearchResult = NonNullable<
 
 export function ProgrammeCard({ programme }: { programme: ProgrammeSearchResult }) {
   const meta = familyMeta(programme.courseFamily)
+  const [showDetails, setShowDetails] = useState(false)
 
   return (
     <article className="group max-w-full overflow-hidden rounded-2xl border border-brand-ink/10 bg-white p-4 transition hover:border-brand-blue/35 hover:shadow-[0_22px_50px_-32px_rgba(29,78,216,0.45)] sm:p-5">
@@ -52,13 +52,6 @@ export function ProgrammeCard({ programme }: { programme: ProgrammeSearchResult 
             </p>
           </div>
         </div>
-        <button
-          aria-label="Save programme"
-          className="grid size-9 shrink-0 place-items-center rounded-full border border-brand-ink/15 text-brand-ink/45 transition hover:border-brand-ink hover:text-brand-ink"
-          type="button"
-        >
-          <BookmarkIcon className="size-4" />
-        </button>
       </div>
 
       <div className="mt-4 flex min-w-0 flex-wrap gap-1.5 text-[12px] text-brand-ink/70">
@@ -91,13 +84,76 @@ export function ProgrammeCard({ programme }: { programme: ProgrammeSearchResult 
         </p>
         <button
           className="inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-brand-ink px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-brand-blue sm:w-auto"
+          onClick={() => setShowDetails((visible) => !visible)}
           type="button"
         >
-          View details
-          <ArrowRightIcon className="size-3.5" />
+          {showDetails ? "Hide details" : "View details"}
+          <ArrowRightIcon
+            className={`size-3.5 transition ${showDetails ? "rotate-90" : ""}`}
+          />
         </button>
       </div>
+
+      {showDetails ? <ProgrammeDetails programme={programme} /> : null}
     </article>
+  )
+}
+
+function ProgrammeDetails({ programme }: { programme: ProgrammeSearchResult }) {
+  const detailRows = [
+    { label: "Institution", value: programme.institutionName },
+    { label: "Award level", value: programme.awardLevel },
+    { label: "Field", value: programme.fieldCategory },
+    { label: "Duration", value: programme.duration ? `${programme.duration} years` : undefined },
+    { label: "Region", value: programme.region },
+    { label: "Campus", value: programme.campusLocation },
+    { label: "Study mode", value: programme.studyMode },
+    { label: "Fees", value: programme.feesIfAvailable },
+    { label: "Entry routes", value: programme.entryRouteTypes },
+    { label: "Required subjects", value: programme.requiredSubjects },
+    { label: "Regulator", value: programme.regulator },
+    { label: "Source", value: programme.sourceType },
+  ].filter((row) => row.value)
+
+  return (
+    <div className="mt-4 border-t border-brand-ink/8 pt-4">
+      <dl className="grid gap-3 sm:grid-cols-2">
+        {detailRows.map((row) => (
+          <div className="min-w-0 rounded-xl bg-brand-ink/[0.035] p-3" key={row.label}>
+            <dt className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-brand-ink/40">
+              {row.label}
+            </dt>
+            <dd className="mt-1 break-words text-[13px] leading-5 text-brand-ink/75">
+              {row.value}
+            </dd>
+          </div>
+        ))}
+      </dl>
+
+      {programme.officialSourceUrl || programme.institutionWebsite ? (
+        <div className="mt-4 flex flex-wrap gap-2">
+          {programme.officialSourceUrl ? (
+            <DetailLink href={programme.officialSourceUrl}>Official source</DetailLink>
+          ) : null}
+          {programme.institutionWebsite ? (
+            <DetailLink href={programme.institutionWebsite}>Institution website</DetailLink>
+          ) : null}
+        </div>
+      ) : null}
+    </div>
+  )
+}
+
+function DetailLink({ children, href }: { children: ReactNode; href: string }) {
+  return (
+    <a
+      className="rounded-full border border-brand-ink/15 px-3 py-1.5 text-[12px] font-semibold text-brand-ink transition hover:border-brand-blue hover:text-brand-blue"
+      href={href}
+      rel="noreferrer"
+      target="_blank"
+    >
+      {children}
+    </a>
   )
 }
 

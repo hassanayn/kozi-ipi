@@ -17,6 +17,7 @@ const filtersValidator = v.optional(
     regulator: v.optional(v.string()),
     institutionType: v.optional(v.string()),
     ownershipType: v.optional(v.string()),
+    normalizedInstitutionName: v.optional(v.string()),
     suitableForFormFourLeaver: v.optional(suitability),
     confidenceLevel: v.optional(confidenceLevel),
   }),
@@ -30,6 +31,7 @@ type ProgrammeFilters = {
   regulator?: string
   institutionType?: string
   ownershipType?: string
+  normalizedInstitutionName?: string
   suitableForFormFourLeaver?: "yes" | "no" | "unknown"
   confidenceLevel?: "high" | "medium" | "low"
 }
@@ -48,6 +50,11 @@ async function attachInstitutionLogos(ctx: QueryCtx, results: Doc<"programmes">[
 
       return {
         ...programme,
+        programmeName: cleanProgrammeName(programme.programmeName),
+        institutionName: cleanDisplayText(programme.institutionName),
+        minimumEntryRequirements: cleanDisplayText(programme.minimumEntryRequirements),
+        requiredSubjects: cleanDisplayText(programme.requiredSubjects),
+        feesIfAvailable: cleanDisplayText(programme.feesIfAvailable),
         institutionLogoUrl: institutionLogo?.logoUrl,
         institutionLogoSourceUrl: institutionLogo?.logoSourceUrl,
         institutionWebsite: institution[0]?.website,
@@ -63,7 +70,7 @@ const courseFamilyIntents = [
   },
   {
     courseFamily: "health",
-    terms: ["health", "afya", "nurse", "nursing", "hospital", "medical", "clinical"],
+    terms: ["health", "afya", "nurse", "nursing", "nesi", "hospital", "medical", "clinical"],
   },
   {
     courseFamily: "ICT",
@@ -192,6 +199,29 @@ export const smartSearch = query({
       }
     }
 
+    if (interpreted.appliedFilters.normalizedInstitutionName) {
+      const institutionResults = await ctx.db
+        .query("programmes")
+        .withIndex("by_normalizedInstitutionName", (q) =>
+          q.eq(
+            "normalizedInstitutionName",
+            interpreted.appliedFilters.normalizedInstitutionName!,
+          ),
+        )
+        .take(args.limit ?? 25)
+
+      return {
+        interpreted,
+        results: await attachInstitutionLogos(
+          ctx,
+          rankProgrammes(institutionResults.filter((programme) =>
+            matchesProgrammeFilters(programme, interpreted.appliedFilters),
+          ), interpreted.query).slice(0, args.limit ?? 25),
+        ),
+      }
+    }
+
+    const searchLimit = Math.max(args.limit ?? 25, isNursingIntent(interpreted.query) ? 80 : 25)
     const results = await ctx.db
       .query("programmes")
       .withSearchIndex("search_searchText", (q) => {
@@ -230,11 +260,14 @@ export const smartSearch = query({
 
         return search
       })
-      .take(args.limit ?? 25)
+      .take(searchLimit)
 
     return {
       interpreted,
-      results: await attachInstitutionLogos(ctx, results),
+      results: await attachInstitutionLogos(
+        ctx,
+        rankProgrammes(results, interpreted.query).slice(0, args.limit ?? 25),
+      ),
     }
   },
 })
@@ -310,6 +343,27 @@ export const smartSearchCount = query({
     }
 
     const maxCount = args.maxCount ?? 1000
+    if (interpreted.appliedFilters.normalizedInstitutionName) {
+      const results = await ctx.db
+        .query("programmes")
+        .withIndex("by_normalizedInstitutionName", (q) =>
+          q.eq(
+            "normalizedInstitutionName",
+            interpreted.appliedFilters.normalizedInstitutionName!,
+          ),
+        )
+        .take(maxCount)
+      const count = results.filter((programme) =>
+        matchesProgrammeFilters(programme, interpreted.appliedFilters),
+      ).length
+
+      return {
+        interpreted,
+        count,
+        capped: results.length === maxCount,
+      }
+    }
+
     const results = await ctx.db
       .query("programmes")
       .withSearchIndex("search_searchText", (q) => {
@@ -357,6 +411,62 @@ export const smartSearchCount = query({
     }
   },
 })
+
+function matchesProgrammeFilters(programme: Doc<"programmes">, filters: ProgrammeFilters) {
+  if (filters.region && programme.region !== filters.region) return false
+  if (filters.awardLevel && programme.awardLevel !== filters.awardLevel) return false
+  if (filters.fieldCategory && programme.fieldCategory !== filters.fieldCategory) return false
+  if (filters.courseFamily && programme.courseFamily !== filters.courseFamily) return false
+  if (filters.regulator && programme.regulator !== filters.regulator) return false
+  if (filters.institutionType && programme.institutionType !== filters.institutionType) return false
+  if (filters.ownershipType && programme.ownershipType !== filters.ownershipType) return false
+  if (
+    filters.suitableForFormFourLeaver &&
+    programme.suitableForFormFourLeaver !== filters.suitableForFormFourLeaver
+  ) {
+    return false
+  }
+  if (filters.confidenceLevel && programme.confidenceLevel !== filters.confidenceLevel) {
+    return false
+  }
+
+  return true
+}
+
+function rankProgrammes(results: Doc<"programmes">[], query: string) {
+  if (!isNursingIntent(query)) {
+    return results
+  }
+
+  return [...results].sort((left, right) => nursingScore(right) - nursingScore(left))
+}
+
+function isNursingIntent(query: string) {
+  return /\b(nurse|nursing|nesi|midwife|midwifery)\b/i.test(query)
+}
+
+function nursingScore(programme: Doc<"programmes">) {
+  const text = `${programme.programmeName} ${programme.careerKeywords.join(" ")} ${programme.swahiliKeywords.join(" ")}`.toLowerCase()
+  let score = 0
+  if (/\bnursing\b|\bnurse\b/.test(text)) score += 100
+  if (/\bmidwife\b|\bmidwifery\b/.test(text)) score += 90
+  if (/\bdoctor\b|\bmedicine\b|\bpharmacy\b/.test(text)) score -= 25
+  return score
+}
+
+function cleanProgrammeName(value: string) {
+  return cleanDisplayText(value)
+    .replace(/\s+subjects?:.*$/i, "")
+    .replace(/\s+\d+\s+\d+\s+duration\s*\(yrs\).*$/i, "")
+    .trim()
+}
+
+function cleanDisplayText(value?: string) {
+  return (value ?? "")
+    .replace(/\.{5,}\s*\d*/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+}
 
 export const byInstitution = query({
   args: {

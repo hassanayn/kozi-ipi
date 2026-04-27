@@ -448,9 +448,11 @@ function CampusImage({
         src={src}
         alt={alt}
         fill
+        loading="eager"
         sizes="(min-width: 1024px) 18vw, (min-width: 640px) 30vw, 45vw"
         className="object-cover transition-transform duration-500 group-hover:scale-105"
         onError={() => setFailed(true)}
+        unoptimized
       />
     </div>
   )

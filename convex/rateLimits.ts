@@ -1,13 +1,8 @@
-import { HOUR, MINUTE, RateLimiter } from "@convex-dev/rate-limiter"
+import { MINUTE, RateLimiter } from "@convex-dev/rate-limiter"
 
 import { components } from "./_generated/api"
 
 export const rateLimiter = new RateLimiter(components.rateLimiter, {
-  correctionSubmit: {
-    kind: "fixed window",
-    rate: 30,
-    period: HOUR,
-  },
   searchEventLog: {
     kind: "token bucket",
     rate: 600,

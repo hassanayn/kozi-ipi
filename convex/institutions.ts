@@ -17,6 +17,17 @@ const filtersValidator = v.optional(
   }),
 )
 
+const browseFiltersValidator = v.optional(
+  v.object({
+    query: v.optional(v.string()),
+    types: v.optional(v.array(v.string())),
+    region: v.optional(v.string()),
+    ownership: v.optional(v.string()),
+    awardLevels: v.optional(v.array(v.string())),
+    field: v.optional(v.string()),
+  }),
+)
+
 const fieldLabels: Record<string, string> = {
   accounting: "Accounting",
   agriculture: "Agriculture",
@@ -44,6 +55,44 @@ const fieldLabels: Record<string, string> = {
   transport: "Transport",
 }
 
+const validRegions = new Set([
+  "Arusha",
+  "Dar es Salaam",
+  "Dodoma",
+  "Geita",
+  "Iringa",
+  "Kagera",
+  "Katavi",
+  "Kigoma",
+  "Kilimanjaro",
+  "Lindi",
+  "Manyara",
+  "Mara",
+  "Mbeya",
+  "Morogoro",
+  "Mtwara",
+  "Mwanza",
+  "Njombe",
+  "Pemba North",
+  "Pemba South",
+  "Pwani",
+  "Rukwa",
+  "Ruvuma",
+  "Shinyanga",
+  "Simiyu",
+  "Singida",
+  "Songwe",
+  "Tabora",
+  "Tanga",
+  "Zanzibar",
+  "Zanzibar Central/South",
+  "Zanzibar North",
+  "Zanzibar North Pemba",
+  "Zanzibar South Pemba",
+  "Zanzibar South Unguja",
+  "Zanzibar Urban/West",
+])
+
 const tones = ["blue", "green", "amber", "indigo", "red", "ink"] as const
 
 type InstitutionType = "University" | "College" | "TVET"
@@ -62,6 +111,60 @@ export const listForBrowse = query({
       .take(limit)
 
     return institutions.map(toBrowseInstitution)
+  },
+})
+
+export const browse = query({
+  args: {
+    filters: browseFiltersValidator,
+    limit: v.optional(v.number()),
+  },
+  handler: async (ctx, args) => {
+    const limit = Math.min(Math.max(args.limit ?? 80, 1), 240)
+    const institutions = await ctx.db
+      .query("institutions")
+      .withIndex("by_programmeCount")
+      .order("desc")
+      // TODO: Replace this capped scan with indexed pagination before the catalogue exceeds 1000 institutions.
+      .take(1000)
+    const browseInstitutions = institutions.map(toBrowseInstitution)
+    const filters = args.filters
+    const query = normalize(filters?.query)
+    const types = new Set(filters?.types ?? [])
+    const awardLevels = new Set(filters?.awardLevels ?? [])
+
+    const results = browseInstitutions.filter((institution) => {
+      if (types.size > 0 && !types.has(institution.type)) return false
+      if (filters?.region && institution.region !== filters.region) return false
+      if (filters?.ownership && institution.ownership !== filters.ownership) return false
+      if (
+        awardLevels.size > 0 &&
+        !institution.awardLevels.some((award) => awardLevels.has(award))
+      ) {
+        return false
+      }
+      if (filters?.field && !fieldMatches(institution, filters.field)) return false
+      if (!query) return true
+
+      return institution.searchText.includes(query)
+    })
+
+    return {
+      results: results.slice(0, limit),
+      total: results.length,
+      facets: {
+        regions: [
+          ...new Set(
+            browseInstitutions
+              .map((institution) => institution.region)
+              .filter(isValidRegion),
+          ),
+        ].sort(),
+        typeCounts: countBy(browseInstitutions, (institution) => institution.type),
+        ownershipCounts: countBy(browseInstitutions, (institution) => institution.ownership),
+        awardLevelCounts: countByMany(browseInstitutions, (institution) => institution.awardLevels),
+      },
+    }
   },
 })
 
@@ -115,18 +218,19 @@ function toBrowseInstitution(institution: Doc<"institutions">, index: number) {
   const fields = topLabels(fieldSlugs, 4)
   const type = normalizeInstitutionType(institution.institutionType)
   const ownership = normalizeOwnership(institution.ownershipType)
-  const region = institution.region ?? "Region not verified"
+  const region = normalizeRegion(institution.region)
   const programmeCount = institution.programmeCount ?? 0
 
   return {
     id: institution._id,
-    name: institution.institutionName,
-    short: abbreviation(institution.institutionName),
+    name: cleanDisplayText(institution.institutionName),
+    normalizedName: institution.normalizedInstitutionName,
+    short: abbreviation(cleanDisplayText(institution.institutionName)),
     type,
     accredited: institution.sourceType === "regulator" || institution.confidenceLevel === "high",
     region,
     ownership,
-    blurb: institutionBlurb(type, region, programmeCount, institution.regulator),
+    blurb: institutionBlurb(type, region, programmeCount, cleanDisplayText(institution.regulator)),
     fields: fields.length > 0 ? fields : fallbackFields(institution),
     fieldSlugs: fieldSlugs.length > 0 ? fieldSlugs : fallbackFieldSlugs(institution),
     programmes: programmeCount,
@@ -242,6 +346,68 @@ function abbreviation(name: string) {
 
 function normalize(value?: string) {
   return value?.trim().toLowerCase().replace(/\s+/g, " ") ?? ""
+}
+
+type BrowseInstitution = ReturnType<typeof toBrowseInstitution>
+
+function fieldMatches(institution: BrowseInstitution, field: string) {
+  const fieldTaxonomy: Record<string, string[]> = {
+    Agriculture: ["agriculture"],
+    Business: ["business", "accounting", "procurement", "commerce", "insurance", "banking"],
+    Education: ["education", "teacher", "teaching", "languages"],
+    Engineering: [
+      "engineering",
+      "technical",
+      "mechanical",
+      "electrical",
+      "construction",
+      "transport",
+      "auto",
+      "automotive",
+    ],
+    Health: ["health", "medicine", "nursing", "pharmacy", "clinical", "laboratory"],
+    ICT: ["ict", "computer", "technology", "information technology", "software"],
+    Law: ["law"],
+    Tourism: ["tourism", "hospitality", "tour guiding", "culinary", "wildlife"],
+  }
+  const terms = fieldTaxonomy[field] ?? [field.toLowerCase()]
+  const haystack = `${institution.fieldSlugs.join(" ")} ${institution.searchText}`.toLowerCase()
+
+  return terms.some((term) => haystack.includes(term.toLowerCase()))
+}
+
+function countBy<T>(items: T[], getKey: (item: T) => string) {
+  return items.reduce<Record<string, number>>((counts, item) => {
+    const key = getKey(item)
+    counts[key] = (counts[key] ?? 0) + 1
+    return counts
+  }, {})
+}
+
+function countByMany<T>(items: T[], getKeys: (item: T) => string[]) {
+  return items.reduce<Record<string, number>>((counts, item) => {
+    for (const key of getKeys(item)) {
+      counts[key] = (counts[key] ?? 0) + 1
+    }
+    return counts
+  }, {})
+}
+
+function cleanDisplayText(value?: string) {
+  return (value ?? "")
+    .replace(/\.{5,}\s*\d*/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+}
+
+function normalizeRegion(value?: string) {
+  const region = cleanDisplayText(value)
+
+  return isValidRegion(region) ? region : "Region not verified"
+}
+
+function isValidRegion(value?: string) {
+  return Boolean(value && validRegions.has(value))
 }
 
 function titleCase(value: string) {

@@ -53,7 +53,9 @@ export function InstitutionCard({ institution }: { institution: Institution }) {
             : "Programu zinahakikiwa"}
         </p>
         <Link
-          href={`/search?q=${encodeURIComponent(institution.name)}`}
+          href={`/search?q=${encodeURIComponent(institution.name)}&institution=${encodeURIComponent(
+            institution.normalizedName,
+          )}&institutionLabel=${encodeURIComponent(institution.name)}`}
           className="inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-brand-ink/15 px-3.5 py-1.5 text-[12.5px] font-semibold text-brand-ink transition group-hover:border-brand-ink group-hover:bg-brand-ink group-hover:text-white sm:w-auto"
         >
           Tazama chuo

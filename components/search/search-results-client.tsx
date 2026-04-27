@@ -1,7 +1,7 @@
 "use client"
 
-import { type FormEvent, useEffect, useMemo, useState } from "react"
-import { useQuery } from "convex/react"
+import { type FormEvent, useEffect, useMemo, useRef, useState } from "react"
+import { useMutation, useQuery } from "convex/react"
 import { usePathname, useRouter } from "next/navigation"
 
 import { ProgrammeCard } from "@/components/search/programme-card"
@@ -29,11 +29,14 @@ export function SearchResultsClient({
 }) {
   const router = useRouter()
   const pathname = usePathname()
+  const logSearchEvent = useMutation(api.searchEvents.log)
+  const lastLoggedSearchRef = useRef("")
   // Keep /search server-rendered; this replaces useSearchParams without forcing a Suspense shell.
   const [searchParamsKey, setSearchParamsKey] = useState(() =>
     new URLSearchParams(initialSearchParams.map(([key, value]) => [key, value])).toString(),
   )
   const searchParams = useMemo(() => new URLSearchParams(searchParamsKey), [searchParamsKey])
+  const submittedQuery = searchParams.get("q")?.trim() ?? ""
   const queryFromUrl = getInitialQuery(searchParams)
   const [query, setQuery] = useState(queryFromUrl)
 
@@ -62,6 +65,9 @@ export function SearchResultsClient({
   const activeQuery = queryFromUrl
   const hasFilters =
     Boolean(family) || awardLevel !== "all" || Boolean(region) || Boolean(institution)
+  const filtersJson = useMemo(() => {
+    return hasFilters ? JSON.stringify(filters) : undefined
+  }, [filters, hasFilters])
 
   const searchArgs = activeQuery
     ? {
@@ -125,6 +131,30 @@ export function SearchResultsClient({
 
     return () => window.removeEventListener("popstate", syncFromLocation)
   }, [])
+
+  useEffect(() => {
+    if (!submittedQuery || isResultsLoading || isCountLoading || !count) {
+      return
+    }
+
+    const logKey = JSON.stringify([
+      submittedQuery.toLowerCase(),
+      filtersJson ?? "",
+      count.count,
+      Boolean(count.capped),
+    ])
+    if (lastLoggedSearchRef.current === logKey) {
+      return
+    }
+
+    lastLoggedSearchRef.current = logKey
+    void logSearchEvent({
+      query: submittedQuery,
+      filtersJson,
+      resultCount: count.count,
+      source: "search_page",
+    })
+  }, [count, filtersJson, isCountLoading, isResultsLoading, logSearchEvent, submittedQuery])
 
   function routeWith(nextParams: URLSearchParams) {
     const queryString = nextParams.toString()

@@ -45,13 +45,15 @@ export function SearchResultsClient({
   const region = searchParams.get("region") ?? ""
   const institution = searchParams.get("institution") ?? undefined
   const institutionLabel = searchParams.get("institutionLabel") ?? undefined
-  const resultSetKey = `${queryFromUrl}|${family ?? ""}|${awardLevel}|${region}|${institution ?? ""}|${institutionLabel ?? ""}`
+  const selectedProgrammeId = searchParams.get("programme") ?? undefined
+  const resultSetKey = `${queryFromUrl}|${family ?? ""}|${awardLevel}|${region}|${institution ?? ""}|${institutionLabel ?? ""}|${selectedProgrammeId ?? ""}`
+  const defaultResultLimit = selectedProgrammeId ? MAX_VISIBLE_RESULTS : INITIAL_RESULT_LIMIT
   const [resultLimitState, setResultLimitState] = useState({
     key: resultSetKey,
-    limit: INITIAL_RESULT_LIMIT,
+    limit: defaultResultLimit,
   })
   const resultLimit =
-    resultLimitState.key === resultSetKey ? resultLimitState.limit : INITIAL_RESULT_LIMIT
+    resultLimitState.key === resultSetKey ? resultLimitState.limit : defaultResultLimit
 
   const filters = useMemo(() => {
     return {
@@ -168,6 +170,7 @@ export function SearchResultsClient({
       updateParams(searchParams, {
         [key]: value,
         ...(key === "institution" ? { institutionLabel: null } : {}),
+        programme: null,
       }),
     )
   }
@@ -180,6 +183,7 @@ export function SearchResultsClient({
         region: null,
         institution: null,
         institutionLabel: null,
+        programme: null,
       }),
     )
   }
@@ -198,6 +202,7 @@ export function SearchResultsClient({
         family: null,
         institution: null,
         institutionLabel: null,
+        programme: null,
       }),
     )
   }
@@ -210,6 +215,7 @@ export function SearchResultsClient({
         family: null,
         institution: null,
         institutionLabel: null,
+        programme: null,
       }),
     )
   }
@@ -272,7 +278,12 @@ export function SearchResultsClient({
             ) : search?.results.length ? (
               <>
                 {search.results.map((programme) => (
-                  <ProgrammeCard key={programme._id} programme={programme} />
+                  <ProgrammeCard
+                    isSelected={programme._id === selectedProgrammeId}
+                    key={programme._id}
+                    programme={programme}
+                    shareUrl={buildProgrammeShareUrl(searchParams, programme._id)}
+                  />
                 ))}
                 <SearchResultsFooter
                   canLoadMore={canLoadMore}
@@ -385,4 +396,11 @@ function LoadingState() {
       ))}
     </div>
   )
+}
+
+function buildProgrammeShareUrl(searchParams: URLSearchParams, programmeId: string) {
+  const nextParams = new URLSearchParams(searchParams.toString())
+  nextParams.set("programme", programmeId)
+
+  return `/search?${nextParams.toString()}`
 }

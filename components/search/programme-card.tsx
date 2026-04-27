@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import type { ReactNode } from "react"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import type { useQuery } from "convex/react"
 
 import { familyMeta } from "@/components/search/search-config"
@@ -10,6 +10,7 @@ import {
   ArrowRightIcon,
   ClockIcon,
   PinIcon,
+  ShareIcon,
 } from "@/components/search/search-icons"
 import { api } from "@/convex/_generated/api"
 
@@ -17,12 +18,62 @@ type ProgrammeSearchResult = NonNullable<
   ReturnType<typeof useQuery<typeof api.programmes.smartSearch>>
 >["results"][number]
 
-export function ProgrammeCard({ programme }: { programme: ProgrammeSearchResult }) {
+export function ProgrammeCard({
+  isSelected = false,
+  programme,
+  shareUrl,
+}: {
+  isSelected?: boolean
+  programme: ProgrammeSearchResult
+  shareUrl: string
+}) {
   const meta = familyMeta(programme.courseFamily)
-  const [showDetails, setShowDetails] = useState(false)
+  const cardRef = useRef<HTMLElement>(null)
+  const [showDetails, setShowDetails] = useState(isSelected)
+  const [shareStatus, setShareStatus] = useState<"idle" | "copied">("idle")
+  const detailsVisible = showDetails
+
+  useEffect(() => {
+    if (!isSelected) {
+      return
+    }
+
+    window.requestAnimationFrame(() => setShowDetails(true))
+    cardRef.current?.scrollIntoView({ block: "center", behavior: "smooth" })
+  }, [isSelected])
+
+  async function shareProgramme() {
+    const shareTitle = `${programme.programmeName} at ${programme.institutionName}`
+    const shareText = `Check this course on Kozi Ipi: ${shareTitle}`
+    const absoluteShareUrl = new URL(shareUrl, window.location.origin).toString()
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: shareTitle,
+          text: shareText,
+          url: absoluteShareUrl,
+        })
+        return
+      } catch (error) {
+        if (error instanceof DOMException && error.name === "AbortError") {
+          return
+        }
+      }
+    }
+
+    await copyToClipboard(absoluteShareUrl)
+    setShareStatus("copied")
+    window.setTimeout(() => setShareStatus("idle"), 1800)
+  }
 
   return (
-    <article className="group max-w-full overflow-hidden rounded-2xl border border-brand-ink/10 bg-white p-4 transition hover:border-brand-blue/35 hover:shadow-[0_22px_50px_-32px_rgba(29,78,216,0.45)] sm:p-5">
+    <article
+      className={`group max-w-full scroll-mt-6 overflow-hidden rounded-2xl border bg-white p-4 transition hover:border-brand-blue/35 hover:shadow-[0_22px_50px_-32px_rgba(29,78,216,0.45)] sm:p-5 ${
+        isSelected ? "border-brand-blue shadow-[0_22px_50px_-32px_rgba(29,78,216,0.45)]" : "border-brand-ink/10"
+      }`}
+      ref={cardRef}
+    >
       <div className="flex min-w-0 items-start justify-between gap-3 sm:gap-4">
         <div className="flex min-w-0 flex-1 items-start gap-3">
           <InstitutionLogo
@@ -82,19 +133,29 @@ export function ProgrammeCard({ programme }: { programme: ProgrammeSearchResult 
           Verified {programme.lastVerifiedDate}
           {programme.needsReview ? " · Needs review" : ""}
         </p>
-        <button
-          className="inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-brand-ink px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-brand-blue sm:w-auto"
-          onClick={() => setShowDetails((visible) => !visible)}
-          type="button"
-        >
-          {showDetails ? "Hide details" : "View details"}
-          <ArrowRightIcon
-            className={`size-3.5 transition ${showDetails ? "rotate-90" : ""}`}
-          />
-        </button>
+        <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
+          <button
+            className="inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-brand-ink/15 px-4 py-2 text-[13px] font-semibold text-brand-ink transition hover:border-brand-blue hover:text-brand-blue sm:w-auto"
+            onClick={shareProgramme}
+            type="button"
+          >
+            <ShareIcon className="size-3.5" />
+            {shareStatus === "copied" ? "Link copied" : "Share"}
+          </button>
+          <button
+            className="inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-brand-ink px-4 py-2 text-[13px] font-semibold text-white transition hover:bg-brand-blue sm:w-auto"
+            onClick={() => setShowDetails((visible) => !visible)}
+            type="button"
+          >
+            {detailsVisible ? "Hide details" : "View details"}
+            <ArrowRightIcon
+              className={`size-3.5 transition ${detailsVisible ? "rotate-90" : ""}`}
+            />
+          </button>
+        </div>
       </div>
 
-      {showDetails ? <ProgrammeDetails programme={programme} /> : null}
+      {detailsVisible ? <ProgrammeDetails programme={programme} /> : null}
     </article>
   )
 }
@@ -156,6 +217,27 @@ function normalizeExternalHref(href?: string) {
   }
 
   return null
+}
+
+async function copyToClipboard(value: string) {
+  if (navigator.clipboard) {
+    try {
+      await navigator.clipboard.writeText(value)
+      return
+    } catch {
+      // Fall back for browsers that expose clipboard but block writes.
+    }
+  }
+
+  const textarea = document.createElement("textarea")
+  textarea.value = value
+  textarea.setAttribute("readonly", "")
+  textarea.style.position = "fixed"
+  textarea.style.left = "-9999px"
+  document.body.appendChild(textarea)
+  textarea.select()
+  document.execCommand("copy")
+  document.body.removeChild(textarea)
 }
 
 function DetailLink({ children, href }: { children: ReactNode; href: string }) {

@@ -38,6 +38,7 @@ export function ProgrammeCard({
       return
     }
 
+    window.requestAnimationFrame(() => setShowDetails(true))
     cardRef.current?.scrollIntoView({ block: "center", behavior: "smooth" })
   }, [isSelected])
 

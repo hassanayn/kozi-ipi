@@ -203,7 +203,12 @@ export default defineSchema({
     detectedIntent: v.optional(v.string()),
     filtersJson: v.optional(v.string()),
     resultCount: v.number(),
+    resultCountCapped: v.optional(v.boolean()),
     clickedResultId: v.optional(v.string()),
     languageMode: v.optional(v.string()),
-  }).index("by_normalizedQuery", ["normalizedQuery"]),
+    source: v.optional(v.string()),
+    createdAt: v.optional(v.number()),
+  })
+    .index("by_createdAt", ["createdAt"])
+    .index("by_normalizedQuery", ["normalizedQuery"]),
 })

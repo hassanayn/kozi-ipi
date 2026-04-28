@@ -153,13 +153,13 @@ export const smartSearchCount = query({
           )
         )
         .take(maxCount)
-      const count = results.filter((programme) =>
+      const filteredResults = results.filter((programme) =>
         matchesProgrammeFilters(programme, interpreted.appliedFilters)
-      ).length
+      )
 
       return {
         interpreted,
-        count,
+        count: rankProgrammes(filteredResults, interpreted.query).length,
         capped: results.length === maxCount,
       }
     }
@@ -173,7 +173,7 @@ export const smartSearchCount = query({
 
     return {
       interpreted,
-      count: results.length,
+      count: rankProgrammes(results, interpreted.query).length,
       capped: results.length === maxCount,
     }
   },

@@ -174,9 +174,16 @@ const biomedicalDegreeResults = rankedDegreeSearchResults("biomedical")
 const muhasBiomedicalRank = biomedicalDegreeResults.findIndex(
   (programme) => programme.programmeCode === "MH014"
 )
+const muhasBiomedicalProgramme = programmes.find(
+  (programme) => programme.programmeCode === "MH014"
+)
 assert(
   muhasBiomedicalRank >= 0,
   "Biomedical degree search should include MUHAS MH014."
+)
+assert(
+  muhasBiomedicalProgramme,
+  "Missing MUHAS Biomedical Engineering programme MH014."
 )
 assert(
   muhasBiomedicalRank < 3,
@@ -187,6 +194,24 @@ assert(
     .slice(0, 3)
     .every((programme) => /biomedical/i.test(programme.programmeName)),
   "Top biomedical degree results should match biomedical in the programme title."
+)
+
+const dedupedEquivalentProgrammes = rankProgrammes(
+  [
+    muhasBiomedicalProgramme,
+    {
+      ...muhasBiomedicalProgramme,
+      programmeCode: undefined,
+      programmeName: "Bachelor Degree in Biomedical Engineering",
+      normalizedProgrammeName: "bachelor degree in biomedical engineering",
+      sourceDatasets: ["education_pathways"],
+    },
+  ],
+  "biomedical"
+)
+assert(
+  dedupedEquivalentProgrammes.length === 1,
+  "Programme ranking should dedupe equivalent cards so smartSearchCount matches rendered results."
 )
 
 console.log(`Data quality checks passed for ${programmes.length} programmes.`)

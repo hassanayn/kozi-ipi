@@ -11,7 +11,18 @@ const legacyBaseDir = join(root, "data/raw/tanzania-post-form-four-dataset")
 const nactvetEnrichmentDir = join(root, "data/raw/tanzania-education-dataset")
 const pathwaysDir = join(root, "data/raw/tanzania-education-pathways-dataset")
 const logoEnrichmentPath = join(root, "data/enrichment/institution-logos.seed.csv")
+const tcuSecondaryExtractedProgrammesPath = join(
+  root,
+  "data/extracted/tcu-secondary-guidebook-2025-2026-programmes.csv",
+)
+const udsmProspectusProgrammesPath = join(
+  root,
+  "data/enrichment/udsm-undergraduate-prospectus-2024-2025-programmes.csv",
+)
 const outputDir = join(root, "data/processed")
+const tcuSecondaryGuidebookUrl =
+  "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf"
+const udsmUndergraduateProspectusSource = "Undergraduate Prospectus 2024-2025 (1).pdf"
 
 type Row = Record<string, string>
 type Suitability = "yes" | "no" | "unknown"
@@ -204,6 +215,32 @@ function normalizeFieldCategory(value: string | undefined) {
   return normalized
 }
 
+function inferFieldCategoryFromProgrammeName(value: string | undefined) {
+  const normalized = normalizeName(value)
+  if (!normalized) return "other"
+  if (/\b(education|teaching|teacher|ualimu|elimu)\b/.test(normalized)) return "education"
+  if (/\b(account|finance|business|commerce|procurement|marketing|economics|insurance|banking|tax|logistics|entrepreneurship|human resource|management)\b/.test(normalized)) {
+    return "business finance management"
+  }
+  if (/\b(computer|information technology|ict|data science|cyber|software|networks?)\b/.test(normalized)) {
+    return "ICT"
+  }
+  if (/\b(engineering|architecture|construction|geomatics|surveying|land|urban|planning|property|real estate|environmental)\b/.test(normalized)) {
+    return "engineering technology"
+  }
+  if (/\b(medicine|medical|nursing|pharmacy|health|laboratory|clinical|dentistry)\b/.test(normalized)) {
+    return "health"
+  }
+  if (/\b(agriculture|veterinary|animal|forestry|wildlife|nutrition)\b/.test(normalized)) {
+    return "agriculture"
+  }
+  if (/\b(law|public administration|community development|social work|governance)\b/.test(normalized)) {
+    return "law public administration"
+  }
+  if (/\b(tourism|hospitality|hotel)\b/.test(normalized)) return "tourism hospitality"
+  return "other"
+}
+
 function normalizeCourseFamily(value: string | undefined) {
   const normalized = normalizeName(value)
   if (!normalized) return undefined
@@ -215,6 +252,77 @@ function normalizeCourseFamily(value: string | undefined) {
   if (normalized.includes("engineering")) return "engineering"
   return normalized
 }
+
+const knownInstitutionShortCodes = new Set([
+  "aku",
+  "amucta",
+  "aru",
+  "atc",
+  "cawm",
+  "cbe",
+  "cfr",
+  "cuhas",
+  "cuom",
+  "dartu",
+  "dit",
+  "dmi",
+  "duce",
+  "eastc",
+  "iaa",
+  "iae",
+  "ifm",
+  "ifs",
+  "ipa",
+  "irdp",
+  "isw",
+  "ita",
+  "juco",
+  "kcmc",
+  "kicob",
+  "kist",
+  "kiut",
+  "ku",
+  "lgti",
+  "maruco",
+  "mnma",
+  "mnuat",
+  "mocu",
+  "mu",
+  "mudcco",
+  "muhas",
+  "mum",
+  "mumcco",
+  "must",
+  "muce",
+  "mwecau",
+  "mzu",
+  "nit",
+  "out",
+  "rucu",
+  "saut",
+  "sjcet",
+  "sjchas",
+  "sjut",
+  "sfuchas",
+  "stemmuco",
+  "sua",
+  "sumait",
+  "suza",
+  "teku",
+  "tia",
+  "ticd",
+  "tipm",
+  "tpsc",
+  "tuma",
+  "uad",
+  "uaut",
+  "udom",
+  "udsm",
+  "uoa",
+  "uoi",
+  "wi",
+  "zu",
+])
 
 function institutionNameCandidates(value: string | undefined) {
   const base = normalizeName(value)
@@ -228,13 +336,37 @@ function institutionNameCandidates(value: string | undefined) {
       .replace(/\b(university|college|institute|institution|centre|center)$/, "")
       .replace(/\s+/g, " ")
       .trim()
+  const stripTrailingShortCode = (name: string) => {
+    const parts = name.split(" ")
+    const last = parts.at(-1) ?? ""
+    if (parts.length > 1 && knownInstitutionShortCodes.has(last)) {
+      return parts.slice(0, -1).join(" ")
+    }
 
-  return [
+    return name
+  }
+
+  const shortCodeStripped = stripTrailingShortCode(base)
+  const withoutParentheticalShortCodeStripped = stripTrailingShortCode(withoutParenthetical)
+  const firstPassVariants = [
     base,
     withoutParenthetical,
     stripTrailingInstitutionWords(base),
     stripTrailingInstitutionWords(withoutParenthetical),
-  ].filter((candidate) => candidate && candidate.split(" ").length > 1)
+    shortCodeStripped,
+    withoutParentheticalShortCodeStripped,
+    stripTrailingInstitutionWords(shortCodeStripped),
+    stripTrailingInstitutionWords(withoutParentheticalShortCodeStripped),
+  ]
+  const variants = firstPassVariants
+
+  return [...new Set(variants)].filter(
+    (candidate) =>
+      candidate &&
+      (candidate.split(" ").length > 1 ||
+        candidate === shortCodeStripped ||
+        candidate === withoutParentheticalShortCodeStripped),
+  )
 }
 
 function institutionAliases(
@@ -325,6 +457,18 @@ function makeProgrammeKey(
 
 function makeRequirementKey(programme: string | undefined, institution: string | undefined) {
   return [programmeFingerprint(programme), normalizeName(institution)].join("|")
+}
+
+function makeProcessedProgrammeKey(programme: ProcessedProgramme) {
+  if (programme.regulator === "TCU" && programme.programmeCode) {
+    return ["tcu_code", programme.programmeCode].join("|")
+  }
+
+  return makeProgrammeKey(
+    programme.normalizedProgrammeName,
+    programme.normalizedInstitutionName,
+    programme.awardLevel,
+  )
 }
 
 function detectProgrammeReviewReasons(row: Row) {
@@ -462,6 +606,224 @@ function requirementRouteSummary(requirements: ProcessedEntryRequirement[]) {
   }
 }
 
+function normalizeTcuExtractedInstitutionName(value: string | undefined) {
+  return normalizeName(value)
+    .replace(/^(the\s+)?(university|college|institute|school|academy|centre|center)\s+of\s+/, "")
+    .replace(/^(the\s+)?(university|college|institute|school|academy|centre|center)\s+/, "")
+    .replace(/\s+campus$/, "")
+    .replace(
+      /\b(dar\s+es\s+salaam|dodoma|mwanza|zanzibar|mbeya|arusha|morogoro|tabora|kilimanjaro|iringa|pemba|simiyu|geita|mtwara|rukwa|shinyanga|bagamoyo|tanga|singida|mara|musoma|lindi|pwani|kigoma|kagera|njombe|songwe|manyara|katavi|ruvuma|bukoba|songea|moshi|chato)\s*$/,
+      "",
+    )
+    .replace(/\s+/g, " ")
+    .trim()
+}
+
+function buildTcuExtractedProgrammeRow(row: Row): Row {
+  const programmeName = cleanDataArtifactText(row.programmeName)
+  const institutionName = cleanDataArtifactText(row.institutionName)
+  const normalizedInstitutionName = normalizeTcuExtractedInstitutionName(institutionName)
+  const reviewReasons = uniqueValues([
+    row.reviewReasons,
+    row.needsReview === "yes" ? "pdf_extraction_needs_review" : undefined,
+  ])
+
+  return {
+    programme_name: programmeName,
+    normalized_programme_name: blankToUndefined(row.normalizedProgrammeName) ?? normalizeName(programmeName),
+    programme_code: cleanDataArtifactText(row.programmeCode),
+    award_level: "Bachelor Degree",
+    qualification_level: "Bachelor Degree",
+    pathway_type: "degree",
+    field_category: inferFieldCategoryFromProgrammeName(programmeName),
+    course_family: "",
+    institution_name: institutionName,
+    normalized_institution_name: normalizedInstitutionName,
+    regulator: "TCU",
+    institution_type: "Higher Education Institution",
+    duration: cleanDataArtifactText(row.durationYears),
+    study_mode: "full-time",
+    admission_capacity: cleanDataArtifactText(row.admissionCapacity),
+    application_method: "Apply through TCU or the institution admissions system.",
+    official_source_url: tcuSecondaryGuidebookUrl,
+    source_type: "TCU 2025/2026 Bachelor degree admission guidebook - secondary school qualifications",
+    confidence_level: row.needsReview === "yes" ? "medium" : "high",
+    last_verified_date: "2026-04-28",
+    notes: uniqueValues([
+      `Direct PDF extraction from page ${row.page}.`,
+      blankToUndefined(row.minimumAdmissionPoints)
+        ? `TCU minimum admission points: ${row.minimumAdmissionPoints}.`
+        : undefined,
+    ]).join(" "),
+    needs_review: row.needsReview,
+    review_reasons: reviewReasons.join("; "),
+    minimum_entry_requirements: cleanDataArtifactText(row.admissionRequirements),
+  }
+}
+
+function buildTcuExtractedEntryRequirement(row: Row): ProcessedEntryRequirement {
+  const programmeName = cleanDataArtifactText(row.programmeName)
+  const normalizedProgrammeName =
+    blankToUndefined(row.normalizedProgrammeName) ?? normalizeName(programmeName)
+  const institutionName = cleanDataArtifactText(row.institutionName)
+  const normalizedInstitutionName = normalizeTcuExtractedInstitutionName(institutionName)
+  const rawRequirementText = cleanDataArtifactText(row.admissionRequirements)
+  const principalPassMatch = rawRequirementText.match(/\b(One|Two|Three|\d+)\s+principal\s+passes?/i)
+
+  return {
+    programmeName,
+    normalizedProgrammeName,
+    institutionName,
+    normalizedInstitutionName,
+    rawRequirementText,
+    acceptsFormFourDirect: "no",
+    acceptsFormSix: "yes",
+    acceptsCertificate: "no",
+    acceptsDiploma: "no",
+    acceptsEquivalent: "unknown",
+    minimumAcseePrincipalPassesIfAvailable: principalPassMatch?.[1],
+    minimumPointsIfAvailable: blankToUndefined(row.minimumAdmissionPoints),
+    bridgeOrFoundationRequired: "unknown",
+    eligibilityConfidence: row.needsReview === "yes" ? "medium" : "high",
+    officialSourceUrl: tcuSecondaryGuidebookUrl,
+    notes: uniqueValues([
+      `Direct PDF extraction from page ${row.page}.`,
+      blankToUndefined(row.programmeCode) ? `Programme code: ${row.programmeCode}.` : undefined,
+    ]).join(" "),
+    searchText: [
+      programmeName,
+      normalizedProgrammeName,
+      institutionName,
+      normalizedInstitutionName,
+      rawRequirementText,
+      row.programmeCode,
+    ]
+      .filter(Boolean)
+      .join(" "),
+  }
+}
+
+const udsmMainCampusUnits = new Set([
+  "College of Agricultural Sciences and Food Technology (CoAF)",
+  "College of Humanities (CoHU)",
+  "College of Social Sciences (CoSS)",
+  "College of Engineering and Technology (CoET)",
+  "College of Natural and Applied Sciences (CoNAS)",
+  "College of Information and Communication Technologies (CoICT)",
+  "School of Mines and Geosciences (SoMG)",
+  "School of Aquatic Sciences and Fisheries Technology (SoAF)",
+  "School of Journalism and Mass Communication (SJMC)",
+  "University of Dar es Salaam Business School (UDBS)",
+  "University of Dar es Salaam School of Economics (UDSE)",
+  "School of Education (SoED)",
+  "University of Dar es Salaam School of Law (UDSoL)",
+  "Institute of Kiswahili Studies (IKS)",
+  "Institute of Development Studies (IDS)",
+])
+
+const udsmProspectusSupplementProgrammes = new Set([
+  "University of Dar es Salaam (UDSM)|BA in History and Political Science",
+  "University of Dar es Salaam (UDSM)|BA with Education (Chinese and English)",
+  "University of Dar es Salaam (UDSM)|BA in Statistics",
+  "University of Dar es Salaam (UDSM)|Bachelor of Education in Adult and Community Education",
+  "University of Dar es Salaam (UDSM)|Bachelor of Education in Commerce",
+  "University of Dar es Salaam (UDSM)|Bachelor of Education in Psychology",
+  "Dar es Salaam University College of Education (DUCE)|Bachelor of Education in Arts",
+  "Dar es Salaam University College of Education (DUCE)|Bachelor of Education in Science",
+  "Dar es Salaam University College of Education (DUCE)|Bachelor of Arts with Education",
+  "Dar es Salaam University College of Education (DUCE)|Bachelor of Science with Education",
+  "Dar es Salaam University College of Education (DUCE)|Bachelor of Arts in Disaster Risk Management",
+  "Mkwawa University College of Education (MUCE)|Bachelor of Education in Arts",
+  "Mkwawa University College of Education (MUCE)|Bachelor of Education in Science",
+  "Mbeya College of Health and Allied Sciences (MCHAS)|Doctor of Medicine",
+  "Mbeya College of Health and Allied Sciences (MCHAS)|Doctor of Dental Surgery",
+  "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA|Technician Certificate in Geology and Mineral Exploration",
+  "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA|Technician Certificate in Petroleum Geosciences",
+  "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA|Technician Certificate in Mining Engineering",
+  "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA|Technician Certificate in Mineral Processing Engineering",
+  "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA|Technician Certificate in Environmental Engineering and Management in Mines",
+  "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA|Technician Certificate Land and Mine Surveying",
+  "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA|Basic Certificate in Geology and Mineral Exploration",
+  "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA|Basic Certificate in Petroleum Geosciences",
+  "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA|Basic Certificate in Mining Engineering",
+  "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA|Basic Certificate in Mineral Processing Engineering",
+  "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA|Basic Certificate in Environmental Engineering and Management in Mines",
+  "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA|Basic Certificate Land and Mine Surveying",
+])
+
+function udsmProspectusInstitutionName(row: Row) {
+  const academicUnit = cleanDataArtifactText(row.academic_unit)
+
+  if (udsmMainCampusUnits.has(academicUnit)) return "University of Dar es Salaam (UDSM)"
+  if (/Dar es Salaam University College of Education/i.test(academicUnit)) {
+    return "Dar es Salaam University College of Education (DUCE)"
+  }
+  if (/Mkwawa University College of Education/i.test(academicUnit)) {
+    return "Mkwawa University College of Education (MUCE)"
+  }
+  if (/Mbeya College of Health and Allied Sciences/i.test(academicUnit)) {
+    return "Mbeya College of Health and Allied Sciences (MCHAS)"
+  }
+  if (/Mineral Resources Institute/i.test(academicUnit)) {
+    return "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA"
+  }
+
+  return academicUnit
+}
+
+function isUdsmProspectusSupplementRow(row: Row) {
+  return udsmProspectusSupplementProgrammes.has(
+    `${udsmProspectusInstitutionName(row)}|${cleanDataArtifactText(row.programme_name)}`,
+  )
+}
+
+function normalizeUdsmProspectusAwardLevel(row: Row) {
+  const awardLevel = cleanDataArtifactText(row.award_level)
+  if (/diploma/i.test(awardLevel)) return "Ordinary Diploma"
+  if (/certificate/i.test(awardLevel)) return "Certificate"
+  return "Bachelor Degree"
+}
+
+function buildUdsmProspectusProgrammeRow(row: Row): Row {
+  const programmeName = cleanDataArtifactText(row.programme_name)
+  const institutionName = udsmProspectusInstitutionName(row)
+  const awardLevel = normalizeUdsmProspectusAwardLevel(row)
+  const academicUnit = cleanDataArtifactText(row.academic_unit)
+  const reviewReasons = uniqueValues([
+    "udsm_prospectus_supplement",
+    "missing_tcu_programme_code",
+    "entry_requirements_not_extracted_from_prospectus",
+    institutionName.includes("DUCE") ? "tcu_pdf_extraction_misassigned_duce_row" : undefined,
+  ])
+
+  return {
+    programme_name: programmeName,
+    normalized_programme_name: normalizeName(programmeName),
+    award_level: awardLevel,
+    qualification_level: awardLevel,
+    pathway_type: cleanDataArtifactText(row.pathway_type) || "degree",
+    field_category: inferFieldCategoryFromProgrammeName(programmeName),
+    course_family: "",
+    institution_name: institutionName,
+    normalized_institution_name: normalizeName(institutionName),
+    regulator: awardLevel === "Bachelor Degree" ? "TCU" : "NACTVET",
+    institution_type: awardLevel === "Bachelor Degree" ? "Higher Education Institution" : "Technical Institution",
+    study_mode: "full-time",
+    campus_location: academicUnit,
+    official_source_url: udsmUndergraduateProspectusSource,
+    source_type: "UDSM Undergraduate Prospectus 2024/2025 programme list",
+    confidence_level: "medium",
+    last_verified_date: "2026-04-28",
+    notes: uniqueValues([
+      `Extracted from UDSM undergraduate prospectus page ${cleanDataArtifactText(row.printed_page)}.`,
+      academicUnit ? `Academic unit: ${academicUnit}.` : undefined,
+      cleanDataArtifactText(row.notes),
+    ]).join(" "),
+    needs_review: "yes",
+    review_reasons: reviewReasons.join("; "),
+  }
+}
+
 mkdirSync(outputDir, { recursive: true })
 
 const legacyInstitutions = readCsv(join(legacyBaseDir, "institutions.csv"))
@@ -473,6 +835,16 @@ const pathwayProgrammes = readCsvIfExists(join(pathwaysDir, "programmes.csv"))
 const pathwayEntryRequirements = readCsvIfExists(join(pathwaysDir, "entry_requirements.csv"))
 const pathwayInstitutionEnrichment = readCsvIfExists(join(pathwaysDir, "institution_enrichment.csv"))
 const logoEnrichment = existsSync(logoEnrichmentPath) ? readCsv(logoEnrichmentPath) : []
+const tcuSecondaryExtractedProgrammes = readCsvIfExists(tcuSecondaryExtractedProgrammesPath)
+const udsmProspectusProgrammes = readCsvIfExists(udsmProspectusProgrammesPath)
+const cleanTcuSecondaryExtractedProgrammes = tcuSecondaryExtractedProgrammes.filter(
+  (row) =>
+    blankToUndefined(row.programmeCode) &&
+    blankToUndefined(row.programmeName) &&
+    blankToUndefined(row.institutionName) &&
+    blankToUndefined(row.admissionRequirements),
+)
+const udsmProspectusSupplementRows = udsmProspectusProgrammes.filter(isUdsmProspectusSupplementRow)
 
 const nactvetInstitutionsByName = new Map(
   nactvetInstitutions.map((row) => [normalizeName(row.institution_name), row]),
@@ -513,7 +885,8 @@ function findVerifiedLogo(normalizedInstitutionName: string, institutionName: st
   )
 }
 
-const processedEntryRequirements: ProcessedEntryRequirement[] = pathwayEntryRequirements.map((row) => {
+const processedEntryRequirements: ProcessedEntryRequirement[] = [
+  ...pathwayEntryRequirements.map((row) => {
   const programmeName = cleanProgrammeNameArtifact(row.programme_name) ?? ""
   const institutionName = cleanDataArtifactText(row.institution_name)
   const normalizedProgrammeName =
@@ -556,7 +929,9 @@ const processedEntryRequirements: ProcessedEntryRequirement[] = pathwayEntryRequ
       .filter(Boolean)
       .join(" "),
   }
-})
+}),
+  ...cleanTcuSecondaryExtractedProgrammes.map(buildTcuExtractedEntryRequirement),
+]
 
 const requirementsByProgramme = new Map<string, ProcessedEntryRequirement[]>()
 for (const requirement of processedEntryRequirements) {
@@ -908,13 +1283,15 @@ function mergeProgramme(left: ProcessedProgramme, right: ProcessedProgramme): Pr
 const programmesByKey = new Map<string, ProcessedProgramme>()
 for (const programme of [
   ...pathwayProgrammes.map((row) => buildProgramme(row, "education_pathways")),
+  ...cleanTcuSecondaryExtractedProgrammes.map((row) =>
+    buildProgramme(buildTcuExtractedProgrammeRow(row), "tcu_secondary_guidebook_pdf_extraction"),
+  ),
+  ...udsmProspectusSupplementRows.map((row) =>
+    buildProgramme(buildUdsmProspectusProgrammeRow(row), "udsm_undergraduate_prospectus_2024_2025"),
+  ),
   ...legacyProgrammes.map((row) => buildProgramme(row, "post_form_four")),
 ]) {
-  const key = makeProgrammeKey(
-    programme.normalizedProgrammeName,
-    programme.normalizedInstitutionName,
-    programme.awardLevel,
-  )
+  const key = makeProcessedProgrammeKey(programme)
   const existing = programmesByKey.get(key)
   programmesByKey.set(key, existing ? mergeProgramme(existing, programme) : programme)
 }
@@ -1008,7 +1385,12 @@ const report = {
   generatedAt: new Date().toISOString(),
   canonicalDataset: "tanzania-education-pathways-dataset",
   fallbackDataset: "tanzania-post-form-four-dataset",
-  enrichmentDatasets: ["tanzania-education-dataset", "institution-logos.seed.csv"],
+  enrichmentDatasets: [
+    "tanzania-education-dataset",
+    "institution-logos.seed.csv",
+    "tcu-secondary-guidebook-2025-2026-programmes.csv",
+    "udsm-undergraduate-prospectus-2024-2025-programmes.csv",
+  ],
   institutions: {
     rawPathwayCount: pathwayInstitutions.length,
     rawLegacyCount: legacyInstitutions.length,
@@ -1026,10 +1408,18 @@ const report = {
   programmes: {
     rawPathwayCount: pathwayProgrammes.length,
     rawLegacyCount: legacyProgrammes.length,
+    extractedTcuSecondaryGuidebookCount: cleanTcuSecondaryExtractedProgrammes.length,
+    udsmProspectusSupplementCount: udsmProspectusSupplementRows.length,
     nactvetEnrichmentCount: nactvetProgrammes.length,
     processedCount: processedProgrammes.length,
     fromPathwaysCount: processedProgrammes.filter((row) =>
       row.sourceDatasets.includes("education_pathways"),
+    ).length,
+    fromTcuSecondaryGuidebookExtractionCount: processedProgrammes.filter((row) =>
+      row.sourceDatasets.includes("tcu_secondary_guidebook_pdf_extraction"),
+    ).length,
+    fromUdsmProspectusSupplementCount: processedProgrammes.filter((row) =>
+      row.sourceDatasets.includes("udsm_undergraduate_prospectus_2024_2025"),
     ).length,
     fallbackOnlyCount: processedProgrammes.filter(
       (row) => !row.sourceDatasets.includes("education_pathways"),
@@ -1042,6 +1432,7 @@ const report = {
   },
   entryRequirements: {
     rawPathwayCount: pathwayEntryRequirements.length,
+    extractedTcuSecondaryGuidebookCount: cleanTcuSecondaryExtractedProgrammes.length,
     processedCount: processedEntryRequirements.length,
     formFourRouteCount: processedEntryRequirements.filter(
       (row) => row.acceptsFormFourDirect === "yes",

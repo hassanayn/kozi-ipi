@@ -1,0 +1,672 @@
+{
+  "generatedAt": "2026-04-28T09:40:45.948Z",
+  "sourceFile": "udsm-undergraduate-prospectus-2024-2025-programmes.csv",
+  "tcuGuidebookFile": "tcu-secondary-guidebook-2025-2026-programmes.csv",
+  "processedProgrammesFile": "programmes.jsonl",
+  "prospectusProgrammeCount": 123,
+  "missingFromTcuGuidebookCount": 33,
+  "missingFromProcessedDbCount": 0,
+  "missingFromTcuGuidebook": [
+    {
+      "programmeName": "BA in History and Political Science",
+      "formalProgrammeName": "Bachelor of Arts in History and Political Science",
+      "awardLevel": "Bachelor's Degree",
+      "academicUnit": "College of Humanities (CoHU)",
+      "mappedInstitutionName": "University of Dar es Salaam (UDSM)",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "BA in History and Political Science",
+          "institutionName": "University of Dar es Salaam (UDSM)",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "BA with Education (Chinese and English)",
+      "formalProgrammeName": "Bachelor of Arts with Education (Chinese and English)",
+      "awardLevel": "Bachelor's Degree",
+      "academicUnit": "College of Humanities (CoHU)",
+      "mappedInstitutionName": "University of Dar es Salaam (UDSM)",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "BA with Education (Chinese and English)",
+          "institutionName": "University of Dar es Salaam (UDSM)",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "BA in Statistics",
+      "formalProgrammeName": "Bachelor of Arts in Statistics",
+      "awardLevel": "Bachelor's Degree",
+      "academicUnit": "College of Social Sciences (CoSS)",
+      "mappedInstitutionName": "University of Dar es Salaam (UDSM)",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "BA in Statistics",
+          "institutionName": "University of Dar es Salaam (UDSM)",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Bachelor of Education in Adult and Community Education",
+      "formalProgrammeName": "Bachelor of Education in Adult and Community Education",
+      "awardLevel": "Bachelor's Degree",
+      "academicUnit": "School of Education (SoED)",
+      "mappedInstitutionName": "University of Dar es Salaam (UDSM)",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Bachelor of Education in Adult and Community Education",
+          "institutionName": "University of Dar es Salaam (UDSM)",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Bachelor of Education in Commerce",
+      "formalProgrammeName": "Bachelor of Education in Commerce",
+      "awardLevel": "Bachelor's Degree",
+      "academicUnit": "School of Education (SoED)",
+      "mappedInstitutionName": "University of Dar es Salaam (UDSM)",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Bachelor of Education in Commerce",
+          "institutionName": "University of Dar es Salaam (UDSM)",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Bachelor of Education in Psychology",
+      "formalProgrammeName": "Bachelor of Education in Psychology",
+      "awardLevel": "Bachelor's Degree",
+      "academicUnit": "School of Education (SoED)",
+      "mappedInstitutionName": "University of Dar es Salaam (UDSM)",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Bachelor of Education in Psychology",
+          "institutionName": "University of Dar es Salaam (UDSM)",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Bachelor of Education in Arts",
+      "formalProgrammeName": "Bachelor of Education in Arts",
+      "awardLevel": "Bachelor's Degree",
+      "academicUnit": "Dar es Salaam University College of Education (DUCE)",
+      "mappedInstitutionName": "Dar es Salaam University College of Education (DUCE)",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Bachelor of Education in Arts",
+          "institutionName": "Dar es Salaam University College of Education (DUCE)",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Bachelor of Education in Science",
+      "formalProgrammeName": "Bachelor of Education in Science",
+      "awardLevel": "Bachelor's Degree",
+      "academicUnit": "Dar es Salaam University College of Education (DUCE)",
+      "mappedInstitutionName": "Dar es Salaam University College of Education (DUCE)",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Bachelor of Education in Science",
+          "institutionName": "Dar es Salaam University College of Education (DUCE)",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Bachelor of Arts with Education",
+      "formalProgrammeName": "Bachelor of Arts with Education",
+      "awardLevel": "Bachelor's Degree",
+      "academicUnit": "Dar es Salaam University College of Education (DUCE)",
+      "mappedInstitutionName": "Dar es Salaam University College of Education (DUCE)",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Bachelor of Arts with Education",
+          "institutionName": "Dar es Salaam University College of Education (DUCE)",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Bachelor of Science with Education",
+      "formalProgrammeName": "Bachelor of Science with Education",
+      "awardLevel": "Bachelor's Degree",
+      "academicUnit": "Dar es Salaam University College of Education (DUCE)",
+      "mappedInstitutionName": "Dar es Salaam University College of Education (DUCE)",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Bachelor of Science with Education",
+          "institutionName": "Dar es Salaam University College of Education (DUCE)",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Bachelor of Arts in Disaster Risk Management",
+      "formalProgrammeName": "Bachelor of Arts in Disaster Risk Management",
+      "awardLevel": "Bachelor's Degree",
+      "academicUnit": "Dar es Salaam University College of Education (DUCE)",
+      "mappedInstitutionName": "Dar es Salaam University College of Education (DUCE)",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Bachelor of Arts in Disaster Risk Management",
+          "institutionName": "Dar es Salaam University College of Education (DUCE)",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Bachelor of Education in Arts",
+      "formalProgrammeName": "Bachelor of Education in Arts",
+      "awardLevel": "Bachelor's Degree",
+      "academicUnit": "Mkwawa University College of Education (MUCE)",
+      "mappedInstitutionName": "Mkwawa University College of Education (MUCE)",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Bachelor of Education in Arts",
+          "institutionName": "Mkwawa University College of Education (MUCE)",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Bachelor of Education in Science",
+      "formalProgrammeName": "Bachelor of Education in Science",
+      "awardLevel": "Bachelor's Degree",
+      "academicUnit": "Mkwawa University College of Education (MUCE)",
+      "mappedInstitutionName": "Mkwawa University College of Education (MUCE)",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Bachelor of Education in Science",
+          "institutionName": "Mkwawa University College of Education (MUCE)",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Doctor of Medicine",
+      "formalProgrammeName": "Doctor of Medicine",
+      "awardLevel": "Professional Undergraduate Degree",
+      "academicUnit": "Mbeya College of Health and Allied Sciences (MCHAS)",
+      "mappedInstitutionName": "Mbeya College of Health and Allied Sciences (MCHAS)",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Doctor of Medicine",
+          "institutionName": "Mbeya College of Health and Allied Sciences (MCHAS)",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Doctor of Dental Surgery",
+      "formalProgrammeName": "Doctor of Dental Surgery",
+      "awardLevel": "Professional Undergraduate Degree",
+      "academicUnit": "Mbeya College of Health and Allied Sciences (MCHAS)",
+      "mappedInstitutionName": "Mbeya College of Health and Allied Sciences (MCHAS)",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Doctor of Dental Surgery",
+          "institutionName": "Mbeya College of Health and Allied Sciences (MCHAS)",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Ordinary Diploma in Geology and Mineral Exploration",
+      "formalProgrammeName": "Ordinary Diploma in Geology and Mineral Exploration",
+      "awardLevel": "Ordinary Diploma",
+      "academicUnit": "University of Dar es Salaam Mineral Resources Institute (UDSM-MRI)",
+      "mappedInstitutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Ordinary Diploma in Geology and Mineral Exploration",
+          "institutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+          "sourceDatasets": [
+            "education_pathways"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Ordinary Diploma in Petroleum Geosciences",
+      "formalProgrammeName": "Ordinary Diploma in Petroleum Geosciences",
+      "awardLevel": "Ordinary Diploma",
+      "academicUnit": "University of Dar es Salaam Mineral Resources Institute (UDSM-MRI)",
+      "mappedInstitutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Technician Certificate in Petroleum Geosciences",
+          "institutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Ordinary Diploma in Mining Engineering",
+      "formalProgrammeName": "Ordinary Diploma in Mining Engineering",
+      "awardLevel": "Ordinary Diploma",
+      "academicUnit": "University of Dar es Salaam Mineral Resources Institute (UDSM-MRI)",
+      "mappedInstitutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Ordinary Diploma in Mining Engineering",
+          "institutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+          "sourceDatasets": [
+            "education_pathways"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Ordinary Diploma in Mineral Processing Engineering",
+      "formalProgrammeName": "Ordinary Diploma in Mineral Processing Engineering",
+      "awardLevel": "Ordinary Diploma",
+      "academicUnit": "University of Dar es Salaam Mineral Resources Institute (UDSM-MRI)",
+      "mappedInstitutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Technician Certificate in Mineral Processing Engineering",
+          "institutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Ordinary Diploma in Environmental Engineering and Management in Mines",
+      "formalProgrammeName": "Ordinary Diploma in Environmental Engineering and Management in Mines",
+      "awardLevel": "Ordinary Diploma",
+      "academicUnit": "University of Dar es Salaam Mineral Resources Institute (UDSM-MRI)",
+      "mappedInstitutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Technician Certificate in Environmental Engineering and Management in Mines",
+          "institutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Ordinary Diploma in Land and Mine Surveying",
+      "formalProgrammeName": "Ordinary Diploma in Land and Mine Surveying",
+      "awardLevel": "Ordinary Diploma",
+      "academicUnit": "University of Dar es Salaam Mineral Resources Institute (UDSM-MRI)",
+      "mappedInstitutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Ordinary Diploma in Land and Mine Surveying",
+          "institutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+          "sourceDatasets": [
+            "education_pathways"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Technician Certificate in Geology and Mineral Exploration",
+      "formalProgrammeName": "Technician Certificate in Geology and Mineral Exploration",
+      "awardLevel": "Technician Certificate",
+      "academicUnit": "University of Dar es Salaam Mineral Resources Institute (UDSM-MRI)",
+      "mappedInstitutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Technician Certificate in Geology and Mineral Exploration",
+          "institutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Technician Certificate in Petroleum Geosciences",
+      "formalProgrammeName": "Technician Certificate in Petroleum Geosciences",
+      "awardLevel": "Technician Certificate",
+      "academicUnit": "University of Dar es Salaam Mineral Resources Institute (UDSM-MRI)",
+      "mappedInstitutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Technician Certificate in Petroleum Geosciences",
+          "institutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Technician Certificate in Mining Engineering",
+      "formalProgrammeName": "Technician Certificate in Mining Engineering",
+      "awardLevel": "Technician Certificate",
+      "academicUnit": "University of Dar es Salaam Mineral Resources Institute (UDSM-MRI)",
+      "mappedInstitutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Technician Certificate in Mining Engineering",
+          "institutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Technician Certificate in Mineral Processing Engineering",
+      "formalProgrammeName": "Technician Certificate in Mineral Processing Engineering",
+      "awardLevel": "Technician Certificate",
+      "academicUnit": "University of Dar es Salaam Mineral Resources Institute (UDSM-MRI)",
+      "mappedInstitutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Technician Certificate in Mineral Processing Engineering",
+          "institutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Technician Certificate in Environmental Engineering and Management in Mines",
+      "formalProgrammeName": "Technician Certificate in Environmental Engineering and Management in Mines",
+      "awardLevel": "Technician Certificate",
+      "academicUnit": "University of Dar es Salaam Mineral Resources Institute (UDSM-MRI)",
+      "mappedInstitutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Technician Certificate in Environmental Engineering and Management in Mines",
+          "institutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Technician Certificate Land and Mine Surveying",
+      "formalProgrammeName": "Technician Certificate in Land and Mine Surveying",
+      "awardLevel": "Technician Certificate",
+      "academicUnit": "University of Dar es Salaam Mineral Resources Institute (UDSM-MRI)",
+      "mappedInstitutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Technician Certificate Land and Mine Surveying",
+          "institutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Basic Certificate in Geology and Mineral Exploration",
+      "formalProgrammeName": "Basic Certificate in Geology and Mineral Exploration",
+      "awardLevel": "Basic Certificate",
+      "academicUnit": "University of Dar es Salaam Mineral Resources Institute (UDSM-MRI)",
+      "mappedInstitutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Basic Certificate in Geology and Mineral Exploration",
+          "institutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Basic Certificate in Petroleum Geosciences",
+      "formalProgrammeName": "Basic Certificate in Petroleum Geosciences",
+      "awardLevel": "Basic Certificate",
+      "academicUnit": "University of Dar es Salaam Mineral Resources Institute (UDSM-MRI)",
+      "mappedInstitutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Basic Certificate in Petroleum Geosciences",
+          "institutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Basic Certificate in Mining Engineering",
+      "formalProgrammeName": "Basic Certificate in Mining Engineering",
+      "awardLevel": "Basic Certificate",
+      "academicUnit": "University of Dar es Salaam Mineral Resources Institute (UDSM-MRI)",
+      "mappedInstitutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Basic Certificate in Mining Engineering",
+          "institutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Basic Certificate in Mineral Processing Engineering",
+      "formalProgrammeName": "Basic Certificate in Mineral Processing Engineering",
+      "awardLevel": "Basic Certificate",
+      "academicUnit": "University of Dar es Salaam Mineral Resources Institute (UDSM-MRI)",
+      "mappedInstitutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Basic Certificate in Mineral Processing Engineering",
+          "institutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Basic Certificate in Environmental Engineering and Management in Mines",
+      "formalProgrammeName": "Basic Certificate in Environmental Engineering and Management in Mines",
+      "awardLevel": "Basic Certificate",
+      "academicUnit": "University of Dar es Salaam Mineral Resources Institute (UDSM-MRI)",
+      "mappedInstitutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Basic Certificate in Environmental Engineering and Management in Mines",
+          "institutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    },
+    {
+      "programmeName": "Basic Certificate Land and Mine Surveying",
+      "formalProgrammeName": "Basic Certificate in Land and Mine Surveying",
+      "awardLevel": "Basic Certificate",
+      "academicUnit": "University of Dar es Salaam Mineral Resources Institute (UDSM-MRI)",
+      "mappedInstitutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+      "existsInTcuGuidebook": false,
+      "existsInProcessedDb": true,
+      "tcuMatches": [],
+      "processedMatches": [
+        {
+          "programmeCode": "",
+          "programmeName": "Basic Certificate Land and Mine Surveying",
+          "institutionName": "MINERAL RESOURCES INSTITUTE (MADINI INSTITUTE) - DODOMA",
+          "sourceDatasets": [
+            "udsm_undergraduate_prospectus_2024_2025"
+          ]
+        }
+      ]
+    }
+  ],
+  "missingFromProcessedDb": []
+}

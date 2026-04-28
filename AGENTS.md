@@ -2,7 +2,9 @@
 
 ## Project
 
-Kozi Ipi is a Tanzania post-Form Four education discovery platform. It helps students, parents, and guardians find institutions and programmes by course name, career goal, location, field, award level, and Form Four suitability.
+Kozi Ipi is a Tanzania education discovery platform for post-secondary pathways. It helps students, parents, and guardians find institutions and programmes by course name, career goal, location, field, award level, and applicant pathway suitability.
+
+The platform is no longer limited to Form Four leavers. Treat Form Four, Form Six, diploma holders, and equivalent applicants as first-class supported pathways when modelling data, search, eligibility, and UI language.
 
 ## Stack
 
@@ -32,7 +34,7 @@ Canonical source:
 data/raw/tanzania-education-pathways-dataset
 ```
 
-The post-Form Four dataset is a fallback source for preserving current-only records. The NACTVET-focused dataset is only an enrichment source. Do not manually edit raw CSV files. Build processed data with:
+The post-Form Four dataset is a fallback source for preserving current-only records, not the full product boundary. The NACTVET-focused dataset is only an enrichment source. Do not manually edit raw CSV files. Build processed data with:
 
 ```sh
 bun run data:build
@@ -66,7 +68,7 @@ Rules decide eligibility.
 Semantic search suggests.
 ```
 
-MVP search should use full-text search, structured filters, synonym/intent mapping, and conservative eligibility labels. Do not make vector search or AI chat the source of eligibility decisions.
+MVP search should use full-text search, structured filters, synonym/intent mapping, and conservative eligibility labels. Eligibility language should be pathway-aware rather than Form-Four-only. Do not make vector search or AI chat the source of eligibility decisions.
 
 ## Important Docs
 

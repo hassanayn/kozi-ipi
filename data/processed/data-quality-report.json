@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-28T09:40:46.337Z",
+  "generatedAt": "2026-04-28T21:42:54.902Z",
   "canonicalDataset": "tanzania-education-pathways-dataset",
   "fallbackDataset": "tanzania-post-form-four-dataset",
   "enrichmentDatasets": [
@@ -30,9 +30,9 @@
     "fromUdsmProspectusSupplementCount": 27,
     "fallbackOnlyCount": 1669,
     "degreeCount": 1530,
-    "formSixRouteCount": 1844,
+    "formSixRouteCount": 1835,
     "certificateRouteCount": 1206,
-    "diplomaRouteCount": 835,
+    "diplomaRouteCount": 834,
     "needsReviewCount": 1655
   },
   "entryRequirements": {

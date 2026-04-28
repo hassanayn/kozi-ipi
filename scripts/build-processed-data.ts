@@ -608,6 +608,10 @@ function requirementRouteSummary(requirements: ProcessedEntryRequirement[]) {
 
 function normalizeTcuExtractedInstitutionName(value: string | undefined) {
   return normalizeName(value)
+}
+
+function normalizeTcuExtractedInstitutionLookupName(value: string | undefined) {
+  return normalizeName(value)
     .replace(/^(the\s+)?(university|college|institute|school|academy|centre|center)\s+of\s+/, "")
     .replace(/^(the\s+)?(university|college|institute|school|academy|centre|center)\s+/, "")
     .replace(/\s+campus$/, "")
@@ -1112,9 +1116,14 @@ function buildProgramme(row: Row, sourceDataset: string): ProcessedProgramme {
   const nactvetEnrichment = nactvetProgrammesByKey.get(
     makeProgrammeKey(row.normalized_programme_name, row.institution_name, row.award_level),
   )
-  const institution = institutionNameCandidates(
+  const institutionLookupNames = uniqueValues([
     firstValue(row.normalized_institution_name, row.institution_name),
-  )
+    sourceDataset === "tcu_secondary_guidebook_pdf_extraction"
+      ? normalizeTcuExtractedInstitutionLookupName(row.institution_name)
+      : undefined,
+  ])
+  const institution = institutionLookupNames
+    .flatMap((name) => institutionNameCandidates(name))
     .map((candidate) => institutionByName.get(candidate))
     .find(Boolean)
   const rawNormalizedInstitutionName =

@@ -1,5 +1,6 @@
 import { spawnSync } from "node:child_process"
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
+import { tmpdir } from "node:os"
 import { basename, dirname, join } from "node:path"
 import { fileURLToPath } from "node:url"
 
@@ -7,7 +8,8 @@ import { parse } from "csv-parse/sync"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const root = join(__dirname, "..")
-const defaultPdfPath = "/Users/elishabulalu/Downloads/Admission Guidebook 2025-2026.pdf"
+const defaultPdfSource =
+  "https://tcu.go.tz/sites/default/files/public_notices/2025-07/Admission%20Guidebook%20for%20Holders%20of%20Secondary%20School%20Qualifications_2025_2026.pdf"
 const outputDir = join(root, "data/extracted")
 const pathwayProgrammesPath = join(root, "data/raw/tanzania-education-pathways-dataset/programmes.csv")
 const processedProgrammesPath = join(root, "data/processed/programmes.jsonl")
@@ -104,6 +106,28 @@ function parsePdfText(pdfPath: string) {
   }
 
   return result.stdout
+}
+
+async function resolvePdfSource(source: string) {
+  if (!/^https?:\/\//i.test(source)) {
+    return {
+      pdfPath: source,
+      sourcePdf: basename(source),
+    }
+  }
+
+  const response = await fetch(source)
+  if (!response.ok) {
+    throw new Error(`Failed to download TCU guidebook PDF: ${response.status} ${response.statusText}`)
+  }
+
+  const pdfPath = join(tmpdir(), "tcu-secondary-guidebook-2025-2026.pdf")
+  writeFileSync(pdfPath, Buffer.from(await response.arrayBuffer()))
+
+  return {
+    pdfPath,
+    sourcePdf: "TCU secondary qualifications admission guidebook 2025-2026.pdf",
+  }
 }
 
 function extractPageNumber(page: string, fallback: number) {
@@ -434,31 +458,41 @@ function compareAgainstCurrent(rows: ExtractedProgramme[]) {
   }
 }
 
-const pdfPath = process.argv[2] ?? defaultPdfPath
+async function main() {
+  const pdfSource = process.argv[2] ?? process.env.TCU_SECONDARY_GUIDEBOOK_PDF ?? defaultPdfSource
+  const { pdfPath, sourcePdf } = await resolvePdfSource(pdfSource)
 
-if (!existsSync(pdfPath)) {
-  throw new Error(`TCU guidebook PDF not found: ${pdfPath}`)
+  if (!existsSync(pdfPath)) {
+    throw new Error(`TCU guidebook PDF not found: ${pdfPath}`)
+  }
+
+  mkdirSync(outputDir, { recursive: true })
+
+  const pdfText = parsePdfText(pdfPath)
+  const extractedRows = parseRows(pdfText, sourcePdf)
+  const csvPath = join(outputDir, "tcu-secondary-guidebook-2025-2026-programmes.csv")
+  const comparisonPath = join(outputDir, "tcu-secondary-guidebook-2025-2026-comparison.json")
+  const comparison = compareAgainstCurrent(extractedRows)
+
+  writeCsv(csvPath, extractedRows)
+  writeFileSync(comparisonPath, JSON.stringify(comparison, null, 2))
+
+  console.log(
+    JSON.stringify(
+      {
+        pdfSource,
+        pdfPath,
+        csvPath,
+        comparisonPath,
+        ...comparison,
+      },
+      null,
+      2,
+    ),
+  )
 }
 
-mkdirSync(outputDir, { recursive: true })
-
-const pdfText = parsePdfText(pdfPath)
-const extractedRows = parseRows(pdfText, basename(pdfPath))
-const csvPath = join(outputDir, "tcu-secondary-guidebook-2025-2026-programmes.csv")
-const comparisonPath = join(outputDir, "tcu-secondary-guidebook-2025-2026-comparison.json")
-
-writeCsv(csvPath, extractedRows)
-writeFileSync(comparisonPath, JSON.stringify(compareAgainstCurrent(extractedRows), null, 2))
-
-console.log(
-  JSON.stringify(
-    {
-      pdfPath,
-      csvPath,
-      comparisonPath,
-      ...compareAgainstCurrent(extractedRows),
-    },
-    null,
-    2,
-  ),
-)
+main().catch((error: unknown) => {
+  console.error(error instanceof Error ? error.message : error)
+  process.exit(1)
+})

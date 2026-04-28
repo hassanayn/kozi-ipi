@@ -1,10 +1,12 @@
 {
-  "generatedAt": "2026-04-26T23:57:02.683Z",
+  "generatedAt": "2026-04-28T21:42:54.902Z",
   "canonicalDataset": "tanzania-education-pathways-dataset",
   "fallbackDataset": "tanzania-post-form-four-dataset",
   "enrichmentDatasets": [
     "tanzania-education-dataset",
-    "institution-logos.seed.csv"
+    "institution-logos.seed.csv",
+    "tcu-secondary-guidebook-2025-2026-programmes.csv",
+    "udsm-undergraduate-prospectus-2024-2025-programmes.csv"
   ],
   "institutions": {
     "rawPathwayCount": 621,
@@ -19,21 +21,26 @@
   "programmes": {
     "rawPathwayCount": 2916,
     "rawLegacyCount": 2743,
+    "extractedTcuSecondaryGuidebookCount": 855,
+    "udsmProspectusSupplementCount": 27,
     "nactvetEnrichmentCount": 1771,
-    "processedCount": 4433,
-    "fromPathwaysCount": 2852,
-    "fallbackOnlyCount": 1581,
-    "degreeCount": 1402,
-    "formSixRouteCount": 1640,
-    "certificateRouteCount": 1205,
-    "diplomaRouteCount": 772,
-    "needsReviewCount": 1579
+    "processedCount": 4573,
+    "fromPathwaysCount": 2904,
+    "fromTcuSecondaryGuidebookExtractionCount": 855,
+    "fromUdsmProspectusSupplementCount": 27,
+    "fallbackOnlyCount": 1669,
+    "degreeCount": 1530,
+    "formSixRouteCount": 1835,
+    "certificateRouteCount": 1206,
+    "diplomaRouteCount": 834,
+    "needsReviewCount": 1655
   },
   "entryRequirements": {
     "rawPathwayCount": 4503,
-    "processedCount": 4503,
+    "extractedTcuSecondaryGuidebookCount": 855,
+    "processedCount": 5358,
     "formFourRouteCount": 1515,
-    "formSixRouteCount": 1782,
+    "formSixRouteCount": 2637,
     "certificateRouteCount": 1625,
     "diplomaRouteCount": 891
   }

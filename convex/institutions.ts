@@ -1,6 +1,7 @@
 import { paginationOptsValidator } from "convex/server"
 import { v } from "convex/values"
 
+import { matchesField, tanzaniaRegions } from "../lib/domain/taxonomy"
 import { query } from "./_generated/server"
 import type { Doc } from "./_generated/dataModel"
 
@@ -55,43 +56,7 @@ const fieldLabels: Record<string, string> = {
   transport: "Transport",
 }
 
-const validRegions = new Set([
-  "Arusha",
-  "Dar es Salaam",
-  "Dodoma",
-  "Geita",
-  "Iringa",
-  "Kagera",
-  "Katavi",
-  "Kigoma",
-  "Kilimanjaro",
-  "Lindi",
-  "Manyara",
-  "Mara",
-  "Mbeya",
-  "Morogoro",
-  "Mtwara",
-  "Mwanza",
-  "Njombe",
-  "Pemba North",
-  "Pemba South",
-  "Pwani",
-  "Rukwa",
-  "Ruvuma",
-  "Shinyanga",
-  "Simiyu",
-  "Singida",
-  "Songwe",
-  "Tabora",
-  "Tanga",
-  "Zanzibar",
-  "Zanzibar Central/South",
-  "Zanzibar North",
-  "Zanzibar North Pemba",
-  "Zanzibar South Pemba",
-  "Zanzibar South Unguja",
-  "Zanzibar Urban/West",
-])
+const validRegions = new Set<string>(tanzaniaRegions)
 
 const tones = ["blue", "green", "amber", "indigo", "red", "ink"] as const
 
@@ -351,29 +316,9 @@ function normalize(value?: string) {
 type BrowseInstitution = ReturnType<typeof toBrowseInstitution>
 
 function fieldMatches(institution: BrowseInstitution, field: string) {
-  const fieldTaxonomy: Record<string, string[]> = {
-    Agriculture: ["agriculture"],
-    Business: ["business", "accounting", "procurement", "commerce", "insurance", "banking"],
-    Education: ["education", "teacher", "teaching", "languages"],
-    Engineering: [
-      "engineering",
-      "technical",
-      "mechanical",
-      "electrical",
-      "construction",
-      "transport",
-      "auto",
-      "automotive",
-    ],
-    Health: ["health", "medicine", "nursing", "pharmacy", "clinical", "laboratory"],
-    ICT: ["ict", "computer", "technology", "information technology", "software"],
-    Law: ["law"],
-    Tourism: ["tourism", "hospitality", "tour guiding", "culinary", "wildlife"],
-  }
-  const terms = fieldTaxonomy[field] ?? [field.toLowerCase()]
   const haystack = `${institution.fieldSlugs.join(" ")} ${institution.searchText}`.toLowerCase()
 
-  return terms.some((term) => haystack.includes(term.toLowerCase()))
+  return matchesField(haystack, field)
 }
 
 function countBy<T>(items: T[], getKey: (item: T) => string) {

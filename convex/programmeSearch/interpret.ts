@@ -1,51 +1,6 @@
-import type { ProgrammeFilters } from "./filters"
+import { courseFamilies } from "../../lib/domain/taxonomy"
 
-const courseFamilyIntents = [
-  {
-    courseFamily: "engineering",
-    terms: ["engineering", "engineer", "civil", "mechanical", "electrical"],
-  },
-  {
-    courseFamily: "health",
-    terms: [
-      "health",
-      "afya",
-      "nurse",
-      "nursing",
-      "nesi",
-      "hospital",
-      "medical",
-      "clinical",
-    ],
-  },
-  {
-    courseFamily: "ICT",
-    terms: ["ict", "computer", "kompyuta", "software", "network", "technology"],
-  },
-  {
-    courseFamily: "business",
-    terms: [
-      "business",
-      "biashara",
-      "accounting",
-      "procurement",
-      "office",
-      "ofisini",
-    ],
-  },
-  {
-    courseFamily: "education",
-    terms: ["education", "teacher", "teaching", "ualimu", "mwalimu"],
-  },
-  {
-    courseFamily: "tourism_hospitality",
-    terms: ["hotel", "hospitality", "tourism", "utalii"],
-  },
-  {
-    courseFamily: "agriculture",
-    terms: ["agriculture", "kilimo"],
-  },
-]
+import type { ProgrammeFilters } from "./filters"
 
 const vagueIntentPattern =
   /\b(i want|want to|study|become|nataka|kuwa|kazi ya|courses? za)\b/i
@@ -65,10 +20,10 @@ export function interpretProgrammeQuery(
 ) {
   const trimmedQuery = query.trim()
   const normalizedQuery = trimmedQuery.toLowerCase()
-  const matchedIntent = courseFamilyIntents
-    .map((intent) => ({
-      courseFamily: intent.courseFamily,
-      term: intent.terms.find((term) =>
+  const matchedIntent = courseFamilies
+    .map((family) => ({
+      courseFamily: family.key,
+      term: family.intentTerms.find((term) =>
         includesIntentTerm(normalizedQuery, term)
       ),
     }))

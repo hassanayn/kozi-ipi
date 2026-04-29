@@ -1,23 +1,30 @@
 # Data Integration Plan
 
-Kozi Ipi has two raw datasets:
+Kozi Ipi currently works from three raw datasets:
 
-- `data/raw/tanzania-post-form-four-dataset`: canonical base dataset.
+- `data/raw/tanzania-education-pathways-dataset`: canonical base dataset.
+- `data/raw/tanzania-post-form-four-dataset`: fallback coverage dataset.
 - `data/raw/tanzania-education-dataset`: NACTVET-focused enrichment dataset.
 
-The broader post-Form Four dataset stays canonical because it covers NACTVET, VETA, TCU, Ministry teacher pathways, and Zanzibar vocational sources. The NACTVET-focused dataset is used to enrich matching rows with fields that are useful but not present in the broader export.
+The pathways dataset stays canonical because it includes institution, programme, and entry-requirement rows across Form Four, Form Six, certificate, diploma, and equivalent routes. The post-Form Four dataset is retained as a conservative fallback for current-only institutions/programmes that are absent from the pathways export. The NACTVET-focused dataset is used only to enrich matching rows with useful extra fields.
 
 ## Merge Strategy
 
 ```text
-post-form-four institutions
--> merge matching NACTVET institution fields
+pathways institutions
+-> merge matching fallback/current-only rows where needed
+-> merge matching NACTVET institution enrichment
 -> processed institutions
 
-post-form-four programmes
--> merge matching NACTVET programme fields
+pathways programmes
+-> merge matching fallback/current-only rows where needed
+-> merge matching NACTVET programme enrichment
 -> add search keywords and review flags
 -> processed programmes
+
+pathways entry requirements
+-> preserve route rows as the canonical eligibility source
+-> processed entry requirements
 ```
 
 Matching uses normalized institution names and programme tuples:
@@ -43,6 +50,8 @@ data/processed/institutions.json
 data/processed/institutions.jsonl
 data/processed/programmes.json
 data/processed/programmes.jsonl
+data/processed/entry-requirements.json
+data/processed/entry-requirements.jsonl
 data/processed/data-quality-report.json
 ```
 

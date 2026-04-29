@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import type { Dispatch, FormEvent, SetStateAction } from "react"
+import { type FormEvent, useState } from "react"
 
 import { trendingQueries } from "@/components/search/search-config"
 import { SearchIcon, XIcon } from "@/components/search/search-icons"
@@ -10,18 +10,22 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 type SearchHeaderProps = {
-  query: string
-  setQuery: Dispatch<SetStateAction<string>>
-  onSubmit: (event: FormEvent<HTMLFormElement>) => void
+  initialQuery: string
+  onSubmit: (query: string) => void
   onTrending: (query: string) => void
 }
 
 export function SearchHeader({
-  query,
-  setQuery,
+  initialQuery,
   onSubmit,
   onTrending,
 }: SearchHeaderProps) {
+  const [query, setQuery] = useState(initialQuery)
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    onSubmit(query)
+  }
   return (
     <>
       <header className="border-b border-brand-ink/8">
@@ -76,7 +80,7 @@ export function SearchHeader({
 
           <form
             className="mt-6 flex w-full max-w-3xl flex-col gap-2 rounded-3xl border border-brand-ink/10 bg-white p-2 shadow-[0_18px_38px_-22px_rgba(15,15,18,0.25)] sm:flex-row sm:items-center sm:rounded-full"
-            onSubmit={onSubmit}
+            onSubmit={handleSubmit}
           >
             <label className="flex flex-1 items-center gap-3 px-4">
               <span className="sr-only">Tafuta kozi, chuo, career path</span>
@@ -115,7 +119,10 @@ export function SearchHeader({
               <button
                 className="rounded-full border border-brand-ink/15 bg-white px-3 py-1.5 text-brand-ink/70 transition hover:border-brand-blue hover:bg-brand-blue hover:text-white"
                 key={trending}
-                onClick={() => onTrending(trending)}
+                onClick={() => {
+                  setQuery(trending)
+                  onTrending(trending)
+                }}
                 type="button"
               >
                 {trending}

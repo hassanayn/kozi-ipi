@@ -1,9 +1,5 @@
-"use client"
-
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { type FormEvent, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
@@ -70,7 +66,7 @@ export function Hero() {
       className="relative min-h-svh w-full bg-brand-cream font-body text-brand-ink"
       style={{ fontFamily: "var(--font-body)" }}
     >
-      <div className="mx-auto flex w-full max-w-[1320px] flex-col gap-10 pb-20 lg:gap-14 lg:pb-24 px-6 sm:px-10 lg:px-14">
+      <div className="mx-auto flex w-full max-w-[1320px] flex-col gap-10 px-6 pb-20 sm:px-10 lg:gap-14 lg:px-14 lg:pb-24">
         <SiteHeader />
 
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1fr_1.45fr] lg:gap-12">
@@ -91,7 +87,11 @@ export function Hero() {
 function SiteHeader() {
   return (
     <header className="flex h-20 items-center justify-between gap-6 lg:h-24">
-      <Link href="/" aria-label="Kozi Ipi home" className="inline-flex items-center gap-2">
+      <Link
+        href="/"
+        aria-label="Kozi Ipi home"
+        className="inline-flex items-center gap-2"
+      >
         <Image
           src="/kozi-ipi-logo.png"
           alt="Kozi Ipi"
@@ -100,7 +100,7 @@ function SiteHeader() {
           priority
           className="size-12 lg:size-14"
         />
-        <span className="rounded-full bg-brand-blue/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-brand-blue">
+        <span className="rounded-full bg-brand-blue/10 px-2 py-0.5 text-[10px] font-semibold tracking-[0.12em] text-brand-blue uppercase">
           Beta
         </span>
       </Link>
@@ -153,8 +153,8 @@ function HeroCopy() {
         className="mt-7 max-w-[36rem] text-[15.5px] leading-[1.7] text-brand-ink/70 sm:text-base"
         style={{ fontFamily: "var(--font-body)" }}
       >
-        Jukwaa lako la kugundua kozi, vyuo, levels na career paths baada ya Form
-        Four. Chagua smart, jenga kesho yako.
+        Jukwaa lako la kugundua kozi, vyuo, levels na career paths baada ya
+        secondary school, A-level au diploma. Chagua smart, jenga kesho yako.
       </p>
 
       <SearchBar className="mt-9" />
@@ -178,36 +178,22 @@ function HeroCopy() {
 /* ───────────────────────────── Search bar ──────────────────────────── */
 
 function SearchBar({ className = "" }: { className?: string }) {
-  const router = useRouter()
-  const [query, setQuery] = useState("")
-
-  function submitSearch(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-
-    const nextQuery = query.trim()
-    if (!nextQuery) {
-      return
-    }
-
-    router.push(`/search?q=${encodeURIComponent(nextQuery)}`)
-  }
-
   return (
     <form
-      onSubmit={submitSearch}
+      action="/search"
       className={`flex w-full max-w-[40rem] flex-col gap-2 rounded-3xl border border-brand-ink/10 bg-white p-2 shadow-[0_18px_38px_-22px_rgba(15,15,18,0.25)] sm:flex-row sm:items-center sm:gap-0 sm:rounded-full ${className}`}
+      method="get"
     >
       <label className="flex flex-1 items-center gap-3 px-4">
         <span className="sr-only">Tafuta kozi, chuo, au career path</span>
         <SearchIcon className="size-[18px] shrink-0 text-brand-ink/55" />
         <Input
-          variant="ghost"
-          size="xl"
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-          placeholder="Tafuta kozi, chuo, career path..."
           aria-label="Tafuta kozi, chuo, au career path"
           className="h-12 border-0 bg-transparent px-0 text-[15px] text-brand-ink caret-brand-blue shadow-none placeholder:text-brand-ink/40 focus-visible:ring-0"
+          name="q"
+          placeholder="Tafuta kozi, chuo, career path..."
+          size="xl"
+          variant="ghost"
         />
       </label>
 
@@ -226,7 +212,7 @@ function SearchBar({ className = "" }: { className?: string }) {
 
 function HeroArtwork() {
   return (
-    <div className="relative order-1 mx-auto w-full max-w-[640px] lg:order-2 lg:mx-0 lg:ml-auto lg:max-w-[860px] lg:-mr-4 xl:-mr-10">
+    <div className="relative order-1 mx-auto w-full max-w-[640px] lg:order-2 lg:mx-0 lg:-mr-4 lg:ml-auto lg:max-w-[860px] xl:-mr-10">
       <div className="relative aspect-[4/3] w-full">
         <Image
           src="/hero-students.png"
@@ -331,39 +317,50 @@ function CategoryStrip({ className = "" }: { className?: string }) {
       </div>
 
       <div className="grid min-w-0 grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
-        {CATEGORIES.map(({ label, hint, tone, family, query, image, imagePosition, Icon }) => (
-          <Link
-            key={label}
-            href={`/search?q=${encodeURIComponent(query)}&family=${encodeURIComponent(family)}`}
-            className="group relative flex min-h-[154px] min-w-0 overflow-hidden rounded-2xl border border-brand-ink/10 bg-brand-ink p-5 text-white transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-blue/40 hover:shadow-[0_22px_42px_-26px_rgba(29,78,216,0.45)]"
-          >
-            <Image
-              src={image}
-              alt=""
-              fill
-              sizes="(min-width: 1024px) 18vw, (min-width: 640px) 30vw, 45vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-              style={{ objectPosition: imagePosition }}
-              aria-hidden
-            />
-            <div className="absolute inset-0 bg-gradient-to-br from-black/75 via-black/35 to-black/10" />
-            <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/70 to-transparent" />
-            <div
-              className={`relative grid size-11 place-items-center rounded-xl shadow-sm ${TONE_BADGE[tone]}`}
+        {CATEGORIES.map(
+          ({
+            label,
+            hint,
+            tone,
+            family,
+            query,
+            image,
+            imagePosition,
+            Icon,
+          }) => (
+            <Link
+              key={label}
+              href={`/search?q=${encodeURIComponent(query)}&family=${encodeURIComponent(family)}`}
+              className="group relative flex min-h-[154px] min-w-0 overflow-hidden rounded-2xl border border-brand-ink/10 bg-brand-ink p-5 text-white transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-blue/40 hover:shadow-[0_22px_42px_-26px_rgba(29,78,216,0.45)]"
             >
-              <Icon className="size-5" />
-            </div>
-            <div className="relative mt-auto flex items-end justify-between gap-2">
-              <div>
-                <div className="text-[16px] font-semibold tracking-tight text-white">
-                  {label}
-                </div>
-                <div className="text-[12px] text-white/75">{hint}</div>
+              <Image
+                src={image}
+                alt=""
+                fill
+                sizes="(min-width: 1024px) 18vw, (min-width: 640px) 30vw, 45vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                style={{ objectPosition: imagePosition }}
+                aria-hidden
+              />
+              <div className="absolute inset-0 bg-gradient-to-br from-black/75 via-black/35 to-black/10" />
+              <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/70 to-transparent" />
+              <div
+                className={`relative grid size-11 place-items-center rounded-xl shadow-sm ${TONE_BADGE[tone]}`}
+              >
+                <Icon className="size-5" />
               </div>
-              <ArrowRightIcon className="size-4 shrink-0 text-white/70 transition-all group-hover:translate-x-0.5 group-hover:text-white" />
-            </div>
-          </Link>
-        ))}
+              <div className="relative mt-auto flex items-end justify-between gap-2">
+                <div>
+                  <div className="text-[16px] font-semibold tracking-tight text-white">
+                    {label}
+                  </div>
+                  <div className="text-[12px] text-white/75">{hint}</div>
+                </div>
+                <ArrowRightIcon className="size-4 shrink-0 text-white/70 transition-all group-hover:translate-x-0.5 group-hover:text-white" />
+              </div>
+            </Link>
+          )
+        )}
       </div>
     </section>
   )
@@ -400,13 +397,12 @@ function FeaturedInstitutions() {
             <CampusImage
               src={institution.image}
               alt={`${institution.name} campus`}
-              short={institution.short}
             />
             <div className="flex min-w-0 flex-1 flex-col gap-1 p-4">
-              <div className="text-[11px] font-semibold uppercase tracking-wide text-brand-blue">
+              <div className="text-[11px] font-semibold tracking-wide text-brand-blue uppercase">
                 {institution.short}
               </div>
-              <h3 className="line-clamp-2 min-w-0 break-words text-[13.5px] font-semibold leading-snug text-brand-ink">
+              <h3 className="line-clamp-2 min-w-0 text-[13.5px] leading-snug font-semibold break-words text-brand-ink">
                 {institution.name}
               </h3>
               <p className="mt-auto inline-flex min-w-0 items-center gap-1 pt-2 text-[12px] text-brand-ink/55">
@@ -421,27 +417,7 @@ function FeaturedInstitutions() {
   )
 }
 
-function CampusImage({
-  src,
-  alt,
-  short,
-}: {
-  src: string
-  alt: string
-  short: string
-}) {
-  const [failed, setFailed] = useState(false)
-
-  if (failed) {
-    return (
-      <div className="grid aspect-[16/10] w-full place-items-center bg-gradient-to-br from-brand-blue/10 to-brand-yellow/20">
-        <span className="text-[18px] font-bold tracking-tight text-brand-ink/40">
-          {short}
-        </span>
-      </div>
-    )
-  }
-
+function CampusImage({ src, alt }: { src: string; alt: string }) {
   return (
     <div className="relative aspect-[16/10] w-full overflow-hidden bg-brand-ink/[0.04]">
       <Image
@@ -451,8 +427,6 @@ function CampusImage({
         loading="eager"
         sizes="(min-width: 1024px) 18vw, (min-width: 640px) 30vw, 45vw"
         className="object-cover transition-transform duration-500 group-hover:scale-105"
-        onError={() => setFailed(true)}
-        unoptimized
       />
     </div>
   )

@@ -87,6 +87,9 @@ type ProcessedProgramme = {
   ownershipType?: string
   region?: string
   districtOrCouncil?: string
+  institutionLogoUrl?: string
+  institutionLogoSourceUrl?: string
+  institutionWebsite?: string
   minimumEntryRequirements?: string
   requiredSubjects?: string
   suitableForFormFourLeaver: Suitability
@@ -1240,6 +1243,7 @@ function buildProgramme(row: Row, sourceDataset: string): ProcessedProgramme {
   const programmeName = cleanProgrammeNameForRow(row)
   const normalizedProgrammeName = normalizedProgrammeNameForRow(row, programmeName)
   const fieldCategory = normalizeFieldCategory(row.field_category)
+  const institutionLogo = institution?.logoStatus === "verified" ? institution : undefined
   const requirements = requirementsByProgramme.get(
     makeRequirementKey(normalizedProgrammeName, rawNormalizedInstitutionName),
   ) ?? []
@@ -1289,6 +1293,9 @@ function buildProgramme(row: Row, sourceDataset: string): ProcessedProgramme {
     ownershipType: firstValue(row.ownership_type, institution?.ownershipType),
     region: firstValue(row.region, institution?.region),
     districtOrCouncil: firstValue(row.district_or_council, institution?.districtOrCouncil),
+    institutionLogoUrl: institutionLogo?.logoUrl,
+    institutionLogoSourceUrl: institutionLogo?.logoSourceUrl,
+    institutionWebsite: institution?.website,
     minimumEntryRequirements: firstValue(
       row.minimum_entry_requirements,
       routeSummary.rawRequirementText,
@@ -1360,19 +1367,35 @@ function buildProgramme(row: Row, sourceDataset: string): ProcessedProgramme {
 }
 
 function mergeProgramme(left: ProcessedProgramme, right: ProcessedProgramme): ProcessedProgramme {
+  const sameInstitution = left.normalizedInstitutionName === right.normalizedInstitutionName
+
   return {
     ...left,
     programmeCode: firstValue(left.programmeCode, right.programmeCode),
     qualificationLevel: firstValue(left.qualificationLevel, right.qualificationLevel),
     pathwayType: firstValue(left.pathwayType, right.pathwayType),
-    institutionRegistrationNumber: firstValue(
-      left.institutionRegistrationNumber,
-      right.institutionRegistrationNumber,
-    ),
-    institutionType: firstValue(left.institutionType, right.institutionType),
-    ownershipType: firstValue(left.ownershipType, right.ownershipType),
-    region: firstValue(left.region, right.region),
-    districtOrCouncil: firstValue(left.districtOrCouncil, right.districtOrCouncil),
+    institutionRegistrationNumber: sameInstitution
+      ? firstValue(left.institutionRegistrationNumber, right.institutionRegistrationNumber)
+      : left.institutionRegistrationNumber,
+    institutionType: sameInstitution
+      ? firstValue(left.institutionType, right.institutionType)
+      : left.institutionType,
+    ownershipType: sameInstitution
+      ? firstValue(left.ownershipType, right.ownershipType)
+      : left.ownershipType,
+    region: sameInstitution ? firstValue(left.region, right.region) : left.region,
+    districtOrCouncil: sameInstitution
+      ? firstValue(left.districtOrCouncil, right.districtOrCouncil)
+      : left.districtOrCouncil,
+    institutionLogoUrl: sameInstitution
+      ? firstValue(left.institutionLogoUrl, right.institutionLogoUrl)
+      : left.institutionLogoUrl,
+    institutionLogoSourceUrl: sameInstitution
+      ? firstValue(left.institutionLogoSourceUrl, right.institutionLogoSourceUrl)
+      : left.institutionLogoSourceUrl,
+    institutionWebsite: sameInstitution
+      ? firstValue(left.institutionWebsite, right.institutionWebsite)
+      : left.institutionWebsite,
     minimumEntryRequirements: firstValue(left.minimumEntryRequirements, right.minimumEntryRequirements),
     requiredSubjects: firstValue(left.requiredSubjects, right.requiredSubjects),
     suitableForFormFourLeaver: mergeSuitability(
@@ -1406,7 +1429,9 @@ function mergeProgramme(left: ProcessedProgramme, right: ProcessedProgramme): Pr
     reviewReasons: uniqueValues([...left.reviewReasons, ...right.reviewReasons]),
     careerKeywords: uniqueValues([...left.careerKeywords, ...right.careerKeywords]),
     swahiliKeywords: uniqueValues([...left.swahiliKeywords, ...right.swahiliKeywords]),
-    searchText: uniqueValues([left.searchText, right.searchText]).join(" "),
+    searchText: sameInstitution
+      ? uniqueValues([left.searchText, right.searchText]).join(" ")
+      : left.searchText,
   }
 }
 

@@ -1,6 +1,6 @@
 # Kozi Ipi Search Queries
 
-This document captures the kinds of searches Kozi Ipi should support. The goal is to make search work for normal Form Four leavers, parents, guardians, and students who may not know the exact name of a course or institution.
+This document captures the kinds of searches Kozi Ipi should support. The goal is to make search work for Form Four leavers, Form Six leavers, diploma holders, parents, guardians, and students who may not know the exact name of a course or institution.
 
 ## Search Principles
 
@@ -96,7 +96,7 @@ vyuo karibu na nyumbani
 
 ### Qualification Intent
 
-The user searches based on Form Four results, grades, or eligibility.
+The user searches based on prior results, grades, qualification route, or eligibility.
 
 Examples:
 
@@ -314,4 +314,3 @@ Accreditation status
 Suitable for Form Four leaver
 Confidence level
 ```
-

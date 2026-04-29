@@ -1,6 +1,6 @@
 "use client"
 
-import { type FormEvent, useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { useMutation, useQuery } from "convex/react"
 import { usePathname, useRouter } from "next/navigation"
 
@@ -31,14 +31,15 @@ export function SearchResultsClient({
   const pathname = usePathname()
   const logSearchEvent = useMutation(api.searchEvents.log)
   const lastLoggedSearchRef = useRef("")
-  // Keep /search server-rendered; this replaces useSearchParams without forcing a Suspense shell.
-  const [searchParamsKey, setSearchParamsKey] = useState(() =>
-    new URLSearchParams(initialSearchParams.map(([key, value]) => [key, value])).toString(),
+  const searchParams = useMemo(
+    () =>
+      new URLSearchParams(
+        initialSearchParams.map(([key, value]) => [key, value])
+      ),
+    [initialSearchParams]
   )
-  const searchParams = useMemo(() => new URLSearchParams(searchParamsKey), [searchParamsKey])
   const submittedQuery = searchParams.get("q")?.trim() ?? ""
   const queryFromUrl = getInitialQuery(searchParams)
-  const [query, setQuery] = useState(queryFromUrl)
 
   const family = searchParams.get("family") ?? undefined
   const awardLevel = searchParams.get("level") ?? "all"
@@ -47,13 +48,17 @@ export function SearchResultsClient({
   const institutionLabel = searchParams.get("institutionLabel") ?? undefined
   const selectedProgrammeId = searchParams.get("programme") ?? undefined
   const resultSetKey = `${queryFromUrl}|${family ?? ""}|${awardLevel}|${region}|${institution ?? ""}|${institutionLabel ?? ""}|${selectedProgrammeId ?? ""}`
-  const defaultResultLimit = selectedProgrammeId ? MAX_VISIBLE_RESULTS : INITIAL_RESULT_LIMIT
+  const defaultResultLimit = selectedProgrammeId
+    ? MAX_VISIBLE_RESULTS
+    : INITIAL_RESULT_LIMIT
   const [resultLimitState, setResultLimitState] = useState({
     key: resultSetKey,
     limit: defaultResultLimit,
   })
   const resultLimit =
-    resultLimitState.key === resultSetKey ? resultLimitState.limit : defaultResultLimit
+    resultLimitState.key === resultSetKey
+      ? resultLimitState.limit
+      : defaultResultLimit
 
   const filters = useMemo(() => {
     return {
@@ -66,7 +71,10 @@ export function SearchResultsClient({
 
   const activeQuery = queryFromUrl
   const hasFilters =
-    Boolean(family) || awardLevel !== "all" || Boolean(region) || Boolean(institution)
+    Boolean(family) ||
+    awardLevel !== "all" ||
+    Boolean(region) ||
+    Boolean(institution)
   const filtersJson = useMemo(() => {
     return hasFilters ? JSON.stringify(filters) : undefined
   }, [filters, hasFilters])
@@ -76,22 +84,13 @@ export function SearchResultsClient({
         query: activeQuery,
         filters: hasFilters ? filters : undefined,
         limit: resultLimit,
-      }
-    : "skip"
-
-  const countArgs = activeQuery
-    ? {
-        query: activeQuery,
-        filters: hasFilters ? filters : undefined,
         maxCount: 1000,
       }
     : "skip"
 
   const search = useQuery(api.programmes.smartSearch, searchArgs)
-  const count = useQuery(api.programmes.smartSearchCount, countArgs)
-  const isResultsLoading = activeQuery && search === undefined
-  const isCountLoading = activeQuery && count === undefined
-  const totalMatches = count?.count ?? search?.results.length ?? 0
+  const isResultsLoading = Boolean(activeQuery) && search === undefined
+  const totalMatches = search?.total ?? 0
   const renderedCount = search?.results.length ?? 0
   const canLoadMore =
     Boolean(activeQuery) &&
@@ -109,7 +108,9 @@ export function SearchResultsClient({
     },
     awardLevel !== "all" && {
       key: "level",
-      label: awardLevels.find((level) => level.value === awardLevel)?.label ?? awardLevel,
+      label:
+        awardLevels.find((level) => level.value === awardLevel)?.label ??
+        awardLevel,
       clear: () => setFilter("level", "all"),
     },
     region && {
@@ -125,25 +126,15 @@ export function SearchResultsClient({
   ].filter(isActiveFilter)
 
   useEffect(() => {
-    function syncFromLocation() {
-      setSearchParamsKey(new URLSearchParams(window.location.search).toString())
-    }
-
-    window.addEventListener("popstate", syncFromLocation)
-
-    return () => window.removeEventListener("popstate", syncFromLocation)
-  }, [])
-
-  useEffect(() => {
-    if (!submittedQuery || isResultsLoading || isCountLoading || !count) {
+    if (!submittedQuery || isResultsLoading || !search) {
       return
     }
 
     const logKey = JSON.stringify([
       submittedQuery.toLowerCase(),
       filtersJson ?? "",
-      count.count,
-      Boolean(count.capped),
+      search.total,
+      Boolean(search.capped),
     ])
     if (lastLoggedSearchRef.current === logKey) {
       return
@@ -153,15 +144,14 @@ export function SearchResultsClient({
     void logSearchEvent({
       query: submittedQuery,
       filtersJson,
-      resultCount: count.count,
-      resultCountCapped: Boolean(count.capped),
+      resultCount: search.total,
+      resultCountCapped: Boolean(search.capped),
       source: "search_page",
     })
-  }, [count, filtersJson, isCountLoading, isResultsLoading, logSearchEvent, submittedQuery])
+  }, [filtersJson, isResultsLoading, logSearchEvent, search, submittedQuery])
 
   function routeWith(nextParams: URLSearchParams) {
     const queryString = nextParams.toString()
-    setSearchParamsKey(queryString)
     router.push(queryString ? `${pathname}?${queryString}` : pathname)
   }
 
@@ -171,7 +161,7 @@ export function SearchResultsClient({
         [key]: value,
         ...(key === "institution" ? { institutionLabel: null } : {}),
         programme: null,
-      }),
+      })
     )
   }
 
@@ -184,31 +174,28 @@ export function SearchResultsClient({
         institution: null,
         institutionLabel: null,
         programme: null,
-      }),
+      })
     )
   }
 
-  function submitSearch(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-
-    const nextQuery = query.trim()
-    if (!nextQuery) {
+  function submitSearch(nextQuery: string) {
+    const normalizedQuery = nextQuery.trim()
+    if (!normalizedQuery) {
       return
     }
 
     routeWith(
       updateParams(searchParams, {
-        q: nextQuery,
+        q: normalizedQuery,
         family: null,
         institution: null,
         institutionLabel: null,
         programme: null,
-      }),
+      })
     )
   }
 
   function runTrending(nextQuery: string) {
-    setQuery(nextQuery)
     routeWith(
       updateParams(searchParams, {
         q: nextQuery,
@@ -216,20 +203,24 @@ export function SearchResultsClient({
         institution: null,
         institutionLabel: null,
         programme: null,
-      }),
+      })
     )
   }
 
   function loadMoreResults() {
-    const nextLimit = Math.min(resultLimit + RESULT_LIMIT_STEP, totalMatches, MAX_VISIBLE_RESULTS)
+    const nextLimit = Math.min(
+      resultLimit + RESULT_LIMIT_STEP,
+      totalMatches,
+      MAX_VISIBLE_RESULTS
+    )
     setResultLimitState({ key: resultSetKey, limit: nextLimit })
   }
 
   return (
     <main className="min-h-screen bg-white text-brand-ink">
       <SearchHeader
-        query={query}
-        setQuery={setQuery}
+        key={queryFromUrl}
+        initialQuery={queryFromUrl}
         onSubmit={submitSearch}
         onTrending={runTrending}
       />
@@ -247,9 +238,10 @@ export function SearchResultsClient({
         <section className="min-w-0">
           <SearchResultsHeader
             activeQuery={activeQuery}
-            count={count}
             inferredFamily={inferredFamily}
-            isCountLoading={isCountLoading}
+            isResultsLoading={isResultsLoading}
+            totalMatches={search?.total}
+            isCapped={Boolean(search?.capped)}
             resultCount={search?.results.length}
           />
 
@@ -282,12 +274,15 @@ export function SearchResultsClient({
                     isSelected={programme._id === selectedProgrammeId}
                     key={programme._id}
                     programme={programme}
-                    shareUrl={buildProgrammeShareUrl(searchParams, programme._id)}
+                    shareUrl={buildProgrammeShareUrl(
+                      searchParams,
+                      programme._id
+                    )}
                   />
                 ))}
                 <SearchResultsFooter
                   canLoadMore={canLoadMore}
-                  isCapped={Boolean(count?.capped)}
+                  isCapped={Boolean(search?.capped)}
                   onLoadMore={loadMoreResults}
                   renderedCount={renderedCount}
                   totalMatches={totalMatches}
@@ -337,31 +332,28 @@ function SearchResultsFooter({
 
 function SearchResultsHeader({
   activeQuery,
-  count,
   inferredFamily,
-  isCountLoading,
+  isResultsLoading,
+  totalMatches,
+  isCapped,
   resultCount,
 }: {
   activeQuery: string
-  count:
-    | {
-        count: number
-        capped: boolean
-      }
-    | undefined
   inferredFamily?: string
-  isCountLoading: boolean | ""
+  isResultsLoading: boolean
+  totalMatches?: number
+  isCapped: boolean
   resultCount?: number
 }) {
   return (
     <div className="flex min-w-0 flex-wrap items-end justify-between gap-4 border-b border-brand-ink/8 pb-4">
       <div className="min-w-0">
-        <p className="text-[12.5px] font-medium uppercase tracking-[0.16em] text-brand-blue">
-          {isCountLoading
+        <p className="text-[12.5px] font-medium tracking-[0.16em] text-brand-blue uppercase">
+          {isResultsLoading
             ? "Searching"
-            : `${count?.count ?? resultCount ?? 0}${count?.capped ? "+" : ""} matches`}
+            : `${totalMatches ?? resultCount ?? 0}${isCapped ? "+" : ""} matches`}
         </p>
-        <h2 className="mt-1 break-words text-[22px] font-bold tracking-tight">
+        <h2 className="mt-1 text-[22px] font-bold tracking-tight break-words">
           {activeQuery ? `Results for "${activeQuery}"` : "All programmes"}
         </h2>
       </div>
@@ -374,12 +366,15 @@ function SearchResultsHeader({
   )
 }
 
-function EmptyState({ message = "Search a course, college, or career path to see results." }) {
+function EmptyState({
+  message = "Search a course, college, or career path to see results.",
+}) {
   return (
     <div className="rounded-2xl border border-dashed border-brand-ink/15 bg-white p-10 text-center">
       <p className="text-[15px] font-semibold">{message}</p>
       <p className="mt-1 text-[13px] text-brand-ink/55">
-        Try “clinical medicine”, “civil engineering”, or “computer courses after Form Four”.
+        Try “clinical medicine”, “civil engineering”, or “computer courses after
+        school”.
       </p>
     </div>
   )
@@ -398,7 +393,10 @@ function LoadingState() {
   )
 }
 
-function buildProgrammeShareUrl(searchParams: URLSearchParams, programmeId: string) {
+function buildProgrammeShareUrl(
+  searchParams: URLSearchParams,
+  programmeId: string
+) {
   const nextParams = new URLSearchParams(searchParams.toString())
   nextParams.set("programme", programmeId)
 

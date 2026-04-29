@@ -1,5 +1,6 @@
 "use client"
 
+import type { useQuery } from "convex/react"
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
@@ -8,9 +9,14 @@ import {
   ArrowRightIcon,
   PinIcon,
 } from "@/components/search/search-icons"
-import type { Institution, InstitutionTone } from "@/components/vyuo/institutions"
+import { api } from "@/convex/_generated/api"
 
-export function InstitutionCard({ institution }: { institution: Institution }) {
+type BrowseInstitution = NonNullable<
+  ReturnType<typeof useQuery<typeof api.institutions.browse>>
+>["results"][number]
+type InstitutionTone = BrowseInstitution["monogramTone"]
+
+export function InstitutionCard({ institution }: { institution: BrowseInstitution }) {
   return (
     <article className="group flex h-full max-w-full flex-col overflow-hidden rounded-2xl border border-brand-ink/10 bg-white p-5 transition hover:border-brand-blue/35 hover:shadow-[0_22px_50px_-32px_rgba(29,78,216,0.45)]">
       <div className="flex items-start gap-4">
@@ -66,7 +72,7 @@ export function InstitutionCard({ institution }: { institution: Institution }) {
   )
 }
 
-function Crest({ institution }: { institution: Institution }) {
+function Crest({ institution }: { institution: BrowseInstitution }) {
   const [failed, setFailed] = useState(false)
 
   const tones: Record<InstitutionTone, string> = {

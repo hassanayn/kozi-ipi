@@ -1,39 +1,11 @@
-export const courseFamilies = [
-  { key: "engineering", label: "Engineering", swahili: "Uhandisi", mark: "⚙" },
-  { key: "health", label: "Afya", swahili: "Health", mark: "✚" },
-  { key: "ICT", label: "Tech", swahili: "Teknolojia", mark: "</>" },
-  { key: "business", label: "Biashara", swahili: "Business", mark: "$" },
-  { key: "education", label: "Education", swahili: "Elimu", mark: "✎" },
-  { key: "tourism_hospitality", label: "Utalii", swahili: "Tourism", mark: "✈" },
-] as const
+import {
+  awardLevels,
+  courseFamilies,
+  searchRegions as regions,
+  trendingQueries,
+} from "@/lib/domain/taxonomy"
 
-export const awardLevels = [
-  { label: "All levels", value: "all", duration: undefined },
-  { label: "Diploma", value: "ordinary diploma", duration: "2-3 yrs" },
-  { label: "Degree", value: "degree", duration: "3-5 yrs" },
-  { label: "Certificate", value: "certificate", duration: "1 yr" },
-] as const
-
-export const regions = [
-  "Dar es Salaam",
-  "Arusha",
-  "Mwanza",
-  "Dodoma",
-  "Kilimanjaro",
-  "Mbeya",
-  "Iringa",
-  "Tanga",
-  "Morogoro",
-  "Zanzibar Urban/West",
-] as const
-
-export const trendingQueries = [
-  "Clinical medicine",
-  "Civil engineering",
-  "Computer science",
-  "Nataka kuwa nurse",
-  "Hotel management",
-] as const
+export { awardLevels, courseFamilies, regions, trendingQueries }
 
 export type SearchFilterKey = "family" | "level" | "region" | "institution"
 

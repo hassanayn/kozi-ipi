@@ -65,53 +65,6 @@ export const smartSearch = query({
   },
 })
 
-export const searchCount = query({
-  args: {
-    query: v.string(),
-    filters: filtersValidator,
-    maxCount: v.optional(v.number()),
-  },
-  handler: async (ctx, args) => {
-    const text = args.query.trim()
-    if (!text) {
-      return { count: 0, capped: false }
-    }
-
-    const maxCount = args.maxCount ?? 1000
-    const results = await queryProgrammesBySearchText(
-      ctx,
-      text,
-      args.filters,
-      maxCount
-    )
-
-    return { count: results.length, capped: results.length === maxCount }
-  },
-})
-
-export const smartSearchCount = query({
-  args: {
-    query: v.string(),
-    filters: filtersValidator,
-    formFourOnly: v.optional(v.boolean()),
-    maxCount: v.optional(v.number()),
-  },
-  handler: async (ctx, args) => {
-    const { interpreted, rankedResults, capped } = await getSmartSearchCandidates(ctx, {
-      query: args.query,
-      filters: args.filters,
-      formFourOnly: args.formFourOnly,
-      maxCount: args.maxCount,
-    })
-
-    return {
-      interpreted,
-      count: rankedResults.length,
-      capped,
-    }
-  },
-})
-
 async function getSmartSearchCandidates(
   ctx: QueryCtx,
   args: {

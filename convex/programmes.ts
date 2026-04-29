@@ -11,6 +11,7 @@ import {
 } from "./programmeSearch/filters"
 import { interpretProgrammeQuery } from "./programmeSearch/interpret"
 import { matchesProgrammeFilters } from "./programmeSearch/matching"
+import { sliceSearchPage } from "./programmeSearch/pagination"
 import { isNursingIntent, rankProgrammes } from "./programmeSearch/ranking"
 import { queryProgrammesBySearchText } from "./programmeSearch/search"
 
@@ -78,6 +79,64 @@ export const smartSearch = query({
       total: rankedResults.length,
       capped,
       hasMore: rankedResults.length > visibleResults.length,
+    }
+  },
+})
+
+export const smartSearchSummary = query({
+  args: {
+    query: v.string(),
+    filters: filtersValidator,
+    formFourOnly: v.optional(v.boolean()),
+    maxCount: v.optional(v.number()),
+  },
+  handler: async (ctx, args) => {
+    const { interpreted, rankedResults, capped } =
+      await getSmartSearchCandidates(ctx, {
+        query: args.query,
+        filters: args.filters,
+        formFourOnly: args.formFourOnly,
+        maxCount: args.maxCount,
+      })
+
+    return {
+      interpreted,
+      total: rankedResults.length,
+      capped,
+    }
+  },
+})
+
+export const smartSearchPaginated = query({
+  args: {
+    query: v.string(),
+    filters: filtersValidator,
+    formFourOnly: v.optional(v.boolean()),
+    paginationOpts: paginationOptsValidator,
+    maxCount: v.optional(v.number()),
+  },
+  handler: async (ctx, args) => {
+    const pageSize = clampCount(
+      args.paginationOpts.numItems,
+      DEFAULT_RESULT_LIMIT,
+      MAX_VISIBLE_RESULT_LIMIT
+    )
+    const { rankedResults } = await getSmartSearchCandidates(ctx, {
+      query: args.query,
+      filters: args.filters,
+      formFourOnly: args.formFourOnly,
+      limit: pageSize,
+      maxCount: args.maxCount,
+    })
+    const page = sliceSearchPage(rankedResults, {
+      cursor: args.paginationOpts.cursor,
+      pageSize,
+    })
+
+    return {
+      page: formatProgrammeSearchResults(page.results),
+      isDone: !page.hasMore,
+      continueCursor: page.nextCursor ?? page.cursor ?? "",
     }
   },
 })

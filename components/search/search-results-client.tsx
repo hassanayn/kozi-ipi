@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect, useMemo, useRef, useState } from "react"
-import { useMutation, useQuery } from "convex/react"
+import { useEffect, useMemo, useRef } from "react"
+import { useMutation, usePaginatedQuery, useQuery } from "convex/react"
 import { usePathname, useRouter } from "next/navigation"
 
 import { ProgrammeCard } from "@/components/search/programme-card"
@@ -19,8 +19,8 @@ import { XIcon } from "@/components/search/search-icons"
 import { api } from "@/convex/_generated/api"
 
 const INITIAL_RESULT_LIMIT = 20
-const RESULT_LIMIT_STEP = 20
 const MAX_VISIBLE_RESULTS = 200
+const SEARCH_CANDIDATE_LIMIT = 1000
 
 export function SearchResultsClient({
   initialSearchParams,
@@ -47,18 +47,9 @@ export function SearchResultsClient({
   const institution = searchParams.get("institution") ?? undefined
   const institutionLabel = searchParams.get("institutionLabel") ?? undefined
   const selectedProgrammeId = searchParams.get("programme") ?? undefined
-  const resultSetKey = `${queryFromUrl}|${family ?? ""}|${awardLevel}|${region}|${institution ?? ""}|${institutionLabel ?? ""}|${selectedProgrammeId ?? ""}`
   const defaultResultLimit = selectedProgrammeId
     ? MAX_VISIBLE_RESULTS
     : INITIAL_RESULT_LIMIT
-  const [resultLimitState, setResultLimitState] = useState({
-    key: resultSetKey,
-    limit: defaultResultLimit,
-  })
-  const resultLimit =
-    resultLimitState.key === resultSetKey
-      ? resultLimitState.limit
-      : defaultResultLimit
 
   const filters = useMemo(() => {
     return {
@@ -83,22 +74,29 @@ export function SearchResultsClient({
     ? {
         query: activeQuery,
         filters: hasFilters ? filters : undefined,
-        limit: resultLimit,
+        maxCount: SEARCH_CANDIDATE_LIMIT,
       }
     : "skip"
 
-  const search = useQuery(api.programmes.smartSearch, searchArgs)
-  const isResultsLoading = Boolean(activeQuery) && search === undefined
-  const totalMatches = search?.total ?? search?.results.length ?? 0
-  const renderedCount = search?.results.length ?? 0
+  const searchSummary = useQuery(api.programmes.smartSearchSummary, searchArgs)
+  const paginatedSearch = usePaginatedQuery(
+    api.programmes.smartSearchPaginated,
+    searchArgs,
+    { initialNumItems: defaultResultLimit }
+  )
+  const results = paginatedSearch.results.slice(0, MAX_VISIBLE_RESULTS)
+  const isResultsLoading =
+    Boolean(activeQuery) && paginatedSearch.status === "LoadingFirstPage"
+  const isLoadingMore = paginatedSearch.status === "LoadingMore"
+  const renderedCount = results.length
+  const totalMatches = searchSummary?.total ?? renderedCount
   const canLoadMore =
     Boolean(activeQuery) &&
-    !isResultsLoading &&
+    paginatedSearch.status === "CanLoadMore" &&
     renderedCount > 0 &&
-    renderedCount < totalMatches &&
-    resultLimit < MAX_VISIBLE_RESULTS
+    renderedCount < MAX_VISIBLE_RESULTS
 
-  const inferredFamily = search?.interpreted.inferredCourseFamily
+  const inferredFamily = searchSummary?.interpreted.inferredCourseFamily
   const activeFilters = [
     family && {
       key: "family",
@@ -125,16 +123,16 @@ export function SearchResultsClient({
   ].filter(isActiveFilter)
 
   useEffect(() => {
-    if (!submittedQuery || isResultsLoading || !search) {
+    if (!submittedQuery || isResultsLoading || !searchSummary) {
       return
     }
 
-    const resultCount = search.total ?? search.results.length
+    const resultCount = searchSummary.total
     const logKey = JSON.stringify([
       submittedQuery.toLowerCase(),
       filtersJson ?? "",
       resultCount,
-      Boolean(search.capped),
+      searchSummary.capped,
     ])
     if (lastLoggedSearchRef.current === logKey) {
       return
@@ -145,10 +143,16 @@ export function SearchResultsClient({
       query: submittedQuery,
       filtersJson,
       resultCount,
-      resultCountCapped: Boolean(search.capped),
+      resultCountCapped: searchSummary.capped,
       source: "search_page",
     })
-  }, [filtersJson, isResultsLoading, logSearchEvent, search, submittedQuery])
+  }, [
+    filtersJson,
+    isResultsLoading,
+    logSearchEvent,
+    searchSummary,
+    submittedQuery,
+  ])
 
   function routeWith(nextParams: URLSearchParams) {
     const queryString = nextParams.toString()
@@ -208,12 +212,9 @@ export function SearchResultsClient({
   }
 
   function loadMoreResults() {
-    const nextLimit = Math.min(
-      resultLimit + RESULT_LIMIT_STEP,
-      totalMatches,
-      MAX_VISIBLE_RESULTS
+    paginatedSearch.loadMore(
+      Math.min(INITIAL_RESULT_LIMIT, MAX_VISIBLE_RESULTS - renderedCount)
     )
-    setResultLimitState({ key: resultSetKey, limit: nextLimit })
   }
 
   return (
@@ -240,9 +241,9 @@ export function SearchResultsClient({
             activeQuery={activeQuery}
             inferredFamily={inferredFamily}
             isResultsLoading={isResultsLoading}
-            totalMatches={search?.total ?? search?.results.length}
-            isCapped={Boolean(search?.capped)}
-            resultCount={search?.results.length}
+            totalMatches={searchSummary?.total}
+            isCapped={Boolean(searchSummary?.capped)}
+            resultCount={results.length}
           />
 
           {activeFilters.length > 0 ? (
@@ -267,9 +268,9 @@ export function SearchResultsClient({
               <EmptyState />
             ) : isResultsLoading ? (
               <LoadingState />
-            ) : search?.results.length ? (
+            ) : results.length ? (
               <>
-                {search.results.map((programme) => (
+                {results.map((programme) => (
                   <ProgrammeCard
                     isSelected={programme._id === selectedProgrammeId}
                     key={programme._id}
@@ -282,7 +283,8 @@ export function SearchResultsClient({
                 ))}
                 <SearchResultsFooter
                   canLoadMore={canLoadMore}
-                  isCapped={Boolean(search?.capped)}
+                  isCapped={Boolean(searchSummary?.capped)}
+                  isLoadingMore={isLoadingMore}
                   onLoadMore={loadMoreResults}
                   renderedCount={renderedCount}
                   totalMatches={totalMatches}
@@ -301,12 +303,14 @@ export function SearchResultsClient({
 function SearchResultsFooter({
   canLoadMore,
   isCapped,
+  isLoadingMore,
   onLoadMore,
   renderedCount,
   totalMatches,
 }: {
   canLoadMore: boolean
   isCapped: boolean
+  isLoadingMore: boolean
   onLoadMore: () => void
   renderedCount: number
   totalMatches: number
@@ -317,13 +321,14 @@ function SearchResultsFooter({
         Showing {renderedCount} of {totalMatches}
         {isCapped ? "+" : ""} matches
       </p>
-      {canLoadMore ? (
+      {canLoadMore || isLoadingMore ? (
         <button
-          className="rounded-full border border-brand-ink/15 px-5 py-2.5 text-[13px] font-semibold text-brand-ink transition hover:border-brand-blue hover:bg-brand-blue hover:text-white"
+          className="rounded-full border border-brand-ink/15 px-5 py-2.5 text-[13px] font-semibold text-brand-ink transition hover:border-brand-blue hover:bg-brand-blue hover:text-white disabled:cursor-wait disabled:opacity-60"
+          disabled={isLoadingMore}
           onClick={onLoadMore}
           type="button"
         >
-          Load more
+          {isLoadingMore ? "Loading..." : "Load more"}
         </button>
       ) : null}
     </div>

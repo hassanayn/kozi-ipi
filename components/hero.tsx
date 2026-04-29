@@ -1,9 +1,5 @@
-"use client"
-
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { type FormEvent, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
@@ -178,36 +174,22 @@ function HeroCopy() {
 /* ───────────────────────────── Search bar ──────────────────────────── */
 
 function SearchBar({ className = "" }: { className?: string }) {
-  const router = useRouter()
-  const [query, setQuery] = useState("")
-
-  function submitSearch(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-
-    const nextQuery = query.trim()
-    if (!nextQuery) {
-      return
-    }
-
-    router.push(`/search?q=${encodeURIComponent(nextQuery)}`)
-  }
-
   return (
     <form
-      onSubmit={submitSearch}
+      action="/search"
       className={`flex w-full max-w-[40rem] flex-col gap-2 rounded-3xl border border-brand-ink/10 bg-white p-2 shadow-[0_18px_38px_-22px_rgba(15,15,18,0.25)] sm:flex-row sm:items-center sm:gap-0 sm:rounded-full ${className}`}
+      method="get"
     >
       <label className="flex flex-1 items-center gap-3 px-4">
         <span className="sr-only">Tafuta kozi, chuo, au career path</span>
         <SearchIcon className="size-[18px] shrink-0 text-brand-ink/55" />
         <Input
-          variant="ghost"
-          size="xl"
-          value={query}
-          onChange={(event) => setQuery(event.target.value)}
-          placeholder="Tafuta kozi, chuo, career path..."
           aria-label="Tafuta kozi, chuo, au career path"
           className="h-12 border-0 bg-transparent px-0 text-[15px] text-brand-ink caret-brand-blue shadow-none placeholder:text-brand-ink/40 focus-visible:ring-0"
+          name="q"
+          placeholder="Tafuta kozi, chuo, career path..."
+          size="xl"
+          variant="ghost"
         />
       </label>
 
@@ -397,11 +379,7 @@ function FeaturedInstitutions() {
             href={`/search?q=${encodeURIComponent(institution.query)}`}
             className="group flex min-w-0 flex-col overflow-hidden rounded-2xl border border-brand-ink/10 bg-white transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-blue/40 hover:shadow-[0_22px_42px_-26px_rgba(29,78,216,0.45)]"
           >
-            <CampusImage
-              src={institution.image}
-              alt={`${institution.name} campus`}
-              short={institution.short}
-            />
+            <CampusImage src={institution.image} alt={`${institution.name} campus`} />
             <div className="flex min-w-0 flex-1 flex-col gap-1 p-4">
               <div className="text-[11px] font-semibold uppercase tracking-wide text-brand-blue">
                 {institution.short}
@@ -424,24 +402,10 @@ function FeaturedInstitutions() {
 function CampusImage({
   src,
   alt,
-  short,
 }: {
   src: string
   alt: string
-  short: string
 }) {
-  const [failed, setFailed] = useState(false)
-
-  if (failed) {
-    return (
-      <div className="grid aspect-[16/10] w-full place-items-center bg-gradient-to-br from-brand-blue/10 to-brand-yellow/20">
-        <span className="text-[18px] font-bold tracking-tight text-brand-ink/40">
-          {short}
-        </span>
-      </div>
-    )
-  }
-
   return (
     <div className="relative aspect-[16/10] w-full overflow-hidden bg-brand-ink/[0.04]">
       <Image
@@ -451,8 +415,6 @@ function CampusImage({
         loading="eager"
         sizes="(min-width: 1024px) 18vw, (min-width: 640px) 30vw, 45vw"
         className="object-cover transition-transform duration-500 group-hover:scale-105"
-        onError={() => setFailed(true)}
-        unoptimized
       />
     </div>
   )

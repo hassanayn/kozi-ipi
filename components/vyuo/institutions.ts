@@ -4,28 +4,13 @@ export { fieldFocus, popularRegions }
 
 export type InstitutionType = "University" | "College" | "TVET"
 export type InstitutionOwnership = "Public" | "Private" | "Unknown"
-export type InstitutionTone = "amber" | "blue" | "green" | "indigo" | "ink" | "red"
 
-export type Institution = {
-  id: string
-  name: string
-  normalizedName: string
-  short: string
-  type: InstitutionType
-  accredited: boolean
-  region: string
-  ownership: InstitutionOwnership
-  blurb: string
-  fields: string[]
+type InstitutionSearchShape = {
   fieldSlugs: string[]
-  programmes: number
-  monogramTone: InstitutionTone
-  awardLevels: string[]
-  logoUrl?: string
   searchText: string
 }
 
-export function fieldMatches(institution: Institution, field: string) {
+export function fieldMatches(institution: InstitutionSearchShape, field: string) {
   const haystack = `${institution.fieldSlugs.join(" ")} ${institution.searchText}`.toLowerCase()
 
   return matchesField(haystack, field)

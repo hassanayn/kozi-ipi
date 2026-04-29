@@ -28,8 +28,8 @@ Fallback baseline dataset retained for coverage.
 The processed import keeps a conservative union of the pathway export and current fallback data:
 
 - 742 institution records
-- 4,433 programme records
-- 4,503 entry requirement records
+- 4,551 programme records
+- 5,358 entry requirement records
 - 69 verified institution logos from local enrichment
 
 ### `raw/tanzania-education-dataset`

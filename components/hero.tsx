@@ -14,6 +14,7 @@ const FEATURED_INSTITUTIONS: Array<{
   region: string
   image: string
   query: string
+  normalizedInstitutionName: string
 }> = [
   {
     name: "University of Dar es Salaam",
@@ -21,6 +22,7 @@ const FEATURED_INSTITUTIONS: Array<{
     region: "Dar es Salaam",
     image: "/institution-campus/udsm.jpg",
     query: "University of Dar es Salaam",
+    normalizedInstitutionName: "dar es salaam",
   },
   {
     name: "University of Dodoma",
@@ -28,6 +30,7 @@ const FEATURED_INSTITUTIONS: Array<{
     region: "Dodoma",
     image: "/institution-campus/udom.jpg",
     query: "University of Dodoma",
+    normalizedInstitutionName: "dodoma",
   },
   {
     name: "Ardhi University",
@@ -35,6 +38,7 @@ const FEATURED_INSTITUTIONS: Array<{
     region: "Dar es Salaam",
     image: "/institution-campus/ardhi.jpg",
     query: "Ardhi University",
+    normalizedInstitutionName: "ardhi aru",
   },
   {
     name: "Mbeya University of Science and Technology",
@@ -42,6 +46,7 @@ const FEATURED_INSTITUTIONS: Array<{
     region: "Mbeya",
     image: "/institution-campus/must.jpg",
     query: "Mbeya University of Science and Technology",
+    normalizedInstitutionName: "mbeya science technology",
   },
   {
     name: "St Joseph University in Tanzania",
@@ -49,6 +54,7 @@ const FEATURED_INSTITUTIONS: Array<{
     region: "Dar es Salaam",
     image: "/institution-campus/st-joseph.jpg",
     query: "St Joseph University",
+    normalizedInstitutionName: "st joseph tanzania engineering technology",
   },
 ]
 
@@ -391,7 +397,7 @@ function FeaturedInstitutions() {
         {FEATURED_INSTITUTIONS.map((institution) => (
           <Link
             key={institution.short}
-            href={`/search?q=${encodeURIComponent(institution.query)}`}
+            href={featuredInstitutionHref(institution)}
             className="group flex min-w-0 flex-col overflow-hidden rounded-2xl border border-brand-ink/10 bg-white transition-all duration-200 hover:-translate-y-0.5 hover:border-brand-blue/40 hover:shadow-[0_22px_42px_-26px_rgba(29,78,216,0.45)]"
           >
             <CampusImage
@@ -415,6 +421,20 @@ function FeaturedInstitutions() {
       </div>
     </section>
   )
+}
+
+function featuredInstitutionHref(institution: {
+  name: string
+  query: string
+  normalizedInstitutionName: string
+}) {
+  const params = new URLSearchParams({
+    q: institution.query,
+    institution: institution.normalizedInstitutionName,
+    institutionLabel: institution.name,
+  })
+
+  return `/search?${params.toString()}`
 }
 
 function CampusImage({ src, alt }: { src: string; alt: string }) {

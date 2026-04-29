@@ -16,6 +16,7 @@ import type * as programmeSearch_display from "../programmeSearch/display.js";
 import type * as programmeSearch_filters from "../programmeSearch/filters.js";
 import type * as programmeSearch_interpret from "../programmeSearch/interpret.js";
 import type * as programmeSearch_matching from "../programmeSearch/matching.js";
+import type * as programmeSearch_pagination from "../programmeSearch/pagination.js";
 import type * as programmeSearch_ranking from "../programmeSearch/ranking.js";
 import type * as programmeSearch_search from "../programmeSearch/search.js";
 import type * as programmes from "../programmes.js";
@@ -37,6 +38,7 @@ declare const fullApi: ApiFromModules<{
   "programmeSearch/filters": typeof programmeSearch_filters;
   "programmeSearch/interpret": typeof programmeSearch_interpret;
   "programmeSearch/matching": typeof programmeSearch_matching;
+  "programmeSearch/pagination": typeof programmeSearch_pagination;
   "programmeSearch/ranking": typeof programmeSearch_ranking;
   "programmeSearch/search": typeof programmeSearch_search;
   programmes: typeof programmes;

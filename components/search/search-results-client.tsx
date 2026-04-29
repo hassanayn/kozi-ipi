@@ -32,8 +32,11 @@ export function SearchResultsClient({
   const logSearchEvent = useMutation(api.searchEvents.log)
   const lastLoggedSearchRef = useRef("")
   const searchParams = useMemo(
-    () => new URLSearchParams(initialSearchParams.map(([key, value]) => [key, value])),
-    [initialSearchParams],
+    () =>
+      new URLSearchParams(
+        initialSearchParams.map(([key, value]) => [key, value])
+      ),
+    [initialSearchParams]
   )
   const submittedQuery = searchParams.get("q")?.trim() ?? ""
   const queryFromUrl = getInitialQuery(searchParams)
@@ -45,13 +48,17 @@ export function SearchResultsClient({
   const institutionLabel = searchParams.get("institutionLabel") ?? undefined
   const selectedProgrammeId = searchParams.get("programme") ?? undefined
   const resultSetKey = `${queryFromUrl}|${family ?? ""}|${awardLevel}|${region}|${institution ?? ""}|${institutionLabel ?? ""}|${selectedProgrammeId ?? ""}`
-  const defaultResultLimit = selectedProgrammeId ? MAX_VISIBLE_RESULTS : INITIAL_RESULT_LIMIT
+  const defaultResultLimit = selectedProgrammeId
+    ? MAX_VISIBLE_RESULTS
+    : INITIAL_RESULT_LIMIT
   const [resultLimitState, setResultLimitState] = useState({
     key: resultSetKey,
     limit: defaultResultLimit,
   })
   const resultLimit =
-    resultLimitState.key === resultSetKey ? resultLimitState.limit : defaultResultLimit
+    resultLimitState.key === resultSetKey
+      ? resultLimitState.limit
+      : defaultResultLimit
 
   const filters = useMemo(() => {
     return {
@@ -64,7 +71,10 @@ export function SearchResultsClient({
 
   const activeQuery = queryFromUrl
   const hasFilters =
-    Boolean(family) || awardLevel !== "all" || Boolean(region) || Boolean(institution)
+    Boolean(family) ||
+    awardLevel !== "all" ||
+    Boolean(region) ||
+    Boolean(institution)
   const filtersJson = useMemo(() => {
     return hasFilters ? JSON.stringify(filters) : undefined
   }, [filters, hasFilters])
@@ -98,7 +108,9 @@ export function SearchResultsClient({
     },
     awardLevel !== "all" && {
       key: "level",
-      label: awardLevels.find((level) => level.value === awardLevel)?.label ?? awardLevel,
+      label:
+        awardLevels.find((level) => level.value === awardLevel)?.label ??
+        awardLevel,
       clear: () => setFilter("level", "all"),
     },
     region && {
@@ -149,7 +161,7 @@ export function SearchResultsClient({
         [key]: value,
         ...(key === "institution" ? { institutionLabel: null } : {}),
         programme: null,
-      }),
+      })
     )
   }
 
@@ -162,7 +174,7 @@ export function SearchResultsClient({
         institution: null,
         institutionLabel: null,
         programme: null,
-      }),
+      })
     )
   }
 
@@ -179,7 +191,7 @@ export function SearchResultsClient({
         institution: null,
         institutionLabel: null,
         programme: null,
-      }),
+      })
     )
   }
 
@@ -191,12 +203,16 @@ export function SearchResultsClient({
         institution: null,
         institutionLabel: null,
         programme: null,
-      }),
+      })
     )
   }
 
   function loadMoreResults() {
-    const nextLimit = Math.min(resultLimit + RESULT_LIMIT_STEP, totalMatches, MAX_VISIBLE_RESULTS)
+    const nextLimit = Math.min(
+      resultLimit + RESULT_LIMIT_STEP,
+      totalMatches,
+      MAX_VISIBLE_RESULTS
+    )
     setResultLimitState({ key: resultSetKey, limit: nextLimit })
   }
 
@@ -258,7 +274,10 @@ export function SearchResultsClient({
                     isSelected={programme._id === selectedProgrammeId}
                     key={programme._id}
                     programme={programme}
-                    shareUrl={buildProgrammeShareUrl(searchParams, programme._id)}
+                    shareUrl={buildProgrammeShareUrl(
+                      searchParams,
+                      programme._id
+                    )}
                   />
                 ))}
                 <SearchResultsFooter
@@ -329,12 +348,12 @@ function SearchResultsHeader({
   return (
     <div className="flex min-w-0 flex-wrap items-end justify-between gap-4 border-b border-brand-ink/8 pb-4">
       <div className="min-w-0">
-        <p className="text-[12.5px] font-medium uppercase tracking-[0.16em] text-brand-blue">
+        <p className="text-[12.5px] font-medium tracking-[0.16em] text-brand-blue uppercase">
           {isResultsLoading
             ? "Searching"
             : `${totalMatches ?? resultCount ?? 0}${isCapped ? "+" : ""} matches`}
         </p>
-        <h2 className="mt-1 break-words text-[22px] font-bold tracking-tight">
+        <h2 className="mt-1 text-[22px] font-bold tracking-tight break-words">
           {activeQuery ? `Results for "${activeQuery}"` : "All programmes"}
         </h2>
       </div>
@@ -347,12 +366,15 @@ function SearchResultsHeader({
   )
 }
 
-function EmptyState({ message = "Search a course, college, or career path to see results." }) {
+function EmptyState({
+  message = "Search a course, college, or career path to see results.",
+}) {
   return (
     <div className="rounded-2xl border border-dashed border-brand-ink/15 bg-white p-10 text-center">
       <p className="text-[15px] font-semibold">{message}</p>
       <p className="mt-1 text-[13px] text-brand-ink/55">
-        Try “clinical medicine”, “civil engineering”, or “computer courses after Form Four”.
+        Try “clinical medicine”, “civil engineering”, or “computer courses after
+        school”.
       </p>
     </div>
   )
@@ -371,7 +393,10 @@ function LoadingState() {
   )
 }
 
-function buildProgrammeShareUrl(searchParams: URLSearchParams, programmeId: string) {
+function buildProgrammeShareUrl(
+  searchParams: URLSearchParams,
+  programmeId: string
+) {
   const nextParams = new URLSearchParams(searchParams.toString())
   nextParams.set("programme", programmeId)
 

@@ -8,7 +8,7 @@ Rules decide eligibility.
 Semantic search suggests.
 ```
 
-The product is not just a generic directory search. It helps Form Four leavers, parents, and guardians make education decisions, so search must be accurate, explainable, and conservative about eligibility.
+The product is not just a generic directory search. It helps Form Four leavers, Form Six leavers, diploma holders, parents, and guardians make education decisions, so search must be accurate, explainable, and conservative about eligibility.
 
 ## Recommendation
 

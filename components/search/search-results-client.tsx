@@ -84,13 +84,12 @@ export function SearchResultsClient({
         query: activeQuery,
         filters: hasFilters ? filters : undefined,
         limit: resultLimit,
-        maxCount: 1000,
       }
     : "skip"
 
   const search = useQuery(api.programmes.smartSearch, searchArgs)
   const isResultsLoading = Boolean(activeQuery) && search === undefined
-  const totalMatches = search?.total ?? 0
+  const totalMatches = search?.total ?? search?.results.length ?? 0
   const renderedCount = search?.results.length ?? 0
   const canLoadMore =
     Boolean(activeQuery) &&
@@ -130,10 +129,11 @@ export function SearchResultsClient({
       return
     }
 
+    const resultCount = search.total ?? search.results.length
     const logKey = JSON.stringify([
       submittedQuery.toLowerCase(),
       filtersJson ?? "",
-      search.total,
+      resultCount,
       Boolean(search.capped),
     ])
     if (lastLoggedSearchRef.current === logKey) {
@@ -144,7 +144,7 @@ export function SearchResultsClient({
     void logSearchEvent({
       query: submittedQuery,
       filtersJson,
-      resultCount: search.total,
+      resultCount,
       resultCountCapped: Boolean(search.capped),
       source: "search_page",
     })
@@ -240,7 +240,7 @@ export function SearchResultsClient({
             activeQuery={activeQuery}
             inferredFamily={inferredFamily}
             isResultsLoading={isResultsLoading}
-            totalMatches={search?.total}
+            totalMatches={search?.total ?? search?.results.length}
             isCapped={Boolean(search?.capped)}
             resultCount={search?.results.length}
           />

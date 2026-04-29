@@ -4,7 +4,7 @@ import { v } from "convex/values"
 import { query } from "./_generated/server"
 import type { Doc } from "./_generated/dataModel"
 import type { QueryCtx } from "./_generated/server"
-import { attachInstitutionLogos } from "./programmeSearch/display"
+import { formatProgrammeSearchResults } from "./programmeSearch/display"
 import { filtersValidator, type ProgrammeFilters } from "./programmeSearch/filters"
 import { interpretProgrammeQuery } from "./programmeSearch/interpret"
 import { matchesProgrammeFilters } from "./programmeSearch/matching"
@@ -32,7 +32,7 @@ export const search = query({
       args.limit ?? 25
     )
 
-    return await attachInstitutionLogos(ctx, results)
+    return formatProgrammeSearchResults(results)
   },
 })
 
@@ -57,7 +57,7 @@ export const smartSearch = query({
 
     return {
       interpreted,
-      results: await attachInstitutionLogos(ctx, visibleResults),
+      results: formatProgrammeSearchResults(visibleResults),
       total: rankedResults.length,
       capped,
       hasMore: rankedResults.length > visibleResults.length,

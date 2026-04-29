@@ -87,6 +87,9 @@ type ProcessedProgramme = {
   ownershipType?: string
   region?: string
   districtOrCouncil?: string
+  institutionLogoUrl?: string
+  institutionLogoSourceUrl?: string
+  institutionWebsite?: string
   minimumEntryRequirements?: string
   requiredSubjects?: string
   suitableForFormFourLeaver: Suitability
@@ -1240,6 +1243,7 @@ function buildProgramme(row: Row, sourceDataset: string): ProcessedProgramme {
   const programmeName = cleanProgrammeNameForRow(row)
   const normalizedProgrammeName = normalizedProgrammeNameForRow(row, programmeName)
   const fieldCategory = normalizeFieldCategory(row.field_category)
+  const institutionLogo = institution?.logoStatus === "verified" ? institution : undefined
   const requirements = requirementsByProgramme.get(
     makeRequirementKey(normalizedProgrammeName, rawNormalizedInstitutionName),
   ) ?? []
@@ -1289,6 +1293,9 @@ function buildProgramme(row: Row, sourceDataset: string): ProcessedProgramme {
     ownershipType: firstValue(row.ownership_type, institution?.ownershipType),
     region: firstValue(row.region, institution?.region),
     districtOrCouncil: firstValue(row.district_or_council, institution?.districtOrCouncil),
+    institutionLogoUrl: institutionLogo?.logoUrl,
+    institutionLogoSourceUrl: institutionLogo?.logoSourceUrl,
+    institutionWebsite: institution?.website,
     minimumEntryRequirements: firstValue(
       row.minimum_entry_requirements,
       routeSummary.rawRequirementText,
@@ -1373,6 +1380,12 @@ function mergeProgramme(left: ProcessedProgramme, right: ProcessedProgramme): Pr
     ownershipType: firstValue(left.ownershipType, right.ownershipType),
     region: firstValue(left.region, right.region),
     districtOrCouncil: firstValue(left.districtOrCouncil, right.districtOrCouncil),
+    institutionLogoUrl: firstValue(left.institutionLogoUrl, right.institutionLogoUrl),
+    institutionLogoSourceUrl: firstValue(
+      left.institutionLogoSourceUrl,
+      right.institutionLogoSourceUrl,
+    ),
+    institutionWebsite: firstValue(left.institutionWebsite, right.institutionWebsite),
     minimumEntryRequirements: firstValue(left.minimumEntryRequirements, right.minimumEntryRequirements),
     requiredSubjects: firstValue(left.requiredSubjects, right.requiredSubjects),
     suitableForFormFourLeaver: mergeSuitability(

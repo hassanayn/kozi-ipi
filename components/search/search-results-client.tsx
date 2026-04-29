@@ -84,18 +84,19 @@ export function SearchResultsClient({
         query: activeQuery,
         filters: hasFilters ? filters : undefined,
         limit: resultLimit,
+        maxCount: 1000,
       }
     : "skip"
 
   const search = useQuery(api.programmes.smartSearch, searchArgs)
   const isResultsLoading = Boolean(activeQuery) && search === undefined
-  const totalMatches = search?.total ?? search?.results.length ?? 0
   const renderedCount = search?.results.length ?? 0
+  const totalMatches = search?.total ?? 0
   const canLoadMore =
     Boolean(activeQuery) &&
     !isResultsLoading &&
     renderedCount > 0 &&
-    renderedCount < totalMatches &&
+    Boolean(search?.hasMore) &&
     resultLimit < MAX_VISIBLE_RESULTS
 
   const inferredFamily = search?.interpreted.inferredCourseFamily
@@ -240,7 +241,7 @@ export function SearchResultsClient({
             activeQuery={activeQuery}
             inferredFamily={inferredFamily}
             isResultsLoading={isResultsLoading}
-            totalMatches={search?.total ?? search?.results.length}
+            totalMatches={search?.total}
             isCapped={Boolean(search?.capped)}
             resultCount={search?.results.length}
           />

@@ -58,16 +58,25 @@ bun run dev
 Raw datasets live in:
 
 ```text
+data/raw/tanzania-education-pathways-dataset
 data/raw/tanzania-post-form-four-dataset
 data/raw/tanzania-education-dataset
 ```
 
-The broader education dataset is the canonical base. The NACTVET-focused dataset enriches matching institutions and programmes.
+Canonical source:
+
+```text
+data/raw/tanzania-education-pathways-dataset
+```
+
+The post-Form Four dataset is a fallback source for preserving current-only rows. The NACTVET-focused dataset is an enrichment source for useful extra fields.
 
 Processed import files are generated in:
 
 ```text
-data/processed
+data/processed/institutions.jsonl
+data/processed/programmes.jsonl
+data/processed/entry-requirements.jsonl
 ```
 
 Admin moderation is protected with a private Convex `ADMIN_API_KEY`. Keep real admin keys and private admin notes in local ignored files only.

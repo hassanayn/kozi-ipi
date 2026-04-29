@@ -11,6 +11,10 @@ const http = httpRouter()
 const correctionStatuses = ["pending", "approved", "rejected", "needs_more_info"] as const
 type CorrectionStatus = (typeof correctionStatuses)[number]
 
+type AdminAuth = {
+  rateLimitKey: string
+}
+
 function parseCorrectionStatus(status: string | null): CorrectionStatus | null {
   if (correctionStatuses.includes(status as CorrectionStatus)) {
     return status as CorrectionStatus
@@ -29,7 +33,16 @@ function jsonResponse(body: unknown, init?: ResponseInit) {
   })
 }
 
-function assertAdmin(req: Request) {
+function parseBearerToken(req: Request) {
+  const authorization = req.headers.get("authorization")
+  if (!authorization?.startsWith("Bearer ")) {
+    return null
+  }
+
+  return authorization.slice("Bearer ".length)
+}
+
+function authenticateAdmin(req: Request): AdminAuth | Response {
   const adminKey = process.env.ADMIN_API_KEY
   if (!adminKey) {
     return jsonResponse(
@@ -38,19 +51,20 @@ function assertAdmin(req: Request) {
     )
   }
 
-  const authorization = req.headers.get("authorization")
-  if (authorization !== `Bearer ${adminKey}`) {
+  const bearerToken = parseBearerToken(req)
+  if (bearerToken !== adminKey) {
     return jsonResponse({ error: "Unauthorized" }, { status: 401 })
   }
 
-  return null
+  return { rateLimitKey: "admin" }
 }
 
 async function assertRateLimit(
   ctx: ActionCtx,
   name: "adminHttpRead" | "adminHttpWrite",
+  key: string,
 ) {
-  const status = await rateLimiter.limit(ctx, name)
+  const status = await rateLimiter.limit(ctx, name, { key })
   if (status.ok) {
     return null
   }
@@ -74,14 +88,14 @@ http.route({
   path: "/admin/corrections",
   method: "GET",
   handler: httpAction(async (ctx, req) => {
-    const rateLimited = await assertRateLimit(ctx, "adminHttpRead")
-    if (rateLimited) {
-      return rateLimited
+    const auth = authenticateAdmin(req)
+    if (auth instanceof Response) {
+      return auth
     }
 
-    const unauthorized = assertAdmin(req)
-    if (unauthorized) {
-      return unauthorized
+    const rateLimited = await assertRateLimit(ctx, "adminHttpRead", auth.rateLimitKey)
+    if (rateLimited) {
+      return rateLimited
     }
 
     const url = new URL(req.url)
@@ -105,32 +119,53 @@ http.route({
   path: "/admin/corrections/status",
   method: "POST",
   handler: httpAction(async (ctx, req) => {
-    const rateLimited = await assertRateLimit(ctx, "adminHttpWrite")
+    const auth = authenticateAdmin(req)
+    if (auth instanceof Response) {
+      return auth
+    }
+
+    const rateLimited = await assertRateLimit(ctx, "adminHttpWrite", auth.rateLimitKey)
     if (rateLimited) {
       return rateLimited
     }
 
-    const unauthorized = assertAdmin(req)
-    if (unauthorized) {
-      return unauthorized
+    let body: unknown
+    try {
+      body = await req.json()
+    } catch {
+      return jsonResponse({ error: "Request body must be valid JSON." }, { status: 400 })
     }
 
-    const body = (await req.json()) as { id?: string; status?: string }
-    const status = parseCorrectionStatus(body.status ?? null)
-
-    if (!body.id || !status) {
+    if (!body || typeof body !== "object") {
       return jsonResponse(
         { error: "Request body must include correction id and valid status." },
         { status: 400 },
       )
     }
 
-    const correction = await ctx.runMutation(internal.corrections.updateStatus, {
-      id: body.id as Id<"correctionSubmissions">,
-      status,
-    })
+    const { id, status: rawStatus } = body as { id?: string; status?: string }
+    const status = parseCorrectionStatus(rawStatus ?? null)
 
-    return jsonResponse({ correction })
+    if (typeof id !== "string" || !status) {
+      return jsonResponse(
+        { error: "Request body must include correction id and valid status." },
+        { status: 400 },
+      )
+    }
+
+    try {
+      const correction = await ctx.runMutation(internal.corrections.updateStatus, {
+        id: id as Id<"correctionSubmissions">,
+        status,
+      })
+
+      return jsonResponse({ correction })
+    } catch {
+      return jsonResponse(
+        { error: "Correction id is invalid or no longer exists." },
+        { status: 400 },
+      )
+    }
   }),
 })
 

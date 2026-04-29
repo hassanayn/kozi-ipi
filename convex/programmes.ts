@@ -2,8 +2,10 @@ import { paginationOptsValidator } from "convex/server"
 import { v } from "convex/values"
 
 import { query } from "./_generated/server"
+import type { Doc } from "./_generated/dataModel"
+import type { QueryCtx } from "./_generated/server"
 import { attachInstitutionLogos } from "./programmeSearch/display"
-import { filtersValidator } from "./programmeSearch/filters"
+import { filtersValidator, type ProgrammeFilters } from "./programmeSearch/filters"
 import { interpretProgrammeQuery } from "./programmeSearch/interpret"
 import { matchesProgrammeFilters } from "./programmeSearch/matching"
 import { isNursingIntent, rankProgrammes } from "./programmeSearch/ranking"
@@ -40,63 +42,25 @@ export const smartSearch = query({
     filters: filtersValidator,
     formFourOnly: v.optional(v.boolean()),
     limit: v.optional(v.number()),
+    maxCount: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
-    const interpreted = interpretProgrammeQuery(
-      args.query,
-      args.filters,
-      args.formFourOnly
-    )
-    if (!interpreted.query) {
-      return {
-        interpreted,
-        results: [],
-      }
-    }
-
-    if (interpreted.appliedFilters.normalizedInstitutionName) {
-      const institutionResults = await ctx.db
-        .query("programmes")
-        .withIndex("by_normalizedInstitutionName", (q) =>
-          q.eq(
-            "normalizedInstitutionName",
-            interpreted.appliedFilters.normalizedInstitutionName!
-          )
-        )
-        .take(INSTITUTION_PROGRAMME_SCAN_LIMIT)
-      const filteredResults = institutionResults.filter((programme) =>
-        matchesProgrammeFilters(programme, interpreted.appliedFilters)
-      )
-
-      return {
-        interpreted,
-        results: await attachInstitutionLogos(
-          ctx,
-          rankProgrammes(filteredResults, interpreted.query).slice(
-            0,
-            args.limit ?? 25
-          )
-        ),
-      }
-    }
-
-    const searchLimit = Math.max(
-      args.limit ?? 25,
-      isNursingIntent(interpreted.query) ? 80 : 25
-    )
-    const results = await queryProgrammesBySearchText(
-      ctx,
-      interpreted.query,
-      interpreted.appliedFilters,
-      searchLimit
-    )
+    const visibleLimit = args.limit ?? 25
+    const { interpreted, rankedResults, capped } = await getSmartSearchCandidates(ctx, {
+      query: args.query,
+      filters: args.filters,
+      formFourOnly: args.formFourOnly,
+      limit: visibleLimit,
+      maxCount: args.maxCount,
+    })
+    const visibleResults = rankedResults.slice(0, visibleLimit)
 
     return {
       interpreted,
-      results: await attachInstitutionLogos(
-        ctx,
-        rankProgrammes(results, interpreted.query).slice(0, args.limit ?? 25)
-      ),
+      results: await attachInstitutionLogos(ctx, visibleResults),
+      total: rankedResults.length,
+      capped,
+      hasMore: rankedResults.length > visibleResults.length,
     }
   },
 })
@@ -133,51 +97,79 @@ export const smartSearchCount = query({
     maxCount: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
-    const interpreted = interpretProgrammeQuery(
-      args.query,
-      args.filters,
-      args.formFourOnly
-    )
-    if (!interpreted.query) {
-      return { interpreted, count: 0, capped: false }
-    }
+    const { interpreted, rankedResults, capped } = await getSmartSearchCandidates(ctx, {
+      query: args.query,
+      filters: args.filters,
+      formFourOnly: args.formFourOnly,
+      maxCount: args.maxCount,
+    })
 
-    const maxCount = args.maxCount ?? 1000
-    if (interpreted.appliedFilters.normalizedInstitutionName) {
-      const results = await ctx.db
-        .query("programmes")
-        .withIndex("by_normalizedInstitutionName", (q) =>
-          q.eq(
-            "normalizedInstitutionName",
-            interpreted.appliedFilters.normalizedInstitutionName!
-          )
-        )
-        .take(maxCount)
-      const filteredResults = results.filter((programme) =>
-        matchesProgrammeFilters(programme, interpreted.appliedFilters)
+    return {
+      interpreted,
+      count: rankedResults.length,
+      capped,
+    }
+  },
+})
+
+async function getSmartSearchCandidates(
+  ctx: QueryCtx,
+  args: {
+    query: string
+    filters?: ProgrammeFilters
+    formFourOnly?: boolean
+    limit?: number
+    maxCount?: number
+  },
+) {
+  const interpreted = interpretProgrammeQuery(args.query, args.filters, args.formFourOnly)
+  if (!interpreted.query) {
+    return {
+      interpreted,
+      rankedResults: [] as Doc<"programmes">[],
+      capped: false,
+    }
+  }
+
+  const visibleLimit = args.limit ?? 25
+  const maxCount = Math.max(args.maxCount ?? 1000, visibleLimit)
+
+  if (interpreted.appliedFilters.normalizedInstitutionName) {
+    const candidateLimit = Math.min(Math.max(maxCount, visibleLimit), INSTITUTION_PROGRAMME_SCAN_LIMIT)
+    const institutionResults = await ctx.db
+      .query("programmes")
+      .withIndex("by_normalizedInstitutionName", (q) =>
+        q.eq(
+          "normalizedInstitutionName",
+          interpreted.appliedFilters.normalizedInstitutionName!,
+        ),
       )
-
-      return {
-        interpreted,
-        count: rankProgrammes(filteredResults, interpreted.query).length,
-        capped: results.length === maxCount,
-      }
-    }
-
-    const results = await queryProgrammesBySearchText(
-      ctx,
-      interpreted.query,
-      interpreted.appliedFilters,
-      maxCount
+      .take(candidateLimit)
+    const filteredResults = institutionResults.filter((programme) =>
+      matchesProgrammeFilters(programme, interpreted.appliedFilters),
     )
 
     return {
       interpreted,
-      count: rankProgrammes(results, interpreted.query).length,
-      capped: results.length === maxCount,
+      rankedResults: rankProgrammes(filteredResults, interpreted.query),
+      capped: institutionResults.length === candidateLimit,
     }
-  },
-})
+  }
+
+  const candidateLimit = Math.max(maxCount, isNursingIntent(interpreted.query) ? 80 : 25)
+  const searchResults = await queryProgrammesBySearchText(
+    ctx,
+    interpreted.query,
+    interpreted.appliedFilters,
+    candidateLimit,
+  )
+
+  return {
+    interpreted,
+    rankedResults: rankProgrammes(searchResults, interpreted.query),
+    capped: searchResults.length === candidateLimit,
+  }
+}
 
 export const byInstitution = query({
   args: {

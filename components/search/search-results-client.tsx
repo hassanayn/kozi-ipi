@@ -1,6 +1,6 @@
 "use client"
 
-import { type FormEvent, useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { useMutation, useQuery } from "convex/react"
 import { usePathname, useRouter } from "next/navigation"
 
@@ -31,14 +31,12 @@ export function SearchResultsClient({
   const pathname = usePathname()
   const logSearchEvent = useMutation(api.searchEvents.log)
   const lastLoggedSearchRef = useRef("")
-  // Keep /search server-rendered; this replaces useSearchParams without forcing a Suspense shell.
-  const [searchParamsKey, setSearchParamsKey] = useState(() =>
-    new URLSearchParams(initialSearchParams.map(([key, value]) => [key, value])).toString(),
+  const searchParams = useMemo(
+    () => new URLSearchParams(initialSearchParams.map(([key, value]) => [key, value])),
+    [initialSearchParams],
   )
-  const searchParams = useMemo(() => new URLSearchParams(searchParamsKey), [searchParamsKey])
   const submittedQuery = searchParams.get("q")?.trim() ?? ""
   const queryFromUrl = getInitialQuery(searchParams)
-  const [query, setQuery] = useState(queryFromUrl)
 
   const family = searchParams.get("family") ?? undefined
   const awardLevel = searchParams.get("level") ?? "all"
@@ -76,22 +74,13 @@ export function SearchResultsClient({
         query: activeQuery,
         filters: hasFilters ? filters : undefined,
         limit: resultLimit,
-      }
-    : "skip"
-
-  const countArgs = activeQuery
-    ? {
-        query: activeQuery,
-        filters: hasFilters ? filters : undefined,
         maxCount: 1000,
       }
     : "skip"
 
   const search = useQuery(api.programmes.smartSearch, searchArgs)
-  const count = useQuery(api.programmes.smartSearchCount, countArgs)
-  const isResultsLoading = activeQuery && search === undefined
-  const isCountLoading = activeQuery && count === undefined
-  const totalMatches = count?.count ?? search?.results.length ?? 0
+  const isResultsLoading = Boolean(activeQuery) && search === undefined
+  const totalMatches = search?.total ?? 0
   const renderedCount = search?.results.length ?? 0
   const canLoadMore =
     Boolean(activeQuery) &&
@@ -125,25 +114,15 @@ export function SearchResultsClient({
   ].filter(isActiveFilter)
 
   useEffect(() => {
-    function syncFromLocation() {
-      setSearchParamsKey(new URLSearchParams(window.location.search).toString())
-    }
-
-    window.addEventListener("popstate", syncFromLocation)
-
-    return () => window.removeEventListener("popstate", syncFromLocation)
-  }, [])
-
-  useEffect(() => {
-    if (!submittedQuery || isResultsLoading || isCountLoading || !count) {
+    if (!submittedQuery || isResultsLoading || !search) {
       return
     }
 
     const logKey = JSON.stringify([
       submittedQuery.toLowerCase(),
       filtersJson ?? "",
-      count.count,
-      Boolean(count.capped),
+      search.total,
+      Boolean(search.capped),
     ])
     if (lastLoggedSearchRef.current === logKey) {
       return
@@ -153,15 +132,14 @@ export function SearchResultsClient({
     void logSearchEvent({
       query: submittedQuery,
       filtersJson,
-      resultCount: count.count,
-      resultCountCapped: Boolean(count.capped),
+      resultCount: search.total,
+      resultCountCapped: Boolean(search.capped),
       source: "search_page",
     })
-  }, [count, filtersJson, isCountLoading, isResultsLoading, logSearchEvent, submittedQuery])
+  }, [filtersJson, isResultsLoading, logSearchEvent, search, submittedQuery])
 
   function routeWith(nextParams: URLSearchParams) {
     const queryString = nextParams.toString()
-    setSearchParamsKey(queryString)
     router.push(queryString ? `${pathname}?${queryString}` : pathname)
   }
 
@@ -188,17 +166,15 @@ export function SearchResultsClient({
     )
   }
 
-  function submitSearch(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-
-    const nextQuery = query.trim()
-    if (!nextQuery) {
+  function submitSearch(nextQuery: string) {
+    const normalizedQuery = nextQuery.trim()
+    if (!normalizedQuery) {
       return
     }
 
     routeWith(
       updateParams(searchParams, {
-        q: nextQuery,
+        q: normalizedQuery,
         family: null,
         institution: null,
         institutionLabel: null,
@@ -208,7 +184,6 @@ export function SearchResultsClient({
   }
 
   function runTrending(nextQuery: string) {
-    setQuery(nextQuery)
     routeWith(
       updateParams(searchParams, {
         q: nextQuery,
@@ -228,8 +203,8 @@ export function SearchResultsClient({
   return (
     <main className="min-h-screen bg-white text-brand-ink">
       <SearchHeader
-        query={query}
-        setQuery={setQuery}
+        key={queryFromUrl}
+        initialQuery={queryFromUrl}
         onSubmit={submitSearch}
         onTrending={runTrending}
       />
@@ -247,9 +222,10 @@ export function SearchResultsClient({
         <section className="min-w-0">
           <SearchResultsHeader
             activeQuery={activeQuery}
-            count={count}
             inferredFamily={inferredFamily}
-            isCountLoading={isCountLoading}
+            isResultsLoading={isResultsLoading}
+            totalMatches={search?.total}
+            isCapped={Boolean(search?.capped)}
             resultCount={search?.results.length}
           />
 
@@ -287,7 +263,7 @@ export function SearchResultsClient({
                 ))}
                 <SearchResultsFooter
                   canLoadMore={canLoadMore}
-                  isCapped={Boolean(count?.capped)}
+                  isCapped={Boolean(search?.capped)}
                   onLoadMore={loadMoreResults}
                   renderedCount={renderedCount}
                   totalMatches={totalMatches}
@@ -337,29 +313,26 @@ function SearchResultsFooter({
 
 function SearchResultsHeader({
   activeQuery,
-  count,
   inferredFamily,
-  isCountLoading,
+  isResultsLoading,
+  totalMatches,
+  isCapped,
   resultCount,
 }: {
   activeQuery: string
-  count:
-    | {
-        count: number
-        capped: boolean
-      }
-    | undefined
   inferredFamily?: string
-  isCountLoading: boolean | ""
+  isResultsLoading: boolean
+  totalMatches?: number
+  isCapped: boolean
   resultCount?: number
 }) {
   return (
     <div className="flex min-w-0 flex-wrap items-end justify-between gap-4 border-b border-brand-ink/8 pb-4">
       <div className="min-w-0">
         <p className="text-[12.5px] font-medium uppercase tracking-[0.16em] text-brand-blue">
-          {isCountLoading
+          {isResultsLoading
             ? "Searching"
-            : `${count?.count ?? resultCount ?? 0}${count?.capped ? "+" : ""} matches`}
+            : `${totalMatches ?? resultCount ?? 0}${isCapped ? "+" : ""} matches`}
         </p>
         <h2 className="mt-1 break-words text-[22px] font-bold tracking-tight">
           {activeQuery ? `Results for "${activeQuery}"` : "All programmes"}

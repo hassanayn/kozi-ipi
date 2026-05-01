@@ -35,14 +35,14 @@ export function VyuoPageClient() {
     }
   }, [query, types, region, ownership, awardLevels, field])
 
-  // Use paginated query for results
+  // Use paginated query for unfiltered browse (true backend pagination)
   const paginatedResults = usePaginatedQuery(
     api.institutions.browsePaginated,
-    { filters },
+    {},
     { initialNumItems: PAGE_SIZE }
   )
 
-  // Use regular query for summary/facets
+  // Use regular query for summary/facets with filters applied
   const summary = useQuery(api.institutions.browseSummary, { filters })
 
   const institutions = paginatedResults.results

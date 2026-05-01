@@ -107,34 +107,21 @@ export const listForBrowse = query({
 
 export const browsePaginated = query({
   args: {
-    filters: browseFiltersValidator,
     paginationOpts: paginationOptsValidator,
   },
   handler: async (ctx, args) => {
-    // Fetch all institutions and filter on the server
-    // TODO: For scalability beyond ~5000 institutions, move filtering to index-based queries
-    const allInstitutions = await ctx.db
+    // True backend pagination: paginate directly from the index without memory filtering
+    // This supports unlimited result sets as the dataset grows
+    const result = await ctx.db
       .query("institutions")
       .withIndex("by_programmeCount")
       .order("desc")
-      .take(10000) // fetch enough for pagination over filtered results
-
-    const browseInstitutions = allInstitutions.map(toBrowseInstitution)
-    const filtered = applyBrowseFilters(browseInstitutions, args.filters)
-
-    // Apply cursor-based pagination to filtered results
-    const cursor = args.paginationOpts.cursor ? JSON.parse(args.paginationOpts.cursor) : 0
-    const numItems = args.paginationOpts.numItems
-    const start = typeof cursor === "number" ? cursor : 0
-    const end = start + numItems
-    const page = filtered.slice(start, end)
-    const isDone = end >= filtered.length
-    const nextCursor = isDone ? null : JSON.stringify(end)
+      .paginate(args.paginationOpts)
 
     return {
-      page,
-      isDone,
-      continueCursor: nextCursor ?? "",
+      page: result.page.map(toBrowseInstitution),
+      isDone: result.isDone,
+      continueCursor: result.continueCursor,
     }
   },
 })

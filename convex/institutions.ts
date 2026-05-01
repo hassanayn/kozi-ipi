@@ -86,14 +86,13 @@ export const browse = query({
   },
   handler: async (ctx, args) => {
     const limit = Math.min(Math.max(args.limit ?? 80, 1), 240)
-    // Use indexed pagination to fetch up to 1000 documents efficiently
-    const page = await ctx.db
+    const institutions = await ctx.db
       .query("institutions")
       .withIndex("by_programmeCount")
       .order("desc")
-      .paginate({ numItems: 1000, cursor: null })
-    const institutionsPage = page.page
-    const browseInstitutions = institutionsPage.map(toBrowseInstitution)
+      // TODO: Replace this capped scan with indexed pagination before the catalogue exceeds 1000 institutions.
+      .take(1000)
+    const browseInstitutions = institutions.map(toBrowseInstitution)
     const filters = args.filters
     const query = normalize(filters?.query)
     const types = new Set(filters?.types ?? [])

@@ -1,7 +1,7 @@
 "use client"
 
 import { useMemo, useState } from "react"
-import { useQuery } from "convex/react"
+import { usePaginatedQuery, useQuery } from "convex/react"
 
 import { InstitutionCard } from "@/components/vyuo/institution-card"
 import {
@@ -23,49 +23,44 @@ export function VyuoPageClient() {
   const [ownership, setOwnership] = useState<InstitutionOwnership | "">("")
   const [awardLevels, setAwardLevels] = useState<Set<string>>(new Set())
   const [field, setField] = useState("")
-  const filterKey = `${query.trim()}|${[...types].sort().join(",")}|${region}|${ownership}|${[
-    ...awardLevels,
-  ]
-    .sort()
-    .join(",")}|${field}`
-  const [visibleCountState, setVisibleCountState] = useState({
-    key: filterKey,
-    count: PAGE_SIZE,
-  })
-  const visibleCount =
-    visibleCountState.key === filterKey ? visibleCountState.count : PAGE_SIZE
-  const browseResult = useQuery(api.institutions.browse, {
-    filters: {
+
+  const filters = useMemo(() => {
+    return {
       ...(query.trim() ? { query: query.trim() } : {}),
       ...(types.size > 0 ? { types: [...types] } : {}),
       ...(region ? { region } : {}),
       ...(ownership ? { ownership } : {}),
       ...(awardLevels.size > 0 ? { awardLevels: [...awardLevels] } : {}),
       ...(field ? { field } : {}),
-    },
-    limit: visibleCount,
-  })
-  const institutions = browseResult?.results ?? []
-  const totalResults = browseResult?.total ?? 0
+    }
+  }, [query, types, region, ownership, awardLevels, field])
+
+  // Use paginated query for results
+  const paginatedResults = usePaginatedQuery(
+    api.institutions.browsePaginated,
+    { filters },
+    { initialNumItems: PAGE_SIZE }
+  )
+
+  // Use regular query for summary/facets
+  const summary = useQuery(api.institutions.browseSummary, { filters })
+
+  const institutions = paginatedResults.results
+  const isLoading = paginatedResults.status === "LoadingFirstPage"
+  const isLoadingMore = paginatedResults.status === "LoadingMore"
+  const canLoadMore = paginatedResults.status === "CanLoadMore"
+  const totalResults = summary?.total ?? institutions.length
 
   const regions = useMemo(() => {
     return [
       ...new Set([
         ...popularRegions,
-        ...(browseResult?.facets.regions ?? []),
+        ...(summary?.regions ?? []),
       ]),
     ].sort()
-  }, [browseResult?.facets.regions])
+  }, [summary?.regions])
 
-  const isLoading = browseResult === undefined
-
-  const hasFilters =
-    types.size > 0 ||
-    Boolean(region) ||
-    Boolean(ownership) ||
-    awardLevels.size > 0 ||
-    Boolean(field) ||
-    Boolean(query)
+  const hasFilters = types.size > 0 || Boolean(region) || Boolean(ownership) || awardLevels.size > 0 || Boolean(field) || Boolean(query)
 
   function clearAll() {
     setTypes(new Set())
@@ -74,7 +69,6 @@ export function VyuoPageClient() {
     setAwardLevels(new Set())
     setField("")
     setQuery("")
-    setVisibleCountState({ key: "", count: PAGE_SIZE })
   }
 
   return (
@@ -97,7 +91,7 @@ export function VyuoPageClient() {
           setRegion={setRegion}
           setTypes={setTypes}
           types={types}
-          counts={browseResult?.facets}
+          counts={summary ? { typeCounts: summary.typeCounts, ownershipCounts: summary.ownershipCounts, awardLevelCounts: summary.awardLevelCounts } : undefined}
         />
 
         <section className="min-w-0 max-w-full">
@@ -120,19 +114,15 @@ export function VyuoPageClient() {
                   <InstitutionCard institution={institution} key={institution.id} />
                 ))}
               </div>
-              {institutions.length < totalResults ? (
+              {canLoadMore ? (
                 <div className="mt-7 flex justify-center">
                   <button
-                    onClick={() =>
-                      setVisibleCountState({
-                        key: filterKey,
-                        count: visibleCount + PAGE_SIZE,
-                      })
-                    }
-                    className="rounded-full border border-brand-ink/15 px-5 py-2 text-[13px] font-semibold text-brand-ink transition hover:border-brand-ink hover:bg-brand-ink hover:text-white"
+                    onClick={() => paginatedResults.loadMore(PAGE_SIZE)}
+                    disabled={isLoadingMore}
+                    className="rounded-full border border-brand-ink/15 px-5 py-2 text-[13px] font-semibold text-brand-ink transition hover:border-brand-ink hover:bg-brand-ink hover:text-white disabled:cursor-wait disabled:opacity-60"
                     type="button"
                   >
-                    Onyesha vingine {Math.min(PAGE_SIZE, totalResults - institutions.length)}
+                    {isLoadingMore ? "Loading..." : `Onyesha vingine ${Math.min(PAGE_SIZE, totalResults - institutions.length)}`}
                   </button>
                 </div>
               ) : null}

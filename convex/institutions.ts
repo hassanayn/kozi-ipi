@@ -63,6 +63,32 @@ const tones = ["blue", "green", "amber", "indigo", "red", "ink"] as const
 type InstitutionType = "University" | "College" | "TVET"
 type InstitutionOwnership = "Public" | "Private" | "Unknown"
 
+// Helper to apply browse filters to a list of institutions
+function applyBrowseFilters(
+  institutions: ReturnType<typeof toBrowseInstitution>[],
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  filters: any
+) {
+  const query = normalize(filters?.query)
+  const types = new Set(filters?.types ?? [])
+  const awardLevels = new Set(filters?.awardLevels ?? [])
+
+  return institutions.filter((institution) => {
+    if (types.size > 0 && !types.has(institution.type)) return false
+    if (filters?.region && institution.region !== filters.region) return false
+    if (filters?.ownership && institution.ownership !== filters.ownership) return false
+    if (
+      awardLevels.size > 0 &&
+      !institution.awardLevels.some((award) => awardLevels.has(award))
+    ) {
+      return false
+    }
+    if (filters?.field && !fieldMatches(institution, filters.field)) return false
+    if (!query) return true
+    return institution.searchText.includes(query)
+  })
+}
+
 export const listForBrowse = query({
   args: {
     limit: v.optional(v.number()),
@@ -79,6 +105,72 @@ export const listForBrowse = query({
   },
 })
 
+export const browsePaginated = query({
+  args: {
+    filters: browseFiltersValidator,
+    paginationOpts: paginationOptsValidator,
+  },
+  handler: async (ctx, args) => {
+    // Fetch all institutions and filter on the server
+    // TODO: For scalability beyond ~5000 institutions, move filtering to index-based queries
+    const allInstitutions = await ctx.db
+      .query("institutions")
+      .withIndex("by_programmeCount")
+      .order("desc")
+      .take(10000) // fetch enough for pagination over filtered results
+
+    const browseInstitutions = allInstitutions.map(toBrowseInstitution)
+    const filtered = applyBrowseFilters(browseInstitutions, args.filters)
+
+    // Apply cursor-based pagination to filtered results
+    const cursor = args.paginationOpts.cursor ? JSON.parse(args.paginationOpts.cursor) : 0
+    const numItems = args.paginationOpts.numItems
+    const start = typeof cursor === "number" ? cursor : 0
+    const end = start + numItems
+    const page = filtered.slice(start, end)
+    const isDone = end >= filtered.length
+    const nextCursor = isDone ? null : JSON.stringify(end)
+
+    return {
+      page,
+      isDone,
+      continueCursor: nextCursor ?? "",
+    }
+  },
+})
+
+export const browseSummary = query({
+  args: {
+    filters: browseFiltersValidator,
+  },
+  handler: async (ctx, args) => {
+    // Fetch institutions for summary/facets only
+    const allInstitutions = await ctx.db
+      .query("institutions")
+      .withIndex("by_programmeCount")
+      .order("desc")
+      .take(5000)
+
+    const browseInstitutions = allInstitutions.map(toBrowseInstitution)
+    const filtered = applyBrowseFilters(browseInstitutions, args.filters)
+
+    return {
+      regions: [
+        ...new Set(
+          filtered
+            .map((institution) => institution.region)
+            .filter(isValidRegion),
+        ),
+      ].sort(),
+      typeCounts: countBy(filtered, (institution) => institution.type),
+      ownershipCounts: countBy(filtered, (institution) => institution.ownership),
+      awardLevelCounts: countByMany(filtered, (institution) => institution.awardLevels),
+      total: filtered.length,
+    }
+  },
+})
+
+// Keep browse for backwards compatibility
 export const browse = query({
   args: {
     filters: browseFiltersValidator,
@@ -86,49 +178,30 @@ export const browse = query({
   },
   handler: async (ctx, args) => {
     const limit = Math.min(Math.max(args.limit ?? 80, 1), 240)
-    // Use indexed pagination to fetch up to 1000 documents efficiently
-    const page = await ctx.db
+    // Fetch institutions for both results and facets
+    const allInstitutions = await ctx.db
       .query("institutions")
       .withIndex("by_programmeCount")
       .order("desc")
-      .paginate({ numItems: 1000, cursor: null })
-    const institutionsPage = page.page
-    const browseInstitutions = institutionsPage.map(toBrowseInstitution)
-    const filters = args.filters
-    const query = normalize(filters?.query)
-    const types = new Set(filters?.types ?? [])
-    const awardLevels = new Set(filters?.awardLevels ?? [])
+      .take(5000)
 
-    const results = browseInstitutions.filter((institution) => {
-      if (types.size > 0 && !types.has(institution.type)) return false
-      if (filters?.region && institution.region !== filters.region) return false
-      if (filters?.ownership && institution.ownership !== filters.ownership) return false
-      if (
-        awardLevels.size > 0 &&
-        !institution.awardLevels.some((award) => awardLevels.has(award))
-      ) {
-        return false
-      }
-      if (filters?.field && !fieldMatches(institution, filters.field)) return false
-      if (!query) return true
-
-      return institution.searchText.includes(query)
-    })
+    const browseInstitutions = allInstitutions.map(toBrowseInstitution)
+    const filtered = applyBrowseFilters(browseInstitutions, args.filters)
 
     return {
-      results: results.slice(0, limit),
-      total: results.length,
+      results: filtered.slice(0, limit),
+      total: filtered.length,
       facets: {
         regions: [
           ...new Set(
-            browseInstitutions
+            filtered
               .map((institution) => institution.region)
               .filter(isValidRegion),
           ),
         ].sort(),
-        typeCounts: countBy(browseInstitutions, (institution) => institution.type),
-        ownershipCounts: countBy(browseInstitutions, (institution) => institution.ownership),
-        awardLevelCounts: countByMany(browseInstitutions, (institution) => institution.awardLevels),
+        typeCounts: countBy(filtered, (institution) => institution.type),
+        ownershipCounts: countBy(filtered, (institution) => institution.ownership),
+        awardLevelCounts: countByMany(filtered, (institution) => institution.awardLevels),
       },
     }
   },
